@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84827B8C149E663B0098E408 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8B149E663B0098E408 /* UIKit.framework */; };
+		84827B8E149E663B0098E408 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8D149E663B0098E408 /* Foundation.framework */; };
+		84827B90149E663B0098E408 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8F149E663B0098E408 /* CoreGraphics.framework */; };
+		84827B96149E663B0098E408 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84827B94149E663B0098E408 /* InfoPlist.strings */; };
+		84827B98149E663B0098E408 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827B97149E663B0098E408 /* main.m */; };
+		84827B9C149E663C0098E408 /* DDWAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827B9B149E663C0098E408 /* DDWAppDelegate.m */; };
+		84827B9F149E663C0098E408 /* DDWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827B9E149E663C0098E408 /* DDWViewController.m */; };
+		84827BA2149E663C0098E408 /* DDWViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84827BA0149E663C0098E408 /* DDWViewController_iPhone.xib */; };
+		84827BA5149E663C0098E408 /* DDWViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84827BA3149E663C0098E408 /* DDWViewController_iPad.xib */; };
+		84827BAD149E663C0098E408 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827BAC149E663C0098E408 /* SenTestingKit.framework */; };
+		84827BAE149E663C0098E408 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8B149E663B0098E408 /* UIKit.framework */; };
+		84827BAF149E663C0098E408 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8D149E663B0098E408 /* Foundation.framework */; };
+		84827BB7149E663C0098E408 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84827BB5149E663C0098E408 /* InfoPlist.strings */; };
+		84827BBA149E663C0098E408 /* WordGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827BB9149E663C0098E408 /* WordGridTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84827BB0149E663C0098E408 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84827B7E149E663B0098E408 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84827B86149E663B0098E408;
+			remoteInfo = WordGrid;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		84827B87149E663B0098E408 /* WordGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordGrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84827B8B149E663B0098E408 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		84827B8D149E663B0098E408 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		84827B8F149E663B0098E408 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		84827B93149E663B0098E408 /* WordGrid-Info.plist */ = {isa = PBXFileReference; path = "WordGrid-Info.plist"; sourceTree = "<group>"; };
+		84827B95149E663B0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84827B97149E663B0098E408 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		84827B99149E663B0098E408 /* WordGrid-Prefix.pch */ = {isa = PBXFileReference; path = "WordGrid-Prefix.pch"; sourceTree = "<group>"; };
+		84827B9A149E663B0098E408 /* DDWAppDelegate.h */ = {isa = PBXFileReference; path = DDWAppDelegate.h; sourceTree = "<group>"; };
+		84827B9B149E663C0098E408 /* DDWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDWAppDelegate.m; sourceTree = "<group>"; };
+		84827B9D149E663C0098E408 /* DDWViewController.h */ = {isa = PBXFileReference; path = DDWViewController.h; sourceTree = "<group>"; };
+		84827B9E149E663C0098E408 /* DDWViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDWViewController.m; sourceTree = "<group>"; };
+		84827BA1149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DDWViewController_iPhone.xib; sourceTree = "<group>"; };
+		84827BA4149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DDWViewController_iPad.xib; sourceTree = "<group>"; };
+		84827BAB149E663C0098E408 /* WordGridTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordGridTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84827BAC149E663C0098E408 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		84827BB4149E663C0098E408 /* WordGridTests-Info.plist */ = {isa = PBXFileReference; path = "WordGridTests-Info.plist"; sourceTree = "<group>"; };
+		84827BB6149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84827BB8149E663C0098E408 /* WordGridTests.h */ = {isa = PBXFileReference; path = WordGridTests.h; sourceTree = "<group>"; };
+		84827BB9149E663C0098E408 /* WordGridTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordGridTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		84827B84149E663B0098E408 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84827B8C149E663B0098E408 /* UIKit.framework in Frameworks */,
+				84827B8E149E663B0098E408 /* Foundation.framework in Frameworks */,
+				84827B90149E663B0098E408 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84827BA7149E663C0098E408 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84827BAD149E663C0098E408 /* SenTestingKit.framework in Frameworks */,
+				84827BAE149E663C0098E408 /* UIKit.framework in Frameworks */,
+				84827BAF149E663C0098E408 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		84827B7C149E663B0098E408 = {
+			isa = PBXGroup;
+			children = (
+				84827B91149E663B0098E408 /* WordGrid */,
+				84827BB2149E663C0098E408 /* WordGridTests */,
+				84827B8A149E663B0098E408 /* Frameworks */,
+				84827B88149E663B0098E408 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		84827B88149E663B0098E408 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84827B87149E663B0098E408 /* WordGrid.app */,
+				84827BAB149E663C0098E408 /* WordGridTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84827B8A149E663B0098E408 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84827B8B149E663B0098E408 /* UIKit.framework */,
+				84827B8D149E663B0098E408 /* Foundation.framework */,
+				84827B8F149E663B0098E408 /* CoreGraphics.framework */,
+				84827BAC149E663C0098E408 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84827B91149E663B0098E408 /* WordGrid */ = {
+			isa = PBXGroup;
+			children = (
+				84827B9A149E663B0098E408 /* DDWAppDelegate.h */,
+				84827B9B149E663C0098E408 /* DDWAppDelegate.m */,
+				84827B9D149E663C0098E408 /* DDWViewController.h */,
+				84827B9E149E663C0098E408 /* DDWViewController.m */,
+				84827BA0149E663C0098E408 /* DDWViewController_iPhone.xib */,
+				84827BA3149E663C0098E408 /* DDWViewController_iPad.xib */,
+				84827B92149E663B0098E408 /* Supporting Files */,
+			);
+			path = WordGrid;
+			sourceTree = "<group>";
+		};
+		84827B92149E663B0098E408 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84827B93149E663B0098E408 /* WordGrid-Info.plist */,
+				84827B94149E663B0098E408 /* InfoPlist.strings */,
+				84827B97149E663B0098E408 /* main.m */,
+				84827B99149E663B0098E408 /* WordGrid-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84827BB2149E663C0098E408 /* WordGridTests */ = {
+			isa = PBXGroup;
+			children = (
+				84827BB8149E663C0098E408 /* WordGridTests.h */,
+				84827BB9149E663C0098E408 /* WordGridTests.m */,
+				84827BB3149E663C0098E408 /* Supporting Files */,
+			);
+			path = WordGridTests;
+			sourceTree = "<group>";
+		};
+		84827BB3149E663C0098E408 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84827BB4149E663C0098E408 /* WordGridTests-Info.plist */,
+				84827BB5149E663C0098E408 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		84827B86149E663B0098E408 /* WordGrid */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84827BBD149E663C0098E408 /* Build configuration list for PBXNativeTarget "WordGrid" */;
+			buildPhases = (
+				84827B83149E663B0098E408 /* Sources */,
+				84827B84149E663B0098E408 /* Frameworks */,
+				84827B85149E663B0098E408 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WordGrid;
+			productName = WordGrid;
+			productReference = 84827B87149E663B0098E408 /* WordGrid.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84827BAA149E663C0098E408 /* WordGridTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84827BC0149E663C0098E408 /* Build configuration list for PBXNativeTarget "WordGridTests" */;
+			buildPhases = (
+				84827BA6149E663C0098E408 /* Sources */,
+				84827BA7149E663C0098E408 /* Frameworks */,
+				84827BA8149E663C0098E408 /* Resources */,
+				84827BA9149E663C0098E408 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84827BB1149E663C0098E408 /* PBXTargetDependency */,
+			);
+			name = WordGridTests;
+			productName = WordGridTests;
+			productReference = 84827BAB149E663C0098E408 /* WordGridTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84827B7E149E663B0098E408 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 84827B81149E663B0098E408 /* Build configuration list for PBXProject "WordGrid" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 84827B7C149E663B0098E408;
+			productRefGroup = 84827B88149E663B0098E408 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84827B86149E663B0098E408 /* WordGrid */,
+				84827BAA149E663C0098E408 /* WordGridTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		84827B85149E663B0098E408 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84827B96149E663B0098E408 /* InfoPlist.strings in Resources */,
+				84827BA2149E663C0098E408 /* DDWViewController_iPhone.xib in Resources */,
+				84827BA5149E663C0098E408 /* DDWViewController_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84827BA8149E663C0098E408 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84827BB7149E663C0098E408 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		84827BA9149E663C0098E408 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		84827B83149E663B0098E408 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84827B98149E663B0098E408 /* main.m in Sources */,
+				84827B9C149E663C0098E408 /* DDWAppDelegate.m in Sources */,
+				84827B9F149E663C0098E408 /* DDWViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84827BA6149E663C0098E408 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84827BBA149E663C0098E408 /* WordGridTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84827BB1149E663C0098E408 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84827B86149E663B0098E408 /* WordGrid */;
+			targetProxy = 84827BB0149E663C0098E408 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		84827B94149E663B0098E408 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84827B95149E663B0098E408 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		84827BA0149E663C0098E408 /* DDWViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84827BA1149E663C0098E408 /* en */,
+			);
+			name = DDWViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		84827BA3149E663C0098E408 /* DDWViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84827BA4149E663C0098E408 /* en */,
+			);
+			name = DDWViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		84827BB5149E663C0098E408 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84827BB6149E663C0098E408 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		84827BBB149E663C0098E408 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84827BBC149E663C0098E408 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84827BBE149E663C0098E408 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WordGrid/WordGrid-Prefix.pch";
+				INFOPLIST_FILE = "WordGrid/WordGrid-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		84827BBF149E663C0098E408 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WordGrid/WordGrid-Prefix.pch";
+				INFOPLIST_FILE = "WordGrid/WordGrid-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		84827BC1149E663C0098E408 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/WordGrid.app/WordGrid";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WordGrid/WordGrid-Prefix.pch";
+				INFOPLIST_FILE = "WordGridTests/WordGridTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		84827BC2149E663C0098E408 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/WordGrid.app/WordGrid";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WordGrid/WordGrid-Prefix.pch";
+				INFOPLIST_FILE = "WordGridTests/WordGridTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84827B81149E663B0098E408 /* Build configuration list for PBXProject "WordGrid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84827BBB149E663C0098E408 /* Debug */,
+				84827BBC149E663C0098E408 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84827BBD149E663C0098E408 /* Build configuration list for PBXNativeTarget "WordGrid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84827BBE149E663C0098E408 /* Debug */,
+				84827BBF149E663C0098E408 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		84827BC0149E663C0098E408 /* Build configuration list for PBXNativeTarget "WordGridTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84827BC1149E663C0098E408 /* Debug */,
+				84827BC2149E663C0098E408 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84827B7E149E663B0098E408 /* Project object */;
+}
