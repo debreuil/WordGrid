@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class DDWViewController;
+//@class DDWViewController;
+@class GameVC;
 
 @interface DDWAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) DDWViewController *viewController;
+//@property (strong, nonatomic) DDWViewController *viewController;
+@property (strong, nonatomic) GameVC *viewController;
 
 @end

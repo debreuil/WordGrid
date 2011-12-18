@@ -21,6 +21,17 @@
 		84827BAF149E663C0098E408 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8D149E663B0098E408 /* Foundation.framework */; };
 		84827BB7149E663C0098E408 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84827BB5149E663C0098E408 /* InfoPlist.strings */; };
 		84827BBA149E663C0098E408 /* WordGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827BB9149E663C0098E408 /* WordGridTests.m */; };
+		84827BCD149E67050098E408 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827BCA149E67050098E408 /* Tile.m */; };
+		84827BCE149E67050098E408 /* TileGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827BCC149E67050098E408 /* TileGrid.m */; };
+		84827BD5149E67170098E408 /* bkgGameH.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84827BCF149E67170098E408 /* bkgGameH.jpg */; };
+		84827BD6149E67170098E408 /* bkgGameV.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84827BD0149E67170098E408 /* bkgGameV.jpg */; };
+		84827BD7149E67170098E408 /* let_norm.png in Resources */ = {isa = PBXBuildFile; fileRef = 84827BD1149E67170098E408 /* let_norm.png */; };
+		84827BD8149E67170098E408 /* let_sel0.png in Resources */ = {isa = PBXBuildFile; fileRef = 84827BD2149E67170098E408 /* let_sel0.png */; };
+		84827BD9149E67170098E408 /* let_sel1.png in Resources */ = {isa = PBXBuildFile; fileRef = 84827BD3149E67170098E408 /* let_sel1.png */; };
+		84827BDA149E67170098E408 /* let_sel2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84827BD4149E67170098E408 /* let_sel2.png */; };
+		84827BDE149E67470098E408 /* GameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827BDD149E67470098E408 /* GameVC.m */; };
+		84C9D8E2149E822700486E32 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C9D8E1149E822700486E32 /* GameView.xib */; };
+		84C9D8E5149E8D6E00486E32 /* VTC_letterer_pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84C9D8E4149E8D6E00486E32 /* VTC_letterer_pro.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,22 +49,36 @@
 		84827B8B149E663B0098E408 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84827B8D149E663B0098E408 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84827B8F149E663B0098E408 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		84827B93149E663B0098E408 /* WordGrid-Info.plist */ = {isa = PBXFileReference; path = "WordGrid-Info.plist"; sourceTree = "<group>"; };
+		84827B93149E663B0098E408 /* WordGrid-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WordGrid-Info.plist"; sourceTree = "<group>"; };
 		84827B95149E663B0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84827B97149E663B0098E408 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		84827B99149E663B0098E408 /* WordGrid-Prefix.pch */ = {isa = PBXFileReference; path = "WordGrid-Prefix.pch"; sourceTree = "<group>"; };
-		84827B9A149E663B0098E408 /* DDWAppDelegate.h */ = {isa = PBXFileReference; path = DDWAppDelegate.h; sourceTree = "<group>"; };
+		84827B99149E663B0098E408 /* WordGrid-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WordGrid-Prefix.pch"; sourceTree = "<group>"; };
+		84827B9A149E663B0098E408 /* DDWAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDWAppDelegate.h; sourceTree = "<group>"; };
 		84827B9B149E663C0098E408 /* DDWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDWAppDelegate.m; sourceTree = "<group>"; };
-		84827B9D149E663C0098E408 /* DDWViewController.h */ = {isa = PBXFileReference; path = DDWViewController.h; sourceTree = "<group>"; };
+		84827B9D149E663C0098E408 /* DDWViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDWViewController.h; sourceTree = "<group>"; };
 		84827B9E149E663C0098E408 /* DDWViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDWViewController.m; sourceTree = "<group>"; };
 		84827BA1149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DDWViewController_iPhone.xib; sourceTree = "<group>"; };
 		84827BA4149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DDWViewController_iPad.xib; sourceTree = "<group>"; };
 		84827BAB149E663C0098E408 /* WordGridTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordGridTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84827BAC149E663C0098E408 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		84827BB4149E663C0098E408 /* WordGridTests-Info.plist */ = {isa = PBXFileReference; path = "WordGridTests-Info.plist"; sourceTree = "<group>"; };
+		84827BB4149E663C0098E408 /* WordGridTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WordGridTests-Info.plist"; sourceTree = "<group>"; };
 		84827BB6149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		84827BB8149E663C0098E408 /* WordGridTests.h */ = {isa = PBXFileReference; path = WordGridTests.h; sourceTree = "<group>"; };
+		84827BB8149E663C0098E408 /* WordGridTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordGridTests.h; sourceTree = "<group>"; };
 		84827BB9149E663C0098E408 /* WordGridTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordGridTests.m; sourceTree = "<group>"; };
+		84827BC9149E67050098E408 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
+		84827BCA149E67050098E408 /* Tile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tile.m; sourceTree = "<group>"; };
+		84827BCB149E67050098E408 /* TileGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileGrid.h; sourceTree = "<group>"; };
+		84827BCC149E67050098E408 /* TileGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileGrid.m; sourceTree = "<group>"; };
+		84827BCF149E67170098E408 /* bkgGameH.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bkgGameH.jpg; sourceTree = "<group>"; };
+		84827BD0149E67170098E408 /* bkgGameV.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bkgGameV.jpg; sourceTree = "<group>"; };
+		84827BD1149E67170098E408 /* let_norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = let_norm.png; sourceTree = "<group>"; };
+		84827BD2149E67170098E408 /* let_sel0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = let_sel0.png; sourceTree = "<group>"; };
+		84827BD3149E67170098E408 /* let_sel1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = let_sel1.png; sourceTree = "<group>"; };
+		84827BD4149E67170098E408 /* let_sel2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = let_sel2.png; sourceTree = "<group>"; };
+		84827BDC149E67470098E408 /* GameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameVC.h; sourceTree = "<group>"; };
+		84827BDD149E67470098E408 /* GameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameVC.m; sourceTree = "<group>"; };
+		84C9D8E1149E822700486E32 /* GameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
+		84C9D8E4149E8D6E00486E32 /* VTC_letterer_pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = VTC_letterer_pro.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +138,9 @@
 		84827B91149E663B0098E408 /* WordGrid */ = {
 			isa = PBXGroup;
 			children = (
+				84827BDB149E67300098E408 /* Screens */,
+				84827BC4149E66C70098E408 /* Controls */,
+				84827BC3149E66AE0098E408 /* Images */,
 				84827B9A149E663B0098E408 /* DDWAppDelegate.h */,
 				84827B9B149E663C0098E408 /* DDWAppDelegate.m */,
 				84827B9D149E663C0098E408 /* DDWViewController.h */,
@@ -127,6 +155,7 @@
 		84827B92149E663B0098E408 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84C9D8E4149E8D6E00486E32 /* VTC_letterer_pro.ttf */,
 				84827B93149E663B0098E408 /* WordGrid-Info.plist */,
 				84827B94149E663B0098E408 /* InfoPlist.strings */,
 				84827B97149E663B0098E408 /* main.m */,
@@ -152,6 +181,40 @@
 				84827BB5149E663C0098E408 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84827BC3149E66AE0098E408 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				84827BCF149E67170098E408 /* bkgGameH.jpg */,
+				84827BD0149E67170098E408 /* bkgGameV.jpg */,
+				84827BD1149E67170098E408 /* let_norm.png */,
+				84827BD2149E67170098E408 /* let_sel0.png */,
+				84827BD3149E67170098E408 /* let_sel1.png */,
+				84827BD4149E67170098E408 /* let_sel2.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		84827BC4149E66C70098E408 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				84827BC9149E67050098E408 /* Tile.h */,
+				84827BCA149E67050098E408 /* Tile.m */,
+				84827BCB149E67050098E408 /* TileGrid.h */,
+				84827BCC149E67050098E408 /* TileGrid.m */,
+			);
+			name = Controls;
+			sourceTree = "<group>";
+		};
+		84827BDB149E67300098E408 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				84827BDC149E67470098E408 /* GameVC.h */,
+				84827BDD149E67470098E408 /* GameVC.m */,
+				84C9D8E1149E822700486E32 /* GameView.xib */,
+			);
+			name = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +290,14 @@
 				84827B96149E663B0098E408 /* InfoPlist.strings in Resources */,
 				84827BA2149E663C0098E408 /* DDWViewController_iPhone.xib in Resources */,
 				84827BA5149E663C0098E408 /* DDWViewController_iPad.xib in Resources */,
+				84827BD5149E67170098E408 /* bkgGameH.jpg in Resources */,
+				84827BD6149E67170098E408 /* bkgGameV.jpg in Resources */,
+				84827BD7149E67170098E408 /* let_norm.png in Resources */,
+				84827BD8149E67170098E408 /* let_sel0.png in Resources */,
+				84827BD9149E67170098E408 /* let_sel1.png in Resources */,
+				84827BDA149E67170098E408 /* let_sel2.png in Resources */,
+				84C9D8E2149E822700486E32 /* GameView.xib in Resources */,
+				84C9D8E5149E8D6E00486E32 /* VTC_letterer_pro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +335,9 @@
 				84827B98149E663B0098E408 /* main.m in Sources */,
 				84827B9C149E663C0098E408 /* DDWAppDelegate.m in Sources */,
 				84827B9F149E663C0098E408 /* DDWViewController.m in Sources */,
+				84827BCD149E67050098E408 /* Tile.m in Sources */,
+				84827BCE149E67050098E408 /* TileGrid.m in Sources */,
+				84827BDE149E67470098E408 /* GameVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +517,7 @@
 				84827BBF149E663C0098E408 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84827BC0149E663C0098E408 /* Build configuration list for PBXNativeTarget "WordGridTests" */ = {
 			isa = XCConfigurationList;
@@ -451,6 +526,7 @@
 				84827BC2149E663C0098E408 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,7 +8,8 @@
 
 #import "DDWAppDelegate.h"
 
-#import "DDWViewController.h"
+//#import "DDWViewController.h"
+#import "GameVC.h"
 
 @implementation DDWAppDelegate
 
@@ -19,10 +20,15 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[DDWViewController alloc] initWithNibName:@"DDWViewController_iPhone" bundle:nil];
-    } else {
-        self.viewController = [[DDWViewController alloc] initWithNibName:@"DDWViewController_iPad" bundle:nil];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) 
+    {
+        //self.viewController = [[DDWViewController alloc] initWithNibName:@"DDWViewController_iPhone" bundle:nil];
+        self.viewController = [[GameVC alloc] initWithNibName:@"GameView" bundle:nil];
+    } 
+    else 
+    {
+        //self.viewController = [[DDWViewController alloc] initWithNibName:@"DDWViewController_iPad" bundle:nil];
+        self.viewController = [[GameVC alloc] initWithNibName:@"GameView" bundle:nil];
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
