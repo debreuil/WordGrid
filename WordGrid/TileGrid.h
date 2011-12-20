@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
+#import "GridProtocol.h"
 
-@interface TileGrid : UIView
+@interface TileGrid : UIView <GridProtocol>
 {    
     int gw;
     int gh;
@@ -14,18 +15,10 @@
     Boolean hasGap;
 }
 
-- (void)    createGrid;
+- (void)    setup;
 - (void)    createLetters;
-- (void)    layoutGrid:(Boolean) useAnimation;
-- (void)    resetGrid;
-- (int)     getTileIndexFromMousePoint:(CGPoint) point;
-- (Tile *)  getTileFromPoint:(CGPoint) p;
-- (void)    hoverTileAtPoint:(CGPoint) point;
-- (void)    removeTilesAndDrop:(NSArray *) indexes;
-- (void)    removeTile:(int) index;
+- (void)    insertTile:(Tile *)tile At:(int) index;
 - (void)    checkForVerticalGaps;
-
--(void)     setAllIsSelectable:(Boolean) sel;
--(void)     setSelectableAroundIndex:(int) index;
+- (void)    setSelectableAroundIndex:(int) index;
 
 @end

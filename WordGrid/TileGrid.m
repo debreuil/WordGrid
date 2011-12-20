@@ -3,7 +3,7 @@
 
 @implementation TileGrid
 
-static NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+//static NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
 
 -(id)init
 {
@@ -15,7 +15,7 @@ static NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     self = [super initWithCoder:aDecoder];
     if(self)
     {
-        [self createGrid];
+        [self setup];
     }
     return self;    
 }
@@ -24,18 +24,22 @@ static NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     self = [super initWithFrame:frame];
     if (self) 
     {
-        [self createGrid];
+        [self setup];
     }
     return self;
 }
 
--(void) createGrid
-{ 
+- (void) setup
+{    
     gw = 9;
     gh = 7;
     margin = 4;
+    [self createGrid];
+}
+
+-(void) createGrid
+{     
     lastHoverTileIndex = -1;
-    
     Tile *tile;    
     tiles = [NSMutableArray arrayWithCapacity:gw * gh]; 
     float tw = (self.bounds.size.width - margin * (gw - 2)) / gw;
@@ -116,9 +120,14 @@ static NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 { 
     for (Tile* t in tiles) 
     {
-        NSString *s = [letters substringWithRange:[letters rangeOfComposedCharacterSequenceAtIndex:arc4random()%[letters length]]]; 
+        NSString *s = [LETTERS substringWithRange:[LETTERS rangeOfComposedCharacterSequenceAtIndex:arc4random()%[LETTERS length]]]; 
         [t setLetter:s];
     }
+}
+
+- (void) insertTile:(Tile *)tile At:(int) index
+{
+    [tiles replaceObjectAtIndex:index withObject:tile];
 }
 
 - (int) getTileIndexFromMousePoint:(CGPoint) point

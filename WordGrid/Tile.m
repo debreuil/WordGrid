@@ -3,16 +3,20 @@
 @implementation Tile
 
 static NSArray *imageStates;
-static CGRect scaleNormalRect;
-static CGRect scaleUpRect;
 static float hoverScale = 1.5;
 
 @synthesize gridIndex;
+@synthesize originalIndex;
 @synthesize letter;
+@synthesize correctLetter;
 @synthesize isHovering;
 @synthesize selected;
 @synthesize isSelectable;
 @synthesize animatingFrom;
+@synthesize resultIndex;
+@synthesize isResultTile;
+
+NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 + (void) load
 {
@@ -56,6 +60,8 @@ static float hoverScale = 1.5;
     image = [imageStates objectAtIndex:0];
     letter = @""; 
     isSelectable = YES;
+    isResultTile = NO;
+    resultIndex = -1;
     
     animatingFrom = CGRectNull;
     

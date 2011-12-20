@@ -1,22 +1,25 @@
 #import <UIKit/UIKit.h>
 #import "Tile.h"
 #import "TileGrid.h"
+#import "AnswerGrid.h"
 
 @interface GameVC : UIViewController
 {
-    UIButton IBOutlet *btDone;
-    UIView IBOutlet *bkgH;
-    UIView IBOutlet *bkgV;
-    TileGrid IBOutlet *tileGrid;
-    Tile  IBOutlet *letter0;
-    Tile IBOutlet *letter1;
-    Tile IBOutlet *letter2;
-    Tile IBOutlet *letter3;
+    IBOutlet UIButton *btDone;
+    IBOutlet UIView *bkgH;
+    IBOutlet UIView *bkgV;
+    IBOutlet AnswerGrid *answerGrid;
+    IBOutlet TileGrid *tileGrid;
     
-    NSArray* answerTiles;
-    NSArray* answerFrames;
+    //Tile  IBOutlet *letter0;
+    //Tile IBOutlet *letter1;
+    //Tile IBOutlet *letter2;
+    //Tile IBOutlet *letter3;    
+    //NSArray* answerTiles;
+    //NSArray* answerFrames;
+    
     NSMutableArray* answerRefs;
-    int answerIndex;
+    //int answerIndex;
     int lastSelectedTileIndex;
 }
 
@@ -24,5 +27,6 @@
 - (void) setOrientation;
 - (void) testWordComplete;
 - (IBAction)onDone:(id)sender;
+- (IBAction)onAnswerTileClick:(id)sender;
 
 @end

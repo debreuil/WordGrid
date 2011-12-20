@@ -19,6 +19,12 @@
 {
     NSLog(@"done");
 }
+- (IBAction)onAnswerTileClick:(id)sender
+{
+    Tile *t = (Tile *) sender;
+    [tileGrid insertTile:t At:t.gridIndex];
+    [tileGrid layoutGrid:YES];
+}
 
 - (void) tileSelected:(NSNotification *)notification
 {
@@ -27,11 +33,16 @@
     
     if(t.isSelectable)
     {        
-        Tile *at = [answerTiles objectAtIndex:answerIndex];
+        Tile *at = [answerGrid getNextTile];//[answerTiles objectAtIndex:answerIndex];
+        CGRect orgFrame = at.frame;//CGRectInset(at.frame, 0, 0);
         at.hidden = NO;
-        at.frame = CGRectOffset(t.frame, tileGrid.frame.origin.x, tileGrid.frame.origin.y);  
-        [at setLetter:t.letter];
-        [at setSelected:YES];
+        at.frame = CGRectMake( -answerGrid.frame.origin.x + tileGrid.frame.origin.x + t.frame.origin.x,
+                              -answerGrid.frame.origin.y + tileGrid.frame.origin.y + t.frame.origin.y,
+                              t.frame.size.width,
+                              t.frame.size.height);
+        NSLog(@"org: %f %f", at.frame.origin.x, at.frame.origin.y);
+        //[at setLetter:t.letter];
+        [answerGrid setNextTileUsingTile:t];        
         
         [UIView  
          animateWithDuration:0.3
@@ -39,7 +50,7 @@
          options: UIViewAnimationCurveEaseOut
          animations:^
          {
-             at.frame = [[answerFrames objectAtIndex:answerIndex] CGRectValue];
+             at.frame = orgFrame;//[[answerFrames objectAtIndex:answerIndex] CGRectValue];
          } 
          completion:^(BOOL finished)
          {
@@ -51,29 +62,29 @@
          ];
         
         [answerRefs addObject:t];
-        answerIndex++;
-        if(answerIndex < 4)
+        
+        if([answerGrid atWordBoundry])
         {  
-            [tileGrid setSelectableAroundIndex:lastSelectedTileIndex];
+            [tileGrid setAllIsSelectable:NO];
         }
         else
         {
-            [tileGrid setAllIsSelectable:NO];
+            [tileGrid setSelectableAroundIndex:lastSelectedTileIndex];
         }
     }
 }
 
 - (void) testWordComplete
 {
-    if(answerIndex > 3)
+    if([answerGrid atWordBoundry]) //answerIndex > 3)
     {        
-        answerIndex = 0;
         [tileGrid  resetGrid];   
+        /*
         for (Tile *t in answerTiles) 
         {
             t.hidden = YES;
         }
-        
+        */
         [tileGrid removeTilesAndDrop:answerRefs];
         
         [answerRefs removeAllObjects];
@@ -93,8 +104,8 @@
 {
     [super viewDidLoad];
     
-    answerIndex = 0;
-    answerRefs = [[NSMutableArray alloc] initWithCapacity:4];
+    answerRefs = [[NSMutableArray alloc] initWithCapacity:20];
+    /*
     answerTiles = [[NSArray alloc] initWithObjects:letter0, letter1, letter2, letter3, nil]; 
     answerFrames = [[NSArray alloc] initWithObjects:
                     [NSValue valueWithCGRect:letter0.frame],
@@ -106,6 +117,7 @@
     {
         t.hidden = YES;
     }
+     */
     
 	[[NSNotificationCenter defaultCenter] 
      addObserver:self 
@@ -140,7 +152,7 @@
     {
         bkgV.hidden = NO;
         bkgH.hidden = YES;  
-        tileGrid.frame = CGRectMake(50, 220, tf.size.width, tf.size.height); 
+        tileGrid.frame = CGRectMake(50, 180, tf.size.width, tf.size.height); 
     }
     else if (io == UIInterfaceOrientationLandscapeLeft || 
              io == UIInterfaceOrientationLandscapeRight) 
