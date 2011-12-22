@@ -1,7 +1,7 @@
 #import "Tile.h"
 #import "AnswerGrid.h"
 
-@implementation AnswerGrid
+@implementation AnswerGrid 
 
 int answerLength;
 int answerIndex;
@@ -64,6 +64,12 @@ NSMutableArray *wordBoundries;
             }                
         }             
     }
+}
+
+- (void) onSelectTile:(Tile *) tile
+{    
+    [tile setSelected:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"onAnswerSelected" object:tile];
 }
 
 - (void) layoutGrid:(Boolean)useAnimation
@@ -132,6 +138,7 @@ NSMutableArray *wordBoundries;
         Tile *newTile = [tiles objectAtIndex:answerIndex];
         [newTile setLetter:[srcTile letter]];
         [newTile setOriginalIndex:srcTile.gridIndex];
+        NSLog(@"orgIndex: %i", srcTile.gridIndex);
         //[newTile setIsSelectable:YES];
         [newTile setSelected:YES];
         
@@ -139,14 +146,57 @@ NSMutableArray *wordBoundries;
     }
 }
 
+- (int) getAnswerIndex
+{
+    return answerIndex;
+}
+
+- (int) getWordStartIndex:(int) index 
+{
+    int result = -1;
+    int total = 0;
+    int wordLen = [[answerWords objectAtIndex:0] length];
+    for (int i = 1; i < answerWords.count; i++) 
+    {
+        if(total + wordLen >= index)
+        {
+            result = total;
+            break;
+        }
+        else
+        {
+            total += wordLen;
+            wordLen = [[answerWords objectAtIndex:i] length];
+        }
+    }
+    return result;
+}
+
+- (int) getCurrentWordStart 
+{
+    int result = [self getWordStartIndex:answerIndex];
+    return result;
+}
+
+- (NSString *) getCurrentLetter
+{
+    NSString *result = nil;
+    if(answerIndex > 0)
+    {
+        result = [[tiles objectAtIndex:answerIndex] letter];
+    }
+    return result;
+}
+
 - (Tile *) removeCurrentTile
 {
     Tile *result = nil;
     if(answerIndex > 0)
     {
-        result = [tiles objectAtIndex:answerIndex];
-        [result setLetter:@""];
+        result = [tiles objectAtIndex:answerIndex - 1];
+        //[result setLetter:@""];
         [result setIsSelectable:NO];
+        [result setSelected:NO];
         answerIndex--;
         [[tiles objectAtIndex:answerIndex] setIsSelectable:YES];
     }

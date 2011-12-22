@@ -118,16 +118,18 @@
 
 - (void) createLetters
 { 
+    NSString *testString = @"                      AH    I  OETL GGBMRCHHEEHEEHTYFLTRYTDEREA";
+    int index = 0;
     for (Tile* t in tiles) 
     {
-        NSString *s = [LETTERS substringWithRange:[LETTERS rangeOfComposedCharacterSequenceAtIndex:arc4random()%[LETTERS length]]]; 
+        //NSString *s = [LETTERS substringWithRange:[LETTERS rangeOfComposedCharacterSequenceAtIndex:arc4random()%[LETTERS length]]]; 
+        NSString *s = [testString substringWithRange:NSMakeRange(index++, 1)];
         [t setLetter:s];
+        if(![s compare:@" "])
+        {
+            t.hidden = YES;
+        }
     }
-}
-
-- (void) insertTile:(Tile *)tile At:(int) index
-{
-    [tiles replaceObjectAtIndex:index withObject:tile];
 }
 
 - (int) getTileIndexFromMousePoint:(CGPoint) point
@@ -139,7 +141,7 @@
         int ty = (int)(point.y / slotHeight);
         tileIndex = ty * gw + tx;
         Tile *t = [tiles objectAtIndex:tileIndex];
-        if(tileIndex >= [tiles count] || t.hidden == YES || t.selected || !t.isSelectable)
+        if(tileIndex >= [tiles count] || t.hidden == YES || !t.isSelectable) // || t.selected
         {
             tileIndex = -1;
         }
@@ -185,6 +187,11 @@
     {
         [t setIsSelectable:sel];
     }
+}
+
+- (Tile *)  getTileAtIndex:(int) index
+{
+    return [tiles objectAtIndex:index];
 }
 
 - (CGPoint) getPointFromIndex:(int)index
@@ -300,11 +307,32 @@
     }
 }
 
+- (Tile *) insertTile:(Tile *)tile At:(int) index
+{    
+    int topIndex = index % gw;
+    Tile *result = [tiles objectAtIndex:topIndex];
+    [result setLetter:tile.letter];
+    [result setHidden:NO];
+    
+    for (int i = index; i > gw; i -= gw) 
+    {        
+        [tiles exchangeObjectAtIndex:i withObjectAtIndex:topIndex];
+    }
+    
+    return result;
+}
+
 -(void) resetGrid
 {
     [self clearAllHovers];
     [self clearAllSelections];
     [self setAllIsSelectable:YES];
+}
+
+- (void) onSelectTile:(Tile *) tile
+{    
+    [tile setSelected:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -334,8 +362,7 @@
     if(tileIndex > -1)
     {
         Tile *tile = [tiles objectAtIndex:tileIndex];
-        [tile setSelected:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
+        [self onSelectTile:tile];
     }    
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

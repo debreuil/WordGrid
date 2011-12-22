@@ -24,9 +24,9 @@
 }
 
 - (void) tileSelected:(Tile *) t;
+- (void) answerSelected:(NSNotification *)notification;
 - (void) setOrientation;
 - (void) testWordComplete;
 - (IBAction)onDone:(id)sender;
-- (IBAction)onAnswerTileClick:(id)sender;
 
 @end

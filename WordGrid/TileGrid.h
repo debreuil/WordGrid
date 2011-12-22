@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "GridProtocol.h"
+#import "Tile.h"
 
 @interface TileGrid : UIView <GridProtocol>
 {    
@@ -17,8 +18,12 @@
 
 - (void)    setup;
 - (void)    createLetters;
-- (void)    insertTile:(Tile *)tile At:(int) index;
+- (void)    clearAllHovers;
+- (Tile *)    insertTile:(Tile *)tile At:(int) index;
 - (void)    checkForVerticalGaps;
+- (CGPoint)  getPointFromIndex:(int)index;
 - (void)    setSelectableAroundIndex:(int) index;
+- (void)    onSelectTile:(Tile *) tile;
+- (Tile *)  getTileAtIndex:(int) index;
 
 @end

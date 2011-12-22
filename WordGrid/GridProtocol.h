@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "Tile.h"
 
 @protocol GridProtocol
 

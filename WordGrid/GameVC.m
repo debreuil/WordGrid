@@ -19,12 +19,6 @@
 {
     NSLog(@"done");
 }
-- (IBAction)onAnswerTileClick:(id)sender
-{
-    Tile *t = (Tile *) sender;
-    [tileGrid insertTile:t At:t.gridIndex];
-    [tileGrid layoutGrid:YES];
-}
 
 - (void) tileSelected:(NSNotification *)notification
 {
@@ -40,8 +34,7 @@
                               -answerGrid.frame.origin.y + tileGrid.frame.origin.y + t.frame.origin.y,
                               t.frame.size.width,
                               t.frame.size.height);
-        NSLog(@"org: %f %f", at.frame.origin.x, at.frame.origin.y);
-        //[at setLetter:t.letter];
+        //NSLog(@"org: %f %f", at.frame.origin.x, at.frame.origin.y);
         [answerGrid setNextTileUsingTile:t];        
         
         [UIView  
@@ -57,6 +50,7 @@
              if(finished)
              {
                  [self testWordComplete];
+                 [at setIsSelectable:YES];
              }
          }
          ];
@@ -74,17 +68,47 @@
     }
 }
 
+- (void) answerSelected:(NSNotification *)notification
+{
+    Tile *t = (Tile *)[notification object];
+    int firstLetter = [answerGrid getWordStartIndex:t.gridIndex];
+    int lastRemoved = [answerGrid getCurrentWordStart];
+    
+    for (int i = [answerGrid getAnswerIndex] - 1; i >= firstLetter; i--) 
+    {
+        Tile *rt = [answerGrid removeCurrentTile];  
+        [rt setIsSelectable:NO];
+        
+        Tile *targ;
+        if (i < lastRemoved) 
+        {
+            targ = [tileGrid insertTile:rt At:rt.originalIndex];
+            
+            targ.frame = CGRectMake( answerGrid.frame.origin.x - tileGrid.frame.origin.x + rt.frame.origin.x,
+                                  answerGrid.frame.origin.y - tileGrid.frame.origin.y + rt.frame.origin.y,
+                                  rt.frame.size.width,
+                                    rt.frame.size.height); 
+        }
+        else
+        {
+            targ = [tileGrid getTileAtIndex:rt.originalIndex]; 
+        }  
+        
+        [targ setSelected:NO];
+        [tileGrid bringSubviewToFront:targ];         
+        [rt setLetter:@""];
+    }
+    
+    [answerRefs removeAllObjects];
+    [tileGrid resetGrid];
+    [tileGrid layoutGrid:YES];
+}
+
 - (void) testWordComplete
 {
     if([answerGrid atWordBoundry]) //answerIndex > 3)
     {        
-        [tileGrid  resetGrid];   
-        /*
-        for (Tile *t in answerTiles) 
-        {
-            t.hidden = YES;
-        }
-        */
+        [tileGrid resetGrid];  
         [tileGrid removeTilesAndDrop:answerRefs];
         
         [answerRefs removeAllObjects];
@@ -104,25 +128,18 @@
 {
     [super viewDidLoad];
     
-    answerRefs = [[NSMutableArray alloc] initWithCapacity:20];
-    /*
-    answerTiles = [[NSArray alloc] initWithObjects:letter0, letter1, letter2, letter3, nil]; 
-    answerFrames = [[NSArray alloc] initWithObjects:
-                    [NSValue valueWithCGRect:letter0.frame],
-                    [NSValue valueWithCGRect:letter1.frame],
-                    [NSValue valueWithCGRect:letter2.frame],
-                    [NSValue valueWithCGRect:letter3.frame],
-                    nil]; 
-    for (Tile *t in answerTiles) 
-    {
-        t.hidden = YES;
-    }
-     */
-    
+    answerRefs = [[NSMutableArray alloc] initWithCapacity:20];    
+
 	[[NSNotificationCenter defaultCenter] 
      addObserver:self 
      selector:@selector(tileSelected:) 
      name:@"onTileSelected" 
+     object:nil];
+    
+	[[NSNotificationCenter defaultCenter] 
+     addObserver:self 
+     selector:@selector(answerSelected:) 
+     name:@"onAnswerSelected" 
      object:nil];
     
     [self setOrientation];
