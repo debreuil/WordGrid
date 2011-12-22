@@ -138,7 +138,6 @@ NSMutableArray *wordBoundries;
         Tile *newTile = [tiles objectAtIndex:answerIndex];
         [newTile setLetter:[srcTile letter]];
         [newTile setOriginalIndex:srcTile.gridIndex];
-        NSLog(@"orgIndex: %i", srcTile.gridIndex);
         //[newTile setIsSelectable:YES];
         [newTile setSelected:YES];
         
