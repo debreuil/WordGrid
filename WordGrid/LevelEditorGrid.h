@@ -7,6 +7,5 @@
 }
 
 - (NSMutableArray *) getValidNextInsertionIndexes:(int) index;
-- (void) logGridLetters;
 
 @end

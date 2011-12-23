@@ -1,5 +1,6 @@
 #import "Tile.h"
 #import "TileGrid.h"
+#import "AnswerData.h"
 
 @implementation TileGrid
 
@@ -34,6 +35,9 @@
     gw = 9;
     gh = 7;
     margin = 4;
+    quoteIndex = 1;
+    quotePair = [AnswerData getQuotePairAt:quoteIndex];
+    
     [self createGrid];
 }
 
@@ -118,7 +122,7 @@
 
 - (void) createLetters
 { 
-    NSString *testString = @"                      AH    I  OETL GGBMRCHHEEHEEHTYFLTRYTDEREA";
+    NSString *testString = [quotePair objectAtIndex:1];
     int index = 0;
     for (Tile* t in tiles) 
     {
@@ -130,6 +134,7 @@
             t.hidden = YES;
         }
     }
+    NSLog(@"%@",[self serializeGridLetters]);
 }
 
 - (int) getTileIndexFromMousePoint:(CGPoint) point
@@ -313,12 +318,16 @@
     Tile *result = [tiles objectAtIndex:topIndex];
     [result setLetter:tile.letter];
     [result setHidden:NO];
-    
+
     for (int i = index; i > gw; i -= gw) 
-    {        
-        [tiles exchangeObjectAtIndex:i withObjectAtIndex:topIndex];
+    {           
+        if([[tiles objectAtIndex:i] gridIndex] != -1)
+        {
+            [tiles exchangeObjectAtIndex:i withObjectAtIndex:topIndex];
+        }
     }
-    
+    [result setGridIndex:-1];
+
     return result;
 }
 
@@ -332,6 +341,7 @@
 - (void) onSelectTile:(Tile *) tile
 {    
     [tile setSelected:YES];
+    NSLog(@"ti: %i", tile.gridIndex);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
 }
 
@@ -368,6 +378,21 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesCancelled:touches withEvent:event];
+}
+
+- (NSString *) serializeGridLetters
+{
+    NSMutableString *s = [NSMutableString stringWithCapacity:tiles.count];
+    
+    for (Tile *t in tiles) 
+    {
+        if(t.gridIndex % gw == 0)
+        {
+            [s appendString:@"\r"];
+        }
+        [s appendString:t.letter];
+    }    
+    return s;
 }
 
 @end

@@ -1,5 +1,6 @@
 #import "Tile.h"
 #import "AnswerGrid.h"
+#import "AnswerData.h"
 
 @implementation AnswerGrid 
 
@@ -9,12 +10,15 @@ NSMutableArray *wordBoundries;
 
 - (void) setup
 {    
-    answer = @"THE BIGGER THEY COME THE HARDER THEY FALL";
+    quoteIndex = 1;
+    quotePair = [AnswerData getQuotePairAt:quoteIndex];
+    answer = [quotePair objectAtIndex:0];
     answerWords = [answer componentsSeparatedByString: @" "];
     gw = 15;
     gh = 3;
     margin = 2;
-    answerIndex = 0;
+    answerIndex = 0;    
+    
     [self createGrid];
 }
 
@@ -152,22 +156,17 @@ NSMutableArray *wordBoundries;
 
 - (int) getWordStartIndex:(int) index 
 {
-    int result = -1;
-    int total = 0;
-    int wordLen = [[answerWords objectAtIndex:0] length];
-    for (int i = 1; i < answerWords.count; i++) 
+    int result = 0;
+    int counter = 0;
+    int wordLen = [[answerWords objectAtIndex:counter] length];
+    
+    for (int i = wordLen; i <= index; i += wordLen) 
     {
-        if(total + wordLen >= index)
-        {
-            result = total;
-            break;
-        }
-        else
-        {
-            total += wordLen;
-            wordLen = [[answerWords objectAtIndex:i] length];
-        }
+        result += wordLen;
+        counter++;
+        wordLen = [[answerWords objectAtIndex:counter] length];
     }
+    //NSLog(@"index: %i start: %i", index, result);
     return result;
 }
 

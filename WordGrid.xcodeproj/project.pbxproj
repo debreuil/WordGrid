@@ -30,6 +30,7 @@
 		84827BD9149E67170098E408 /* let_sel1.png in Resources */ = {isa = PBXBuildFile; fileRef = 84827BD3149E67170098E408 /* let_sel1.png */; };
 		84827BDA149E67170098E408 /* let_sel2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84827BD4149E67170098E408 /* let_sel2.png */; };
 		84827BDE149E67470098E408 /* GameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827BDD149E67470098E408 /* GameVC.m */; };
+		8482AD9614A410BC00390CC3 /* AnswerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482AD9514A410BC00390CC3 /* AnswerData.m */; };
 		8483726A14A1A186002F9BA7 /* LevelEditorGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 8483726914A1A186002F9BA7 /* LevelEditorGrid.m */; };
 		84C9D8E2149E822700486E32 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C9D8E1149E822700486E32 /* GameView.xib */; };
 		84C9D8E5149E8D6E00486E32 /* VTC_letterer_pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84C9D8E4149E8D6E00486E32 /* VTC_letterer_pro.ttf */; };
@@ -79,6 +80,8 @@
 		84827BD4149E67170098E408 /* let_sel2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = let_sel2.png; sourceTree = "<group>"; };
 		84827BDC149E67470098E408 /* GameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameVC.h; sourceTree = "<group>"; };
 		84827BDD149E67470098E408 /* GameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameVC.m; sourceTree = "<group>"; };
+		8482AD9414A410BC00390CC3 /* AnswerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerData.h; sourceTree = "<group>"; };
+		8482AD9514A410BC00390CC3 /* AnswerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerData.m; sourceTree = "<group>"; };
 		8483726814A1A186002F9BA7 /* LevelEditorGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelEditorGrid.h; sourceTree = "<group>"; };
 		8483726914A1A186002F9BA7 /* LevelEditorGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelEditorGrid.m; sourceTree = "<group>"; };
 		84C9D8E1149E822700486E32 /* GameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
@@ -145,6 +148,7 @@
 		84827B91149E663B0098E408 /* WordGrid */ = {
 			isa = PBXGroup;
 			children = (
+				8482AD8E14A3B08800390CC3 /* Data */,
 				84827BDB149E67300098E408 /* Screens */,
 				84827BC4149E66C70098E408 /* Controls */,
 				84827BC3149E66AE0098E408 /* Images */,
@@ -227,6 +231,15 @@
 				84C9D8E1149E822700486E32 /* GameView.xib */,
 			);
 			name = Screens;
+			sourceTree = "<group>";
+		};
+		8482AD8E14A3B08800390CC3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8482AD9414A410BC00390CC3 /* AnswerData.h */,
+				8482AD9514A410BC00390CC3 /* AnswerData.m */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,6 +365,7 @@
 				84827BDE149E67470098E408 /* GameVC.m in Sources */,
 				84D674DD149FBA6900782018 /* AnswerGrid.m in Sources */,
 				8483726A14A1A186002F9BA7 /* LevelEditorGrid.m in Sources */,
+				8482AD9614A410BC00390CC3 /* AnswerData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

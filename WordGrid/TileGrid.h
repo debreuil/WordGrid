@@ -14,6 +14,8 @@
     int lastHoverTileIndex;
     float animationDelay;
     Boolean hasGap;
+    int quoteIndex;
+    NSArray *quotePair;
 }
 
 - (void)    setup;
@@ -25,5 +27,6 @@
 - (void)    setSelectableAroundIndex:(int) index;
 - (void)    onSelectTile:(Tile *) tile;
 - (Tile *)  getTileAtIndex:(int) index;
+- (NSString *) serializeGridLetters;
 
 @end

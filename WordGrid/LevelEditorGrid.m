@@ -1,6 +1,8 @@
 
 #import "LevelEditorGrid.h"
 #import "Tile.h"
+#import "AnswerGrid.h"
+#import "AnswerData.h"
 
 @implementation LevelEditorGrid
 
@@ -9,7 +11,9 @@ int rightmostColumn;
 
 - (void) setup
 {    
-    answer = @"THE BIGGER THEY COME THE HARDER THEY FALL";
+    quoteIndex = 1;
+    quotePair = [AnswerData getQuotePairAt:quoteIndex];
+    answer = [quotePair objectAtIndex:0];//@"THE BIGGER THEY COME THE HARDER THEY FALL";
     //answer = [answer stringByReplacingOccurrencesOfString:@" " withString:@""];
     answerIndex = [answer length] - 1;
     
@@ -17,6 +21,7 @@ int rightmostColumn;
     gh = 7;
     margin = 4;
     rightmostColumn = gw;
+    
     [self createGrid];  
     [self setAllIsSelectable:YES];
 }
@@ -81,18 +86,6 @@ int rightmostColumn;
     return result;
 }
 
-- (void) logGridLetters
-{
-    NSMutableString *s = [NSMutableString stringWithCapacity:tiles.count];
-    
-    for (Tile *t in tiles) 
-    {
-        [s appendString:t.letter];
-    }
-    
-    NSLog(@"%@", s);
-}
-
 - (void) deselectAll
 {
     for (Tile *t in tiles) 
@@ -137,7 +130,7 @@ int rightmostColumn;
     answerIndex--;
     if(answerIndex < 0)
     {
-        [self logGridLetters];
+        NSLog(@"%@", [self serializeGridLetters]);
     }
     else
     {
