@@ -16,8 +16,8 @@ static NSArray *quotes;
                     @"                 E     M TO    PE CN  ELAELYF EASAYAXO DRDLBBRE", nil
                 ],
                 [NSArray arrayWithObjects:
-                    @"TO KNOW YOUR ENEMY, YOU MUST BECOME YOUR ENEMY", 
-                    @"", nil
+                    @"TO KNOW YOUR ENEMY YOU MUST BECOME YOUR ENEMY", 
+                    @"     ESOB     EOEE     NYUC    OMUEM   NRUEOM  TYOMYTY  KOWUNRY", nil
                 ],
                 [NSArray arrayWithObjects:
                     @"OPPORTUNITIES MULTIPLY AS THEY ARE SEIZED", 
@@ -41,6 +41,19 @@ static NSArray *quotes;
                 ],
                  nil
             ];
+}
+
++ (int) getCurrentIndex
+{
+    return 2;
+}
++ (NSString *) getCurrentQuote
+{
+    return [[quotes objectAtIndex:[AnswerData getCurrentIndex]] objectAtIndex:0];
+}
++ (NSString *) getCurrentGrid
+{
+    return [[quotes objectAtIndex:[AnswerData getCurrentIndex]] objectAtIndex:1];
 }
 
 + (NSArray *) getQuotePairAt:(int)index

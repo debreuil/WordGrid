@@ -10,14 +10,12 @@ NSMutableArray *wordBoundries;
 
 - (void) setup
 {    
-    quoteIndex = 1;
-    quotePair = [AnswerData getQuotePairAt:quoteIndex];
-    answer = [quotePair objectAtIndex:0];
+    answer = [AnswerData getCurrentQuote];
     answerWords = [answer componentsSeparatedByString: @" "];
     gw = 15;
     gh = 3;
     margin = 2;
-    answerIndex = 0;    
+    answerIndex = 0;   
     
     [self createGrid];
 }
@@ -70,10 +68,10 @@ NSMutableArray *wordBoundries;
     }
 }
 
-- (void) onSelectTile:(Tile *) tile
-{    
+- (void) ownTileSelected:(Tile *)tile;
+{ 
     [tile setSelected:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"onAnswerSelected" object:tile];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"onAnswerGridTileSelected" object:tile];
 }
 
 - (void) layoutGrid:(Boolean)useAnimation
@@ -160,12 +158,29 @@ NSMutableArray *wordBoundries;
     int counter = 0;
     int wordLen = [[answerWords objectAtIndex:counter] length];
     
+    if(index < 0)
+    {
+        index = 0;
+    }
+    else if(index > answerLength)
+    {
+        index = answerLength;
+    }
+    
     for (int i = wordLen; i <= index; i += wordLen) 
     {
         result += wordLen;
         counter++;
-        wordLen = [[answerWords objectAtIndex:counter] length];
+        if(counter < answerWords.count)
+        {
+            wordLen = [[answerWords objectAtIndex:counter] length];
+        }
+        else
+        {
+            break;
+        }
     }
+     
     //NSLog(@"index: %i start: %i", index, result);
     return result;
 }

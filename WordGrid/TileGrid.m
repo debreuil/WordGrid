@@ -16,6 +16,7 @@
     self = [super initWithCoder:aDecoder];
     if(self)
     {
+        [self genericSetup];
         [self setup];
     }
     return self;    
@@ -25,18 +26,25 @@
     self = [super initWithFrame:frame];
     if (self) 
     {
-        [self setup];
+        [self genericSetup];
+        [self setup];   
     }
     return self;
 }
 
+- (void) genericSetup
+{  
+    [[NSNotificationCenter defaultCenter] 
+     addObserver:self 
+     selector:@selector(onSelectTile:) 
+     name:@"onTileSelected" 
+     object:nil]; 
+}
 - (void) setup
-{    
+    {    
     gw = 9;
     gh = 7;
-    margin = 4;
-    quoteIndex = 1;
-    quotePair = [AnswerData getQuotePairAt:quoteIndex];
+    margin = 4;    
     
     [self createGrid];
 }
@@ -122,7 +130,7 @@
 
 - (void) createLetters
 { 
-    NSString *testString = [quotePair objectAtIndex:1];
+    NSString *testString = [AnswerData getCurrentGrid];
     int index = 0;
     for (Tile* t in tiles) 
     {
@@ -338,11 +346,19 @@
     [self setAllIsSelectable:YES];
 }
 
-- (void) onSelectTile:(Tile *) tile
+- (void) onSelectTile:(NSNotification *)notification
 {    
+    Tile *tile = (Tile *)[notification object];
+    if([tile superview] == self)
+    {
+        [self ownTileSelected:tile];
+    }
+}
+
+- (void) ownTileSelected:(Tile *)tile;
+{   
     [tile setSelected:YES];
-    NSLog(@"ti: %i", tile.gridIndex);
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"onGridTileSelected" object:tile];    
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -367,13 +383,15 @@
     
     [self clearAllHovers];
     
+    /*
     UITouch *t = [touches anyObject];
     int tileIndex = [self getTileIndexFromMousePoint:[t locationInView:self]];    
     if(tileIndex > -1)
     {
         Tile *tile = [tiles objectAtIndex:tileIndex];
         [self onSelectTile:tile];
-    }    
+    }  
+    */
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {

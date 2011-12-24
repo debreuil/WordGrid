@@ -88,6 +88,10 @@
                                   answerGrid.frame.origin.y - tileGrid.frame.origin.y + rt.frame.origin.y,
                                   rt.frame.size.width,
                                     rt.frame.size.height); 
+            if(i == [answerGrid getWordStartIndex:i])
+            {
+                [tileGrid layoutGrid:YES];
+            }
         }
         else
         {
@@ -133,13 +137,13 @@
 	[[NSNotificationCenter defaultCenter] 
      addObserver:self 
      selector:@selector(tileSelected:) 
-     name:@"onTileSelected" 
+     name:@"onGridTileSelected" 
      object:nil];
     
 	[[NSNotificationCenter defaultCenter] 
      addObserver:self 
      selector:@selector(answerSelected:) 
-     name:@"onAnswerSelected" 
+     name:@"onAnswerGridTileSelected" 
      object:nil];
     
     [self setOrientation];

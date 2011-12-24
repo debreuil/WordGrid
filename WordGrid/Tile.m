@@ -163,10 +163,26 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
 
 }
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    return YES;
+    [super touchesBegan:touches withEvent:event];     
+}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesMoved:touches withEvent:event];
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesEnded:touches withEvent:event];
+    //NSLog(@"%i", gridIndex);
+    if([self isSelectable])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];
+    }
+}
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesEnded:touches withEvent:event];    
 }
 
 @end

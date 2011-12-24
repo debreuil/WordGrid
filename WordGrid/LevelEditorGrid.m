@@ -11,9 +11,7 @@ int rightmostColumn;
 
 - (void) setup
 {    
-    quoteIndex = 1;
-    quotePair = [AnswerData getQuotePairAt:quoteIndex];
-    answer = [quotePair objectAtIndex:0];//@"THE BIGGER THEY COME THE HARDER THEY FALL";
+    answer = [AnswerData getCurrentQuote];
     //answer = [answer stringByReplacingOccurrencesOfString:@" " withString:@""];
     answerIndex = [answer length] - 1;
     
@@ -21,7 +19,7 @@ int rightmostColumn;
     gh = 7;
     margin = 4;
     rightmostColumn = gw;
-    
+        
     [self createGrid];  
     [self setAllIsSelectable:YES];
 }
@@ -93,8 +91,9 @@ int rightmostColumn;
         [t setSelected:NO];
     }
 }
-- (void) onSelectTile:(Tile *) tile
-{    
+
+- (void) ownTileSelected:(Tile *)tile;
+{  
     [self clearAllHovers];
     [self setAllIsSelectable:NO];
     [tile setSelected:YES];

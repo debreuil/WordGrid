@@ -14,18 +14,18 @@
     int lastHoverTileIndex;
     float animationDelay;
     Boolean hasGap;
-    int quoteIndex;
-    NSArray *quotePair;
 }
 
+- (void)    genericSetup;
 - (void)    setup;
 - (void)    createLetters;
 - (void)    clearAllHovers;
-- (Tile *)    insertTile:(Tile *)tile At:(int) index;
+- (Tile *)  insertTile:(Tile *)tile At:(int) index;
 - (void)    checkForVerticalGaps;
 - (CGPoint)  getPointFromIndex:(int)index;
 - (void)    setSelectableAroundIndex:(int) index;
-- (void)    onSelectTile:(Tile *) tile;
+- (void)    onSelectTile:(NSNotification *)notification;
+- (void)    ownTileSelected:(Tile *)tile;
 - (Tile *)  getTileAtIndex:(int) index;
 - (NSString *) serializeGridLetters;
 

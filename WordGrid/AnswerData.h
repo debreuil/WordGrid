@@ -6,5 +6,8 @@
 
 + (NSArray *)   getQuotePairAt:(int)index;
 + (int)        getQuoteCount;
++ (int)        getCurrentIndex;
++ (NSString *)  getCurrentQuote;
++ (NSString *)  getCurrentGrid;
 
 @end
