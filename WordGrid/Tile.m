@@ -3,6 +3,7 @@
 @implementation Tile
 
 static NSArray *imageStates;
+static UIImage *errorImage;
 static float hoverScale = 1.5;
 
 @synthesize gridIndex;
@@ -10,8 +11,10 @@ static float hoverScale = 1.5;
 @synthesize letter;
 @synthesize correctLetter;
 @synthesize isHovering;
+@synthesize errorMarkVisible;
 @synthesize selected;
 @synthesize isSelectable;
+@synthesize letterShowing;
 @synthesize animatingFrom;
 @synthesize resultIndex;
 @synthesize isResultTile;
@@ -20,6 +23,8 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 + (void) load
 {
+    errorImage = [UIImage imageNamed:@"errorTile.png"];
+    
     imageStates = [[NSArray alloc] initWithObjects:
                         [UIImage imageNamed:@"let_norm.png"],
                         [UIImage imageNamed:@"let_sel0.png"],
@@ -76,11 +81,25 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                      f.size.height + yBorder * 2);    
 }
 
+- (Boolean) isCorrectLetter
+{
+    return [letter isEqualToString:correctLetter];
+}
+
 - (void) setLetter:(NSString *) let
 {
     if(let != letter)
     {
-        letter = let;
+        letter = let;            
+        [self setNeedsDisplay];
+    }
+}
+
+- (void) setLetterShowing:(Boolean)isLetterShowing
+{
+    if(isLetterShowing != letterShowing)
+    {
+        letterShowing = isLetterShowing;            
         [self setNeedsDisplay];
     }
 }
@@ -142,17 +161,36 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
 }
 
+- (void) setErrorMarkVisible:(Boolean) isVisible
+{
+    errorMarkVisible = isVisible;
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect
 {
 	//[image drawAtPoint:(CGPointMake(0.0f, 0.0f))];   
     [image drawInRect:[self bounds]];
+        
+    if(errorMarkVisible)
+    {
+        [errorImage drawInRect:[self bounds]];
+    }
     
     float sc = self.bounds.size.width / 48.0;
     
     [[UIColor whiteColor] set];
     UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];
-    CGRect r = CGRectOffset([self bounds], 0.0,(2.0 * sc));    
-    [letter drawInRect:r withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+    CGRect r = CGRectOffset([self bounds], 0.0,(2.0 * sc)); 
+    
+    if(letterShowing && letter == @"")
+    {
+        [correctLetter drawInRect:r withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+    }
+    else
+    {
+        [letter drawInRect:r withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+    }
     
     if(isSelectable)
     {
@@ -160,7 +198,7 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         CGContextSetLineWidth(context, 4);
         CGContextSetRGBStrokeColor(context, 0.2, 0.5, 1.0, 1);
         CGContextStrokeRect(context, [self bounds]);
-    }
+    }   
 
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

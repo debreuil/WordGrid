@@ -59,7 +59,11 @@
         
         if([answerGrid atWordBoundry])
         {  
-            [tileGrid setAllIsSelectable:NO];
+            Boolean correct = [answerGrid testCurrentWordCorrect];
+            if(correct)
+            {
+                [tileGrid setAllIsSelectable:NO];
+            }
         }
         else
         {
@@ -85,8 +89,8 @@
             targ = [tileGrid insertTile:rt At:rt.originalIndex];
             
             targ.frame = CGRectMake( answerGrid.frame.origin.x - tileGrid.frame.origin.x + rt.frame.origin.x,
-                                  answerGrid.frame.origin.y - tileGrid.frame.origin.y + rt.frame.origin.y,
-                                  rt.frame.size.width,
+                                    answerGrid.frame.origin.y - tileGrid.frame.origin.y + rt.frame.origin.y,
+                                    rt.frame.size.width,
                                     rt.frame.size.height); 
             if(i == [answerGrid getWordStartIndex:i])
             {
@@ -106,14 +110,22 @@
     [answerRefs removeAllObjects];
     [tileGrid resetGrid];
     [tileGrid layoutGrid:YES];
+    NSString *let = [answerGrid getCurrentCorrectLetter];
+    [tileGrid setSelectableByLetter:let];
 }
 
 - (void) testWordComplete
 {
-    if([answerGrid atWordBoundry]) //answerIndex > 3)
+    if([answerGrid atWordBoundry])
     {        
         [tileGrid resetGrid];  
         [tileGrid removeTilesAndDrop:answerRefs];
+        
+        if([[answerGrid getNextTile] letterShowing])
+        {
+            NSString *let = [answerGrid getCurrentCorrectLetter];
+            [tileGrid setSelectableByLetter:let];
+        }
         
         [answerRefs removeAllObjects];
     }
@@ -147,6 +159,9 @@
      object:nil];
     
     [self setOrientation];
+    
+    NSString *let = [answerGrid getCurrentCorrectLetter];
+    [tileGrid setSelectableByLetter:let];
 }
 
 - (void)viewDidUnload

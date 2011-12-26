@@ -28,5 +28,6 @@
 - (void)    ownTileSelected:(Tile *)tile;
 - (Tile *)  getTileAtIndex:(int) index;
 - (NSString *) serializeGridLetters;
+- (void)    setSelectableByLetter:(NSString *)let;
 
 @end

@@ -12,9 +12,13 @@
 - (int)         getWordStartIndex:(int)index;
 - (int)         getCurrentWordStart;
 - (NSString *)   getCurrentLetter;
+- (NSString *)   getCurrentCorrectLetter;
 - (Tile *)      removeCurrentTile;
 - (Tile *)      getNextTile;
 - (void)        setNextTileUsingTile:(Tile *)srcTile;
 - (BOOL)        atWordBoundry;
+- (void)        showFirstLetterHints;
+- (void)        showVowelHints;
+- (Boolean)      testCurrentWordCorrect;
 
 @end

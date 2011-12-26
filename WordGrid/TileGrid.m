@@ -5,6 +5,8 @@
 @implementation TileGrid
 
 //static NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+float tw;
+float th;
 
 -(id)init
 {
@@ -54,8 +56,8 @@
     lastHoverTileIndex = -1;
     Tile *tile;    
     tiles = [NSMutableArray arrayWithCapacity:gw * gh]; 
-    float tw = (self.bounds.size.width - margin * (gw - 2)) / gw;
-    float th = (self.bounds.size.height - margin * (gh - 2)) / gh;    
+    tw = (self.bounds.size.width - margin * (gw - 2)) / gw;
+    th = (self.bounds.size.height - margin * (gh - 2)) / gh;    
     slotWidth = tw + margin;   
     slotHeight = th + margin;
     
@@ -75,17 +77,12 @@
 }
 
 - (void) layoutGrid:(Boolean) useAnimation
-{        
-    Tile *tile = [tiles objectAtIndex:0];
-
-    float spcH = tile.bounds.size.width + margin;
-    float spcV = tile.bounds.size.height + margin;
+{            
+    float l = margin / 2.0 + (gw - 1) * slotWidth;
+    float t = margin / 2.0 + (gh - 1) * slotHeight;
     
-    float l = margin / 2.0 + (gw - 1) * spcH;
-    float t = margin / 2.0 + (gh - 1) * spcV;
-    
-    CGRect fr = CGRectMake(l, t, tile.bounds.size.width, tile.bounds.size.height);    
-    //animationDelay += 0.3;
+    CGRect fr = CGRectMake(l, t, tw, th);
+    Tile *tile;
     
     for (int i = gh - 1; i >= 0; i--) 
     {
@@ -121,10 +118,10 @@
                     tile.frame = fr;
                 }
             }
-            fr.origin.x -= spcH;
+            fr.origin.x -= slotWidth;
         }
         fr.origin.x = l;
-        fr.origin.y -= spcV;
+        fr.origin.y -= slotHeight;
     }    
 }
 
@@ -199,6 +196,21 @@
     for (Tile *t in tiles) 
     {
         [t setIsSelectable:sel];
+    }
+}
+
+- (void) setSelectableByLetter:(NSString *)let
+{    
+    for (Tile *t in tiles) 
+    {
+        if([t.letter isEqualToString:let])
+        {
+            [t setIsSelectable:YES];            
+        }
+        else
+        {
+            [t setIsSelectable:NO]; 
+        }
     }
 }
 
@@ -327,7 +339,7 @@
     [result setLetter:tile.letter];
     [result setHidden:NO];
 
-    for (int i = index; i > gw; i -= gw) 
+    for (int i = index; i >= gw; i -= gw) 
     {           
         if([[tiles objectAtIndex:i] gridIndex] != -1)
         {

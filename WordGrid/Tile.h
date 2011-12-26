@@ -7,9 +7,11 @@ extern NSString * const LETTERS;
     UIImage *image;
     NSString *letter;
     NSString *correctLetter;
+    Boolean letterShowing;
     Boolean isHovering;
     Boolean selected;
     Boolean isSelectable;
+    Boolean errorMarkVisible;
     int gridIndex;
     CGRect animatingFrom;
     int resultIndex;
@@ -27,10 +29,13 @@ extern NSString * const LETTERS;
 @property (nonatomic) Boolean isHovering;
 @property (nonatomic) Boolean selected;
 @property (nonatomic) Boolean isSelectable;
+@property (nonatomic) Boolean errorMarkVisible;
+@property (nonatomic) Boolean letterShowing;
 @property (nonatomic) CGRect animatingFrom;
 @property int resultIndex;
 @property (nonatomic) Boolean isResultTile;
 
 - (void)setup;
+- (Boolean) isCorrectLetter;
 
 @end

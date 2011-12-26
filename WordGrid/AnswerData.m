@@ -21,23 +21,27 @@ static NSArray *quotes;
                 ],
                 [NSArray arrayWithObjects:
                     @"OPPORTUNITIES MULTIPLY AS THEY ARE SEIZED", 
-                    @"", nil
+                    @"                E    TAE Z    TIPIA T MUYRLPOIINLTOPESESUHERSYD", nil
                 ],
                 [NSArray arrayWithObjects:
                     @"PRETEND INFERIORITY AND ENCOURAGE HIS ARROGANCE", 
-                    @"", nil
+                    @"  A        N   N   FRETDA   PRIENEN  EGIRRDIAIRORUONHSTYEAOCGCE", nil
                 ],
                 [NSArray arrayWithObjects:
                     @"BUILD YOUR OPPONENT A GOLDEN BRIDGE TO RETREAT ACROSS", 
-                    @"", nil
+                    @"               AT Y DA TBUIUODIENCOLORLNRERSDPPOERTOATGOGENBRES", nil
                 ],
                 [NSArray arrayWithObjects:
                     @"ALL WARFARE IS BASED ON DECEPTION", 
-                    @"", nil
+                    @"               E        TCI    ESIPS    ANAOD    FREBEALLDORAWN", nil
+                 ],
+                [NSArray arrayWithObjects:
+                    @"TO A SURROUNDED ENEMY YOU MUST LEAVE A WAY OF ESCAPE", 
+                    @"              E     U LSUND TSUMODEEOAERRCAYFYMNSUEAVEYOETAWAPO", nil
                 ],
                 [NSArray arrayWithObjects:
-                    @"TO A SURROUNDED ENEMY, YOU MUST LEAVE A WAY OF ESCAPE", 
-                    @"", nil
+                   @"ON A RAINY NIGHT IN SOHO THE WIND WAS WHISTLING ALL ITS CHARMS", 
+                   @"R        A S  A  OIWITDIRMNNWANINTSAYHESLSNGSTHICHIOHOWNIGHTALL", nil
                 ],
                  nil
             ];
@@ -45,7 +49,7 @@ static NSArray *quotes;
 
 + (int) getCurrentIndex
 {
-    return 2;
+    return 8;
 }
 + (NSString *) getCurrentQuote
 {

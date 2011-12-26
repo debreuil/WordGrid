@@ -13,7 +13,7 @@ NSMutableArray *wordBoundries;
     answer = [AnswerData getCurrentQuote];
     answerWords = [answer componentsSeparatedByString: @" "];
     gw = 15;
-    gh = 3;
+    gh = 4;
     margin = 2;
     answerIndex = 0;   
     
@@ -65,7 +65,7 @@ NSMutableArray *wordBoundries;
                 }                
             }                
         }             
-    }
+    }    
 }
 
 - (void) ownTileSelected:(Tile *)tile;
@@ -120,6 +120,39 @@ NSMutableArray *wordBoundries;
                 }                
             }                
         }             
+    }
+    [self showFirstLetterHints];
+}
+
+- (void) showFirstLetterHints
+{
+    int counter = 0;
+    for (int wordIndex = 0; wordIndex < answerWords.count; wordIndex++) 
+    {
+        NSString *word = [answerWords objectAtIndex:wordIndex];
+        Tile *t = [tiles objectAtIndex:counter];
+        [t setLetterShowing:YES];
+        counter += word.length;
+    }
+}
+
+- (void) showVowelHints
+{
+    int counter = 0;
+    for (int wordIndex = 0; wordIndex < answerWords.count; wordIndex++) 
+    {
+        NSString *word = [answerWords objectAtIndex:wordIndex];
+        for (int let = 0; let < word.length; let++) 
+        {
+            unichar letter = [word characterAtIndex:let];
+            if(letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O' || letter == 'U')
+            {
+                Tile *t = [tiles objectAtIndex:counter + let];
+                [t setLetterShowing:YES];
+                //break;
+            }
+        }
+        counter += word.length;
     }
 }
 
@@ -196,7 +229,18 @@ NSMutableArray *wordBoundries;
     NSString *result = nil;
     if(answerIndex > 0)
     {
-        result = [[tiles objectAtIndex:answerIndex] letter];
+        Tile *t = [tiles objectAtIndex:answerIndex];
+        result = t.letter;
+    }
+    return result;
+}
+- (NSString *) getCurrentCorrectLetter
+{
+    NSString *result = nil;
+    if(answerIndex >= 0)
+    {
+        Tile *t = [tiles objectAtIndex:answerIndex];
+        result = t.correctLetter;
     }
     return result;
 }
@@ -210,6 +254,7 @@ NSMutableArray *wordBoundries;
         //[result setLetter:@""];
         [result setIsSelectable:NO];
         [result setSelected:NO];
+        [result setErrorMarkVisible:NO];
         answerIndex--;
         [[tiles objectAtIndex:answerIndex] setIsSelectable:YES];
     }
@@ -232,4 +277,57 @@ NSMutableArray *wordBoundries;
     return result;
 }
 
+- (NSRange) getWordRange
+{    
+    int counter = 0;
+    int wordLen = 0;
+    int start = 0;
+        
+    for (; start < answerIndex; start += wordLen) 
+    {
+        if(counter < answerWords.count)
+        {
+            wordLen = [[answerWords objectAtIndex:counter] length];            
+            counter++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    
+    return NSMakeRange(start - wordLen, wordLen);
+}
+
+- (Boolean) testCurrentWordCorrect
+{
+    Boolean result = NO;
+    if([self atWordBoundry])
+    {
+        result = YES;
+        NSRange range = [self getWordRange];
+        for (int i = range.location; i < range.location + range.length; i++) 
+        {
+            Tile *t = [tiles objectAtIndex:i];
+            if(![t isCorrectLetter])
+            {
+                result = NO;
+            }
+        }
+        
+        if(!result)
+        {            
+            for (int i = range.location; i < range.location + range.length; i++) 
+            {
+                Tile *t = [tiles objectAtIndex:i];
+                [t setErrorMarkVisible:YES];           
+            }
+        }
+    }
+    return result;
+}
+
 @end
+
+
+
