@@ -1,6 +1,7 @@
 #import "GameVC.h"
 #import "TileGrid.h"
 #import "Tile.h"
+#import "AnswerData.h"
 
 @implementation GameVC
 
@@ -49,8 +50,8 @@
          {
              if(finished)
              {
-                 [self testWordComplete];
                  [at setIsSelectable:YES];
+                 [self testWordComplete];
              }
          }
          ];
@@ -120,17 +121,33 @@
     {        
         [tileGrid resetGrid];  
         [tileGrid removeTilesAndDrop:answerRefs];
+        [answerRefs removeAllObjects];
         
-        if([[answerGrid getNextTile] letterShowing])
+        Tile *nextTile = [answerGrid getNextTile];
+        if(nextTile == nil)
+        {
+            // all letters complete
+            if([answerGrid didWin])
+            {
+                [self nextRound];
+            }            
+        }
+        else if([nextTile letterShowing])
         {
             NSString *let = [answerGrid getCurrentCorrectLetter];
             [tileGrid setSelectableByLetter:let];
-        }
-        
-        [answerRefs removeAllObjects];
+        }        
     }
 }
 
+- (void) nextRound
+{
+    [AnswerData incrementIndex];
+    [tileGrid createRound];
+    [answerGrid createRound];
+    NSString *let = [answerGrid getCurrentCorrectLetter];
+    [tileGrid setSelectableByLetter:let];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -145,7 +162,7 @@
     [super viewDidLoad];
     
     answerRefs = [[NSMutableArray alloc] initWithCapacity:20];    
-
+    
 	[[NSNotificationCenter defaultCenter] 
      addObserver:self 
      selector:@selector(tileSelected:) 
@@ -161,7 +178,10 @@
     [self setOrientation];
     
     NSString *let = [answerGrid getCurrentCorrectLetter];
-    [tileGrid setSelectableByLetter:let];
+    if(let != nil)
+    {
+        [tileGrid setSelectableByLetter:let];
+    }
 }
 
 - (void)viewDidUnload
@@ -181,21 +201,24 @@
 {
     UIInterfaceOrientation io = [self interfaceOrientation];
     CGRect df = btDone.frame;    
-    CGRect tf = tileGrid.frame;
+    CGRect tf = tileGrid.frame;  
+    CGRect af = answerGrid.frame;
     
     if (io == UIInterfaceOrientationPortrait || 
         io == UIInterfaceOrientationPortraitUpsideDown) 
     {
         bkgV.hidden = NO;
         bkgH.hidden = YES;  
-        tileGrid.frame = CGRectMake(50, 180, tf.size.width, tf.size.height); 
+        tileGrid.frame = CGRectMake(45, 180, tf.size.width, tf.size.height); 
+        answerGrid.frame = CGRectMake(70, 766, af.size.width, af.size.height); 
     }
     else if (io == UIInterfaceOrientationLandscapeLeft || 
              io == UIInterfaceOrientationLandscapeRight) 
     {
         bkgV.hidden = YES;
         bkgH.hidden = NO;
-        tileGrid.frame = CGRectMake(300, 170, tf.size.width, tf.size.height);    
+        tileGrid.frame = CGRectMake(278, 14, tf.size.width, tf.size.height); 
+        answerGrid.frame = CGRectMake(300, 574, af.size.width, af.size.height);    
     }  
     
     btDone.frame = CGRectMake( tileGrid.frame.origin.x + tileGrid.frame.size.width - df.size.width,

@@ -2,15 +2,29 @@
 
 @implementation AnswerData
 
+static int currentIndex;
 static NSArray *quotes;
 
 + (void) initialize
 {
+    currentIndex = 0;
     quotes = [NSArray arrayWithObjects:
                 [NSArray arrayWithObjects:
+                    @"FIND ALL THE WORDS", 
+                    @"                                       TW      ALHO   FINDLERDS", nil
+                ],
+                [NSArray arrayWithObjects:
+                    @"PRESS ON THE ANSWER AREA TO UNDO SOME WORDS", 
+                    @"                     SW    UNDOOO   PRESSMRDSANSAREETOTHEWERAON", nil
+                ],
+                [NSArray arrayWithObjects:
                     @"THE BIGGER THEY COME THE HARDER THEY FALL", 
-                    @"                      AH    I  OETL GGBMRCHHEEHEEHTYFLTRYTDEREA", nil
-                 ],
+                    @"                     H F     TTARA  BIGHHEDERTHEGERYLLCOMEETHEY", nil
+                ],
+                [NSArray arrayWithObjects:
+                    @"ON A RAINY NIGHT IN SOHO THE WIND WAS WHISTLING ALL ITS CHARMS", 
+                    @"R        A S  A  OIWITDIRMNNWANINTSAYHESLSNGSTHICHIOHOWNIGHTALL", nil
+                ],
                 [NSArray arrayWithObjects:
                     @"A LEADER LEADS BY EXAMPLE NOT BY FORCE", 
                     @"                 E     M TO    PE CN  ELAELYF EASAYAXO DRDLBBRE", nil
@@ -34,14 +48,10 @@ static NSArray *quotes;
                 [NSArray arrayWithObjects:
                     @"ALL WARFARE IS BASED ON DECEPTION", 
                     @"               E        TCI    ESIPS    ANAOD    FREBEALLDORAWN", nil
-                 ],
+                ],
                 [NSArray arrayWithObjects:
                     @"TO A SURROUNDED ENEMY YOU MUST LEAVE A WAY OF ESCAPE", 
                     @"              E     U LSUND TSUMODEEOAERRCAYFYMNSUEAVEYOETAWAPO", nil
-                ],
-                [NSArray arrayWithObjects:
-                   @"ON A RAINY NIGHT IN SOHO THE WIND WAS WHISTLING ALL ITS CHARMS", 
-                   @"R        A S  A  OIWITDIRMNNWANINTSAYHESLSNGSTHICHIOHOWNIGHTALL", nil
                 ],
                  nil
             ];
@@ -49,8 +59,18 @@ static NSArray *quotes;
 
 + (int) getCurrentIndex
 {
-    return 8;
+    return currentIndex;
 }
+
++ (int) incrementIndex
+{
+    currentIndex++;
+    if(currentIndex >= quotes.count)
+    {
+        currentIndex = 0;
+    }
+}
+
 + (NSString *) getCurrentQuote
 {
     return [[quotes objectAtIndex:[AnswerData getCurrentIndex]] objectAtIndex:0];

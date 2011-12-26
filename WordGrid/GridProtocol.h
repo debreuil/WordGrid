@@ -5,6 +5,7 @@
 
 - (void)    setup;
 - (void)    createGrid;
+- (void)    createRound;
 - (void)    resetGrid;
 - (void)    layoutGrid:(Boolean) useAnimation;
 - (int)     getTileIndexFromMousePoint:(CGPoint) point;

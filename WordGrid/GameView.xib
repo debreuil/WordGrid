@@ -44,12 +44,16 @@
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="312021246"/>
+						<object class="NSColor" key="IBUIBackgroundColor" id="787399798">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MAA</bytes>
+						</object>
 						<int key="IBUIContentMode">2</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">bkgGameV.jpg</string>
+							<string key="NSResourceName">main_vert.jpg</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="312021246">
@@ -60,11 +64,12 @@
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1016526659"/>
+						<reference key="IBUIBackgroundColor" ref="787399798"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">bkgGameH.jpg</string>
+							<string key="NSResourceName">main_horz.jpg</string>
 						</object>
 					</object>
 					<object class="IBUIButton" id="1029336070">
@@ -106,7 +111,7 @@
 					<object class="IBUIView" id="248888508">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{129, 726}, {630, 168}}</string>
+						<string key="NSFrame">{{300, 572}, {630, 168}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1029336070"/>
@@ -121,7 +126,7 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">1316</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{47, 180}, {675, 525}}</string>
+						<string key="NSFrame">{{278, 14}, {675, 525}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="248888508"/>
@@ -137,13 +142,7 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="158756890"/>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
-					<object class="NSColorSpace" key="NSCustomColorSpace">
-						<int key="NSID">2</int>
-					</object>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="787399798"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
 				</object>
@@ -213,11 +212,11 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="158756890"/>
-							<reference ref="312021246"/>
 							<reference ref="1029336070"/>
-							<reference ref="248888508"/>
+							<reference ref="312021246"/>
+							<reference ref="158756890"/>
 							<reference ref="1016526659"/>
+							<reference ref="248888508"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -363,8 +362,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="bkgGameH.jpg">{640, 480}</string>
-			<string key="bkgGameV.jpg">{480, 640}</string>
+			<string key="main_horz.jpg">{640, 480}</string>
+			<string key="main_vert.jpg">{480, 640}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>

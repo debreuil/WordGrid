@@ -20,5 +20,6 @@
 - (void)        showFirstLetterHints;
 - (void)        showVowelHints;
 - (Boolean)      testCurrentWordCorrect;
+- (Boolean)      didWin;
 
 @end

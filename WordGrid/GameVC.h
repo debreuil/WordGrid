@@ -23,6 +23,7 @@
     int lastSelectedTileIndex;
 }
 
+- (void) nextRound;
 - (void) tileSelected:(Tile *) t;
 - (void) answerSelected:(NSNotification *)notification;
 - (void) setOrientation;

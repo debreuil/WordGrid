@@ -72,8 +72,13 @@ float th;
             [self addSubview:tile];
         }
     }
+    [self createRound];
+}
+
+- (void) createRound
+{
     [self createLetters];
-    [self layoutGrid:NO];
+    [self layoutGrid:NO];    
 }
 
 - (void) layoutGrid:(Boolean) useAnimation
@@ -131,13 +136,9 @@ float th;
     int index = 0;
     for (Tile* t in tiles) 
     {
-        //NSString *s = [LETTERS substringWithRange:[LETTERS rangeOfComposedCharacterSequenceAtIndex:arc4random()%[LETTERS length]]]; 
         NSString *s = [testString substringWithRange:NSMakeRange(index++, 1)];
         [t setLetter:s];
-        if(![s compare:@" "])
-        {
-            t.hidden = YES;
-        }
+        t.hidden = ([s isEqualToString:@" "]);
     }
     NSLog(@"%@",[self serializeGridLetters]);
 }

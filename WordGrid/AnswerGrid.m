@@ -10,29 +10,33 @@ NSMutableArray *wordBoundries;
 
 - (void) setup
 {    
-    answer = [AnswerData getCurrentQuote];
-    answerWords = [answer componentsSeparatedByString: @" "];
     gw = 15;
     gh = 4;
-    margin = 2;
-    answerIndex = 0;   
+    margin = 2; 
     
     [self createGrid];
 }
 
 - (void) createLetters
 {  
+    answer = [AnswerData getCurrentQuote];
+    answerWords = [answer componentsSeparatedByString: @" "];
     wordBoundries = [[NSMutableArray alloc] init];
+    answerIndex = 0;
+    answerLength = 0;
+    
     int wordIndex = 0;       
     int charIndex = 0;  
     NSString *curWord = [answerWords objectAtIndex:wordIndex];
     NSString *curLetter;   
     BOOL complete = NO;
-    answerLength = 0;
     
     for (Tile* t in tiles) 
     {        
-        [t setIsSelectable:NO]; 
+        [t setIsSelectable:NO];
+        [t setSelected:NO];
+        [t setErrorMarkVisible:NO];
+        [t setLetterShowing:NO];
         
         if(complete)
         {
@@ -322,6 +326,20 @@ NSMutableArray *wordBoundries;
                 Tile *t = [tiles objectAtIndex:i];
                 [t setErrorMarkVisible:YES];           
             }
+        }
+    }
+    return result;
+}
+
+- (Boolean) didWin
+{
+    Boolean result = YES;
+    for (int i = 0; i < answerLength; i++)
+    {
+        if(![[tiles objectAtIndex:i] isCorrectLetter])
+        {
+            result = NO;
+            break;
         }
     }
     return result;
