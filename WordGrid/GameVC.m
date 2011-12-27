@@ -5,6 +5,10 @@
 
 @implementation GameVC
 
+typedef enum { Game, Victory } GameState;
+GameState gameState = Game;
+Boolean isLandscape = NO;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -18,7 +22,7 @@
 
 - (void)onDone:(id)sender
 {
-    NSLog(@"done");
+    [self nextRound];
 }
 
 - (void) tileSelected:(NSNotification *)notification
@@ -128,8 +132,15 @@
         {
             // all letters complete
             if([answerGrid didWin])
-            {
-                [self nextRound];
+            {                
+                UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(42.0)];
+                txVictory.font = f;
+                NSString *s = @"\"";
+                s = [s stringByAppendingString:[AnswerData getCurrentQuote]]; 
+                s = [s stringByAppendingString:@"\"\r\rWAS THE CORRECT ANSWER!"]; 
+                txVictory.text = s;
+                gameState = Victory;
+                [self setOrientation];
             }            
         }
         else if([nextTile letterShowing])
@@ -142,11 +153,13 @@
 
 - (void) nextRound
 {
+    gameState = Game;
     [AnswerData incrementIndex];
     [tileGrid createRound];
     [answerGrid createRound];
     NSString *let = [answerGrid getCurrentCorrectLetter];
     [tileGrid setSelectableByLetter:let];
+    [self setOrientation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -181,7 +194,7 @@
     if(let != nil)
     {
         [tileGrid setSelectableByLetter:let];
-    }
+    }    
 }
 
 - (void)viewDidUnload
@@ -203,28 +216,62 @@
     CGRect df = btDone.frame;    
     CGRect tf = tileGrid.frame;  
     CGRect af = answerGrid.frame;
+    CGRect vf = txVictory.frame;
     
     if (io == UIInterfaceOrientationPortrait || 
         io == UIInterfaceOrientationPortraitUpsideDown) 
     {
-        bkgV.hidden = NO;
-        bkgH.hidden = YES;  
         tileGrid.frame = CGRectMake(45, 180, tf.size.width, tf.size.height); 
         answerGrid.frame = CGRectMake(70, 766, af.size.width, af.size.height); 
+        btDone.frame = CGRectMake( 284, 500, df.size.width, df.size.height); 
+        txVictory.frame = CGRectMake( 84, 200, vf.size.width, vf.size.height);  
+        
+        if(gameState == Game)
+        {
+            bkgV.hidden = NO;
+            bkgH.hidden = YES;
+            txVictory.hidden = YES;
+            victoryH.hidden = YES;
+            victoryV.hidden = YES;  
+            btDone.hidden = YES;
+        }
+        else if(gameState == Victory)
+        {
+            bkgV.hidden = YES;
+            bkgH.hidden = YES;
+            victoryV.hidden = NO; 
+            victoryH.hidden = YES; 
+            txVictory.hidden = NO;   
+            btDone.hidden = NO;          
+        }
     }
     else if (io == UIInterfaceOrientationLandscapeLeft || 
              io == UIInterfaceOrientationLandscapeRight) 
     {
-        bkgV.hidden = YES;
-        bkgH.hidden = NO;
         tileGrid.frame = CGRectMake(278, 14, tf.size.width, tf.size.height); 
-        answerGrid.frame = CGRectMake(300, 574, af.size.width, af.size.height);    
+        answerGrid.frame = CGRectMake(300, 574, af.size.width, af.size.height);
+        btDone.frame = CGRectMake( 100, 570, df.size.width, df.size.height); 
+        txVictory.frame = CGRectMake( 244, 193, vf.size.width, vf.size.height);
+        
+        if(gameState == Game)
+        {
+            bkgV.hidden = YES;
+            bkgH.hidden = NO;
+            txVictory.hidden = YES;
+            victoryH.hidden = YES;
+            victoryV.hidden = YES;   
+            btDone.hidden = YES;
+        }
+        else if(gameState == Victory)
+        {
+            bkgV.hidden = YES;
+            bkgH.hidden = YES;
+            victoryV.hidden = YES; 
+            victoryH.hidden = NO; 
+            txVictory.hidden = NO;     
+            btDone.hidden = NO;                    
+        }  
     }  
-    
-    btDone.frame = CGRectMake( tileGrid.frame.origin.x + tileGrid.frame.size.width - df.size.width,
-                              tileGrid.frame.origin.y + tileGrid.frame.size.height + 20,
-                              df.size.width, 
-                              df.size.height);  
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation

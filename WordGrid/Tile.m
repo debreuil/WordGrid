@@ -83,7 +83,6 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 - (Boolean) isCorrectLetter
 {
-    NSLog(@"%@ %@", letter, correctLetter);
     return [letter isEqualToString:correctLetter];
 }
 
