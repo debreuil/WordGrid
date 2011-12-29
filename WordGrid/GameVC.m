@@ -5,15 +5,28 @@
 
 @implementation GameVC
 
+static GameVC *currentGame;
+
 typedef enum { Game, Victory } GameState;
 GameState gameState = Game;
 Boolean isLandscape = NO;
+
+SystemSoundID correctWordSoundID;
+SystemSoundID errorSoundID;
+SystemSoundID returnWordsSoundID;
+SystemSoundID winSoundID;
+
++ (GameVC *) getCurrentGame
+{
+    return currentGame;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) 
     {
+        currentGame = self;
     }
     return self;
 }
@@ -25,6 +38,12 @@ Boolean isLandscape = NO;
     [self nextRound];
 }
 
+// for level editor
+- (AnswerGrid *) getAnswerGrid
+{
+    return answerGrid;
+}
+
 - (void) tileSelected:(NSNotification *)notification
 {
     Tile *t = (Tile *)[notification object];
@@ -32,7 +51,7 @@ Boolean isLandscape = NO;
     
     if(t.isSelectable)
     {        
-        Tile *at = [answerGrid getNextTile];//[answerTiles objectAtIndex:answerIndex];
+        Tile *at = [answerGrid getNextTile];
         CGRect orgFrame = at.frame;//CGRectInset(at.frame, 0, 0);
         at.hidden = NO;
         at.frame = CGRectMake( -answerGrid.frame.origin.x + tileGrid.frame.origin.x + t.frame.origin.x,
@@ -48,7 +67,7 @@ Boolean isLandscape = NO;
          options: UIViewAnimationCurveEaseOut
          animations:^
          {
-             at.frame = orgFrame;//[[answerFrames objectAtIndex:answerIndex] CGRectValue];
+             at.frame = orgFrame;
          } 
          completion:^(BOOL finished)
          {
@@ -68,6 +87,11 @@ Boolean isLandscape = NO;
             if(correct)
             {
                 [tileGrid setAllIsSelectable:NO];
+                AudioServicesPlaySystemSound(correctWordSoundID);
+            }
+            else
+            {
+                AudioServicesPlaySystemSound(errorSoundID);
             }
         }
         else
@@ -82,6 +106,7 @@ Boolean isLandscape = NO;
     Tile *t = (Tile *)[notification object];
     int firstLetter = [answerGrid getWordStartIndex:t.gridIndex];
     int lastRemoved = [answerGrid getCurrentWordStart];
+    [tileGrid resetAnimationDelay];
     
     for (int i = [answerGrid getAnswerIndex] - 1; i >= firstLetter; i--) 
     {
@@ -91,6 +116,11 @@ Boolean isLandscape = NO;
         Tile *targ;
         if (i < lastRemoved) 
         {
+            if(i + 1 == [answerGrid getWordStartIndex:i + 1])
+            {
+                [tileGrid insertLastVerticalGaps];
+            }
+            
             targ = [tileGrid insertTile:rt At:rt.originalIndex];
             
             targ.frame = CGRectMake( answerGrid.frame.origin.x - tileGrid.frame.origin.x + rt.frame.origin.x,
@@ -117,6 +147,7 @@ Boolean isLandscape = NO;
     [tileGrid layoutGrid:YES];
     NSString *let = [answerGrid getCurrentCorrectLetter];
     [tileGrid setSelectableByLetter:let];
+    AudioServicesPlaySystemSound(returnWordsSoundID);
 }
 
 - (void) testWordComplete
@@ -124,7 +155,7 @@ Boolean isLandscape = NO;
     if([answerGrid atWordBoundry])
     {        
         [tileGrid resetGrid];  
-        [tileGrid removeTilesAndDrop:answerRefs];
+        [tileGrid removeWordAndDrop:answerRefs];
         [answerRefs removeAllObjects];
         
         Tile *nextTile = [answerGrid getNextTile];
@@ -141,6 +172,7 @@ Boolean isLandscape = NO;
                 txVictory.text = s;
                 gameState = Victory;
                 [self setOrientation];
+                AudioServicesPlaySystemSound(winSoundID);
             }            
         }
         else if([nextTile letterShowing])
@@ -174,6 +206,9 @@ Boolean isLandscape = NO;
 {
     [super viewDidLoad];
     
+    [answerGrid setup];
+    [tileGrid setup];
+    
     answerRefs = [[NSMutableArray alloc] initWithCapacity:20];    
     
 	[[NSNotificationCenter defaultCenter] 
@@ -186,7 +221,19 @@ Boolean isLandscape = NO;
      addObserver:self 
      selector:@selector(answerSelected:) 
      name:@"onAnswerGridTileSelected" 
-     object:nil];
+     object:nil];    
+    
+    NSURL *tickURLRef = [[NSBundle mainBundle] URLForResource:@"correctWord" withExtension:@"caf"];
+    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &correctWordSoundID);  
+    
+    tickURLRef = [[NSBundle mainBundle] URLForResource:@"error" withExtension:@"caf"];
+    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &errorSoundID);     
+    
+    tickURLRef = [[NSBundle mainBundle] URLForResource:@"returnWords" withExtension:@"caf"];
+    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &returnWordsSoundID);
+    
+    tickURLRef = [[NSBundle mainBundle] URLForResource:@"win" withExtension:@"caf"];
+    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &winSoundID);  
     
     [self setOrientation];
     

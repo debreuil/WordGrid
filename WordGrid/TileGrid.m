@@ -7,6 +7,7 @@
 //static NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
 float tw;
 float th;
+NSMutableArray *gapsInserted;
 
 -(id)init
 {
@@ -19,7 +20,7 @@ float th;
     if(self)
     {
         [self genericSetup];
-        [self setup];
+        //[self setup];
     }
     return self;    
 }
@@ -29,7 +30,7 @@ float th;
     if (self) 
     {
         [self genericSetup];
-        [self setup];   
+        //[self setup];   
     }
     return self;
 }
@@ -43,10 +44,11 @@ float th;
      object:nil]; 
 }
 - (void) setup
-    {    
+{    
     gw = 9;
     gh = 7;
-    margin = 4;    
+    margin = 4; 
+    gapsInserted = [[NSMutableArray alloc] initWithCapacity:20];
     
     [self createGrid];
 }
@@ -79,6 +81,11 @@ float th;
 {
     [self createLetters];
     [self layoutGrid:NO];    
+}
+
+- (void)    resetAnimationDelay
+{
+    animationDelay = 0;
 }
 
 - (void) layoutGrid:(Boolean) useAnimation
@@ -254,32 +261,50 @@ float th;
         }
     }
 }
+- (void) moveColumn:(int)src toColumn:(int)dest
+{    
+    for (int j = 0; j < gh; j++) 
+    {
+        // put this column into the left most column
+        int cutIndex = src + (gw * j);
+        Tile *cutTile = [tiles objectAtIndex:cutIndex];
+        [tiles removeObjectAtIndex:cutIndex];
+        [tiles insertObject:cutTile atIndex:dest + (gw * j)];           
+    }
+}
 
--(void) checkForVerticalGaps
+- (void) insertLastVerticalGaps
 {
-    //NSMutableArray gaps = [[NSMutableArray alloc] init];
+    if(gapsInserted.count > 0)
+    {
+        NSMutableArray *gaps = [gapsInserted objectAtIndex:gapsInserted.count - 1];
+        [gapsInserted removeObjectAtIndex:gapsInserted.count - 1];
+        
+        for(int i = gaps.count - 1; i >= 0; i--)
+        {
+            NSNumber *val = [gaps objectAtIndex:i];
+            [self moveColumn:0 toColumn:[val intValue]];
+        }
+    }
+}
+
+- (void) removeVerticalGaps
+{
     hasGap = NO;    
     Boolean hasTiles = NO;
     int firstColumnToCheck = gw * (gh - 1) + 1;
+    NSMutableArray *gaps = [[NSMutableArray alloc] init];
     
     for (int i = firstColumnToCheck; i < gw * gh; i++) 
     {
         Tile *t = [tiles objectAtIndex:i];
         if(t.hidden == YES)
         {
-            if(hasTiles)
+            if(hasTiles) // ignore leading blank columns
             {
                 hasGap = YES;
-                if(hasTiles)
-                {
-                    for (int j = 0; j < gh; j++) 
-                    {
-                        int cutIndex = i - (gw * j);
-                        Tile *cutTile = [tiles objectAtIndex:cutIndex];
-                        [tiles removeObjectAtIndex:cutIndex];
-                        [tiles insertObject:cutTile atIndex:(gw * (gh - j - 1))];           
-                    }
-                }
+                [gaps addObject:[NSNumber numberWithInt:(i % gw)]];
+                [self moveColumn:(i % gw) toColumn:0];
             }
         }
         else
@@ -288,13 +313,15 @@ float th;
         }    
     }    
     
+    [gapsInserted addObject:gaps];
+    
     if(hasGap)
     {
         [self layoutGrid:YES];
     }
 }
 
--(void) removeTilesAndDrop:(NSArray *) indexes
+-(void) removeWordAndDrop:(NSArray *) indexes
 {
     animationDelay = 0.3;
     for (Tile *t in indexes) 
@@ -303,11 +330,12 @@ float th;
     }
     [self layoutGrid:YES];
     animationDelay += 0.1;
-    [self checkForVerticalGaps];
+    [self removeVerticalGaps];
 }
 
 -(void) removeTile:(int) index
 {
+    //NSLog(@"remove: %i (x:%i y:%i)", index, index % gw, (int)(index / gw));
     Tile *t = [tiles objectAtIndex:index];
     if(t.hidden == NO)
     {
@@ -335,6 +363,7 @@ float th;
 
 - (Tile *) insertTile:(Tile *)tile At:(int) index
 {    
+    //NSLog(@"insert: %i (x:%i y:%i)", index, index % gw, (int)(index / gw));
     int topIndex = index % gw;
     Tile *result = [tiles objectAtIndex:topIndex];
     [result setLetter:tile.letter];

@@ -9,6 +9,6 @@
 + (int)        getCurrentIndex;
 + (NSString *)  getCurrentQuote;
 + (NSString *)  getCurrentGrid;
-+ (int)        incrementIndex;
++ (void)       incrementIndex;
 
 @end

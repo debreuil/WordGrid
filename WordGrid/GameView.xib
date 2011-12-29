@@ -45,7 +45,7 @@
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="312021246"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="100101105">
+						<object class="NSColor" key="IBUIBackgroundColor" id="273351375">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MAA</bytes>
 						</object>
@@ -64,8 +64,8 @@
 						<string key="NSFrameSize">{1024, 768}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="590579087"/>
-						<reference key="IBUIBackgroundColor" ref="100101105"/>
+						<reference key="NSNextKeyView" ref="888472147"/>
+						<reference key="IBUIBackgroundColor" ref="273351375"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -102,15 +102,15 @@
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
-					<object class="IBUIImageView" id="590579087">
+					<object class="IBUIImageView" id="888472147">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrameSize">{1024, 768}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="691700799"/>
+						<reference key="NSNextKeyView" ref="262109058"/>
 						<string key="NSReuseIdentifierKey">_NS:569</string>
-						<reference key="IBUIBackgroundColor" ref="100101105"/>
+						<reference key="IBUIBackgroundColor" ref="273351375"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -118,15 +118,15 @@
 							<string key="NSResourceName">victory_horz.jpg</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="691700799">
+					<object class="IBUIImageView" id="262109058">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrameSize">{768, 1024}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="488530083"/>
+						<reference key="NSNextKeyView" ref="197489539"/>
 						<string key="NSReuseIdentifierKey">_NS:569</string>
-						<reference key="IBUIBackgroundColor" ref="100101105"/>
+						<reference key="IBUIBackgroundColor" ref="273351375"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -170,7 +170,7 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUILabel" id="488530083">
+					<object class="IBUILabel" id="197489539">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrame">{{84, 200}, {600, 188}}</string>
@@ -211,7 +211,7 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="158756890"/>
-				<reference key="IBUIBackgroundColor" ref="100101105"/>
+				<reference key="IBUIBackgroundColor" ref="273351375"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
 				</object>
@@ -272,7 +272,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">victoryV</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="691700799"/>
+						<reference key="destination" ref="262109058"/>
 					</object>
 					<int key="connectionID">26</int>
 				</object>
@@ -280,7 +280,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">victoryH</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="590579087"/>
+						<reference key="destination" ref="888472147"/>
 					</object>
 					<int key="connectionID">28</int>
 				</object>
@@ -288,7 +288,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">txVictory</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="488530083"/>
+						<reference key="destination" ref="197489539"/>
 					</object>
 					<int key="connectionID">30</int>
 				</object>
@@ -318,9 +318,9 @@
 							<reference ref="158756890"/>
 							<reference ref="1016526659"/>
 							<reference ref="248888508"/>
-							<reference ref="590579087"/>
-							<reference ref="691700799"/>
-							<reference ref="488530083"/>
+							<reference ref="888472147"/>
+							<reference ref="262109058"/>
+							<reference ref="197489539"/>
 							<reference ref="1029336070"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -366,19 +366,19 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">23</int>
-						<reference key="object" ref="590579087"/>
+						<reference key="object" ref="888472147"/>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">victoryH</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">22</int>
-						<reference key="object" ref="691700799"/>
+						<reference key="object" ref="262109058"/>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">victoryV</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">29</int>
-						<reference key="object" ref="488530083"/>
+						<reference key="object" ref="197489539"/>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">txVictory</string>
 					</object>

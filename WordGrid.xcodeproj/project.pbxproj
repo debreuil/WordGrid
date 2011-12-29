@@ -13,9 +13,6 @@
 		84827B96149E663B0098E408 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84827B94149E663B0098E408 /* InfoPlist.strings */; };
 		84827B98149E663B0098E408 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827B97149E663B0098E408 /* main.m */; };
 		84827B9C149E663C0098E408 /* DDWAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827B9B149E663C0098E408 /* DDWAppDelegate.m */; };
-		84827B9F149E663C0098E408 /* DDWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84827B9E149E663C0098E408 /* DDWViewController.m */; };
-		84827BA2149E663C0098E408 /* DDWViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84827BA0149E663C0098E408 /* DDWViewController_iPhone.xib */; };
-		84827BA5149E663C0098E408 /* DDWViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84827BA3149E663C0098E408 /* DDWViewController_iPad.xib */; };
 		84827BAD149E663C0098E408 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827BAC149E663C0098E408 /* SenTestingKit.framework */; };
 		84827BAE149E663C0098E408 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8B149E663B0098E408 /* UIKit.framework */; };
 		84827BAF149E663C0098E408 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84827B8D149E663B0098E408 /* Foundation.framework */; };
@@ -38,6 +35,12 @@
 		84F9CD0714A90BD200891234 /* main_vert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD0314A90BD200891234 /* main_vert.jpg */; };
 		84F9CD0814A90BD200891234 /* victory_horz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD0414A90BD200891234 /* victory_horz.jpg */; };
 		84F9CD0914A90BD200891234 /* victory_vert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD0514A90BD200891234 /* victory_vert.jpg */; };
+		84F9CD2214AA461800891234 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F9CD2114AA461800891234 /* AudioToolbox.framework */; };
+		84F9CD2814AA4DD100891234 /* win.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD2314AA4DD100891234 /* win.caf */; };
+		84F9CD2914AA4DD100891234 /* smallTick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD2414AA4DD100891234 /* smallTick.caf */; };
+		84F9CD2A14AA4DD100891234 /* returnWords.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD2514AA4DD100891234 /* returnWords.caf */; };
+		84F9CD2B14AA4DD100891234 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD2614AA4DD100891234 /* error.caf */; };
+		84F9CD2C14AA4DD100891234 /* correctWord.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84F9CD2714AA4DD100891234 /* correctWord.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,10 +64,6 @@
 		84827B99149E663B0098E408 /* WordGrid-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WordGrid-Prefix.pch"; sourceTree = "<group>"; };
 		84827B9A149E663B0098E408 /* DDWAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDWAppDelegate.h; sourceTree = "<group>"; };
 		84827B9B149E663C0098E408 /* DDWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDWAppDelegate.m; sourceTree = "<group>"; };
-		84827B9D149E663C0098E408 /* DDWViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDWViewController.h; sourceTree = "<group>"; };
-		84827B9E149E663C0098E408 /* DDWViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDWViewController.m; sourceTree = "<group>"; };
-		84827BA1149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DDWViewController_iPhone.xib; sourceTree = "<group>"; };
-		84827BA4149E663C0098E408 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DDWViewController_iPad.xib; sourceTree = "<group>"; };
 		84827BAB149E663C0098E408 /* WordGridTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordGridTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84827BAC149E663C0098E408 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		84827BB4149E663C0098E408 /* WordGridTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WordGridTests-Info.plist"; sourceTree = "<group>"; };
@@ -95,6 +94,12 @@
 		84F9CD0314A90BD200891234 /* main_vert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = main_vert.jpg; sourceTree = "<group>"; };
 		84F9CD0414A90BD200891234 /* victory_horz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = victory_horz.jpg; sourceTree = "<group>"; };
 		84F9CD0514A90BD200891234 /* victory_vert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = victory_vert.jpg; sourceTree = "<group>"; };
+		84F9CD2114AA461800891234 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		84F9CD2314AA4DD100891234 /* win.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = win.caf; path = Resources/win.caf; sourceTree = SOURCE_ROOT; };
+		84F9CD2414AA4DD100891234 /* smallTick.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = smallTick.caf; path = Resources/smallTick.caf; sourceTree = SOURCE_ROOT; };
+		84F9CD2514AA4DD100891234 /* returnWords.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = returnWords.caf; path = Resources/returnWords.caf; sourceTree = SOURCE_ROOT; };
+		84F9CD2614AA4DD100891234 /* error.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = error.caf; path = Resources/error.caf; sourceTree = SOURCE_ROOT; };
+		84F9CD2714AA4DD100891234 /* correctWord.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = correctWord.caf; path = Resources/correctWord.caf; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84F9CD2214AA461800891234 /* AudioToolbox.framework in Frameworks */,
 				84827B8C149E663B0098E408 /* UIKit.framework in Frameworks */,
 				84827B8E149E663B0098E408 /* Foundation.framework in Frameworks */,
 				84827B90149E663B0098E408 /* CoreGraphics.framework in Frameworks */,
@@ -124,6 +130,7 @@
 		84827B7C149E663B0098E408 = {
 			isa = PBXGroup;
 			children = (
+				84F9CD2114AA461800891234 /* AudioToolbox.framework */,
 				84827B91149E663B0098E408 /* WordGrid */,
 				84827BB2149E663C0098E408 /* WordGridTests */,
 				84827B8A149E663B0098E408 /* Frameworks */,
@@ -154,16 +161,13 @@
 		84827B91149E663B0098E408 /* WordGrid */ = {
 			isa = PBXGroup;
 			children = (
+				84F9CD0A14A96E4300891234 /* Audio */,
 				8482AD8E14A3B08800390CC3 /* Data */,
 				84827BDB149E67300098E408 /* Screens */,
 				84827BC4149E66C70098E408 /* Controls */,
 				84827BC3149E66AE0098E408 /* Images */,
 				84827B9A149E663B0098E408 /* DDWAppDelegate.h */,
 				84827B9B149E663C0098E408 /* DDWAppDelegate.m */,
-				84827B9D149E663C0098E408 /* DDWViewController.h */,
-				84827B9E149E663C0098E408 /* DDWViewController.m */,
-				84827BA0149E663C0098E408 /* DDWViewController_iPhone.xib */,
-				84827BA3149E663C0098E408 /* DDWViewController_iPad.xib */,
 				84827B92149E663B0098E408 /* Supporting Files */,
 			);
 			path = WordGrid;
@@ -251,6 +255,18 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		84F9CD0A14A96E4300891234 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				84F9CD2314AA4DD100891234 /* win.caf */,
+				84F9CD2414AA4DD100891234 /* smallTick.caf */,
+				84F9CD2514AA4DD100891234 /* returnWords.caf */,
+				84F9CD2614AA4DD100891234 /* error.caf */,
+				84F9CD2714AA4DD100891234 /* correctWord.caf */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -322,8 +338,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84827B96149E663B0098E408 /* InfoPlist.strings in Resources */,
-				84827BA2149E663C0098E408 /* DDWViewController_iPhone.xib in Resources */,
-				84827BA5149E663C0098E408 /* DDWViewController_iPad.xib in Resources */,
 				84827BD7149E67170098E408 /* let_norm.png in Resources */,
 				84827BD8149E67170098E408 /* let_sel0.png in Resources */,
 				84827BD9149E67170098E408 /* let_sel1.png in Resources */,
@@ -335,6 +349,11 @@
 				84F9CD0714A90BD200891234 /* main_vert.jpg in Resources */,
 				84F9CD0814A90BD200891234 /* victory_horz.jpg in Resources */,
 				84F9CD0914A90BD200891234 /* victory_vert.jpg in Resources */,
+				84F9CD2814AA4DD100891234 /* win.caf in Resources */,
+				84F9CD2914AA4DD100891234 /* smallTick.caf in Resources */,
+				84F9CD2A14AA4DD100891234 /* returnWords.caf in Resources */,
+				84F9CD2B14AA4DD100891234 /* error.caf in Resources */,
+				84F9CD2C14AA4DD100891234 /* correctWord.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +390,6 @@
 			files = (
 				84827B98149E663B0098E408 /* main.m in Sources */,
 				84827B9C149E663C0098E408 /* DDWAppDelegate.m in Sources */,
-				84827B9F149E663C0098E408 /* DDWViewController.m in Sources */,
 				84827BCD149E67050098E408 /* Tile.m in Sources */,
 				84827BCE149E67050098E408 /* TileGrid.m in Sources */,
 				84827BDE149E67470098E408 /* GameVC.m in Sources */,
@@ -406,22 +424,6 @@
 				84827B95149E663B0098E408 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		84827BA0149E663C0098E408 /* DDWViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				84827BA1149E663C0098E408 /* en */,
-			);
-			name = DDWViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		84827BA3149E663C0098E408 /* DDWViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				84827BA4149E663C0098E408 /* en */,
-			);
-			name = DDWViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 		84827BB5149E663C0098E408 /* InfoPlist.strings */ = {

@@ -11,7 +11,7 @@
 - (int)     getTileIndexFromMousePoint:(CGPoint) point;
 - (Tile *)  getTileFromPoint:(CGPoint) p;
 - (void)    hoverTileAtPoint:(CGPoint) point;
-- (void)    removeTilesAndDrop:(NSArray *) indexes;
+- (void)    removeWordAndDrop:(NSArray *) indexes;
 - (void)    removeTile:(int) index;
 - (void)    setAllIsSelectable:(Boolean) sel;
 

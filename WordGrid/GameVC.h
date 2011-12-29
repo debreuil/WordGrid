@@ -1,7 +1,9 @@
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import "Tile.h"
 #import "TileGrid.h"
 #import "AnswerGrid.h"
+
 
 @interface GameVC : UIViewController
 {
@@ -19,6 +21,8 @@
     int lastSelectedTileIndex;
 }
 
++ (GameVC *) getCurrentGame;
+- (AnswerGrid *) getAnswerGrid;
 - (void) nextRound;
 - (void) tileSelected:(Tile *) t;
 - (void) answerSelected:(NSNotification *)notification;

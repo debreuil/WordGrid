@@ -5,6 +5,7 @@
 static NSArray *imageStates;
 static UIImage *errorImage;
 static float hoverScale = 1.5;
+static SystemSoundID tickSoundID;
 
 @synthesize gridIndex;
 @synthesize originalIndex;
@@ -21,6 +22,7 @@ static float hoverScale = 1.5;
 
 NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+
 + (void) load
 {
     errorImage = [UIImage imageNamed:@"errorTile.png"];
@@ -30,6 +32,9 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                         [UIImage imageNamed:@"let_sel0.png"],
                         [UIImage imageNamed:@"let_sel1.png"],
                         [UIImage imageNamed:@"let_sel2.png"], nil];
+    
+    NSURL *tickURLRef = [[NSBundle mainBundle] URLForResource:@"smallTick" withExtension:@"caf"];
+    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &tickSoundID);                                            
 }
 
 - (id)init
@@ -215,6 +220,7 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     //NSLog(@"%i", gridIndex);
     if([self isSelectable])
     {
+        AudioServicesPlaySystemSound(tickSoundID);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];
     }
 }

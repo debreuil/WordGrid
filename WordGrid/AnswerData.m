@@ -9,7 +9,13 @@ static NSArray *quotes;
 {
     currentIndex = 0;
     quotes = [NSArray arrayWithObjects:
-                [NSArray arrayWithObjects:
+              [NSArray arrayWithObjects:
+               @"THE TRUE MYSTERY OF THE WORLD IS THE VISIBLE NOT THE INVISIBLE", 
+                    @"           TRIEHT VTEUNTSYMIHINVERYOSEEOIIBLFISWTSTHEEBLORLDEHT",
+               @"Oscar Wilde", 
+               @"62,61,60,59,58,49,40,31,22,61,60,59,57,48,39,56,55,54,45,36,27,18,60,61,62,46,47,59,58,57,56,47,37,28,19,44,35,34,33,32,23,24,25,26,20,21,12,11,14,15,16", nil
+               ],
+               [NSArray arrayWithObjects:
                     @"FIND ALL THE WORDS", 
                     @"                                       TW      ALHO   FINDLERDS", nil
                 ],
@@ -62,7 +68,7 @@ static NSArray *quotes;
     return currentIndex;
 }
 
-+ (int) incrementIndex
++ (void) incrementIndex
 {
     currentIndex++;
     if(currentIndex >= quotes.count)

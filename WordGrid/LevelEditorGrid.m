@@ -3,11 +3,14 @@
 #import "Tile.h"
 #import "AnswerGrid.h"
 #import "AnswerData.h"
+#import "GameVC.h"
 
 @implementation LevelEditorGrid
 
 int answerIndex;
 int rightmostColumn;
+NSMutableArray *indexes;
+AnswerGrid *answerGrid;
 
 - (void) setup
 {    
@@ -22,10 +25,15 @@ int rightmostColumn;
         
     [self createGrid];  
     [self setAllIsSelectable:YES];
+    
 }
 
 - (void) createLetters
 { 
+    answerGrid = [[GameVC getCurrentGame] getAnswerGrid];    
+    [answerGrid setDirection:-1];
+    indexes = [[NSMutableArray alloc] initWithCapacity:100];
+        
     for (Tile* t in tiles) 
     {
         NSString *s = @" "; 
@@ -62,6 +70,11 @@ int rightmostColumn;
         BOOL select = [self isValidInsertLocation:t.gridIndex] ? sel : NO;
         [t setIsSelectable:select];
     }
+    
+}
+- (void) setSelectableByLetter:(NSString *)let
+{    
+    [answerGrid showAllLetters];
 }
 
 - (NSMutableArray *) getValidNextInsertionIndexes:(int) index
@@ -126,6 +139,10 @@ int rightmostColumn;
     
     [tile setLetter:[answer substringWithRange:NSMakeRange(answerIndex, 1)]];
     
+    [answerGrid setNextTileUsingTile:tile];
+    
+    [indexes addObject:[NSNumber numberWithInteger:tile.gridIndex]];
+    
     answerIndex--;
     if(answerIndex < 0)
     {
@@ -147,5 +164,31 @@ int rightmostColumn;
     }
 }
 
+- (NSString *) serializeGridLetters
+{
+    NSMutableString *s = [NSMutableString stringWithCapacity:tiles.count];
+    
+    for (Tile *t in tiles) 
+    {
+        //if(t.gridIndex % gw == 0)
+        //{
+        //    [s appendString:@"\r"];
+        //}
+        [s appendString:t.letter];
+    } 
+    
+    [s appendString:@"\r\""];
+    NSString *comma = @"";
+    
+    for (NSNumber *n in indexes) 
+    {
+        [s appendString:comma];
+        [s appendString:[NSString stringWithFormat:@"%i", [n intValue]] ];
+        comma = @",";
+    }
+    
+    [s appendString:@"\""];
+    return s;
+} 
 
 @end

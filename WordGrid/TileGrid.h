@@ -21,7 +21,7 @@
 - (void)    createLetters;
 - (void)    clearAllHovers;
 - (Tile *)  insertTile:(Tile *)tile At:(int) index;
-- (void)    checkForVerticalGaps;
+- (void)    removeVerticalGaps;
 - (CGPoint)  getPointFromIndex:(int)index;
 - (void)    setSelectableAroundIndex:(int) index;
 - (void)    onSelectTile:(NSNotification *)notification;
@@ -29,5 +29,7 @@
 - (Tile *)  getTileAtIndex:(int) index;
 - (NSString *) serializeGridLetters;
 - (void)    setSelectableByLetter:(NSString *)let;
+- (void)    resetAnimationDelay;
+- (void)    insertLastVerticalGaps;
 
 @end

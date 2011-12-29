@@ -6,6 +6,7 @@
 {  
     NSString *answer;
     NSArray *answerWords;
+    int direction;
 }
 
 - (int)         getAnswerIndex;
@@ -21,5 +22,7 @@
 - (void)        showVowelHints;
 - (Boolean)      testCurrentWordCorrect;
 - (Boolean)      didWin;
+- (void)        showAllLetters;
+- (void)        setDirection:(int)dir;
 
 @end

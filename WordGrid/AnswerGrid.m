@@ -5,16 +5,31 @@
 @implementation AnswerGrid 
 
 int answerLength;
-int answerIndex;
+int currentIndex;
+
 NSMutableArray *wordBoundries;
 
 - (void) setup
 {    
     gw = 15;
     gh = 4;
-    margin = 2; 
+    margin = 2;  
+    direction = 1;
     
     [self createGrid];
+}
+
+- (void) setDirection:(int)dir
+{
+    direction = dir;
+    if(dir == 1)
+    {
+        currentIndex = 0;        
+    }
+    else
+    {
+        currentIndex = answerLength - 1;
+    }
 }
 
 - (void) createLetters
@@ -22,7 +37,7 @@ NSMutableArray *wordBoundries;
     answer = [AnswerData getCurrentQuote];
     answerWords = [answer componentsSeparatedByString: @" "];
     wordBoundries = [[NSMutableArray alloc] init];
-    answerIndex = 0;
+    currentIndex = 0;
     answerLength = 0;
     
     int wordIndex = 0;       
@@ -128,6 +143,13 @@ NSMutableArray *wordBoundries;
     [self showFirstLetterHints];
 }
 
+- (void) showAllLetters
+{
+    for(Tile *t in tiles)
+    {
+        [t setLetterShowing:YES];
+    }
+}
 - (void) showFirstLetterHints
 {
     int counter = 0;
@@ -163,30 +185,30 @@ NSMutableArray *wordBoundries;
 - (Tile *) getNextTile
 {
     Tile * result = nil;
-    if(answerIndex < answerLength)
+    if(currentIndex < answerLength && currentIndex >= 0)
     {
-        result = [tiles objectAtIndex:answerIndex];
+        result = [tiles objectAtIndex:currentIndex];
     }
     return result;
 }
 
 - (void) setNextTileUsingTile:(Tile *)srcTile
 {    
-    if(answerIndex < answerLength)
+    if(currentIndex < answerLength)
     {
-        Tile *newTile = [tiles objectAtIndex:answerIndex];
+        Tile *newTile = [tiles objectAtIndex:currentIndex];
         [newTile setLetter:[srcTile letter]];
         [newTile setOriginalIndex:srcTile.gridIndex];
         //[newTile setIsSelectable:YES];
         [newTile setSelected:YES];
         
-        answerIndex++;
+        currentIndex += direction;
     }
 }
 
 - (int) getAnswerIndex
 {
-    return answerIndex;
+    return currentIndex;
 }
 
 - (int) getWordStartIndex:(int) index 
@@ -224,16 +246,16 @@ NSMutableArray *wordBoundries;
 
 - (int) getCurrentWordStart 
 {
-    int result = [self getWordStartIndex:answerIndex];
+    int result = [self getWordStartIndex:currentIndex];
     return result;
 }
 
 - (NSString *) getCurrentLetter
 {
     NSString *result = nil;
-    if(answerIndex > 0)
+    if(currentIndex > 0)
     {
-        Tile *t = [tiles objectAtIndex:answerIndex];
+        Tile *t = [tiles objectAtIndex:currentIndex];
         result = t.letter;
     }
     return result;
@@ -241,9 +263,9 @@ NSMutableArray *wordBoundries;
 - (NSString *) getCurrentCorrectLetter
 {
     NSString *result = nil;
-    if(answerIndex >= 0)
+    if(currentIndex >= 0)
     {
-        Tile *t = [tiles objectAtIndex:answerIndex];
+        Tile *t = [tiles objectAtIndex:currentIndex];
         result = t.correctLetter;
     }
     return result;
@@ -252,15 +274,16 @@ NSMutableArray *wordBoundries;
 - (Tile *) removeCurrentTile
 {
     Tile *result = nil;
-    if(answerIndex > 0)
+    if(currentIndex > 0)
     {
-        result = [tiles objectAtIndex:answerIndex - 1];
+        result = [tiles objectAtIndex:currentIndex - 1];
         //[result setLetter:@""];
         [result setIsSelectable:NO];
         [result setSelected:NO];
         [result setErrorMarkVisible:NO];
-        answerIndex--;
-        [[tiles objectAtIndex:answerIndex] setIsSelectable:YES];
+        
+        currentIndex += -direction;
+        [[tiles objectAtIndex:currentIndex] setIsSelectable:YES];
     }
     return result;
 }
@@ -272,7 +295,7 @@ NSMutableArray *wordBoundries;
     for (NSNumber *n in wordBoundries) 
     {
         
-        if ([n integerValue] == answerIndex) 
+        if ([n integerValue] == currentIndex) 
         {
             result = YES;
             break;
@@ -287,7 +310,7 @@ NSMutableArray *wordBoundries;
     int wordLen = 0;
     int start = 0;
         
-    for (; start < answerIndex; start += wordLen) 
+    for (; start < currentIndex; start += wordLen) 
     {
         if(counter < answerWords.count)
         {
