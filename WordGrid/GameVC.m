@@ -10,6 +10,8 @@ static GameVC *currentGame;
 typedef enum { Game, Victory } GameState;
 GameState gameState = Game;
 Boolean isLandscape = NO;
+NSArray *indexes;
+
 
 SystemSoundID correctWordSoundID;
 SystemSoundID errorSoundID;
@@ -154,7 +156,22 @@ SystemSoundID winSoundID;
 {
     if([answerGrid atWordBoundry])
     {        
-        [tileGrid resetGrid];  
+        [tileGrid resetGrid];
+        
+        Boolean correct = [answerGrid testCurrentWordCorrect];
+        if(correct)
+        {
+ /*         NSRange r = NSMakeRange([answerGrid getAnswerIndex] - answerRefs.count, answerRefs.count);
+            NSArray *correctTileIndexes = [indexes subarrayWithRange:r];
+            for (int i = 0; i < correctTileIndexes.count; i++) 
+            {      
+                NSNumber *corIndex = [correctTileIndexes objectAtIndex:i];
+                Tile *corTile = [tileGrid getTileAtIndex:[corIndex integerValue]];
+                [answerRefs replaceObjectAtIndex:i withObject:corTile];
+            }
+ */ 
+        }
+       
         [tileGrid removeWordAndDrop:answerRefs];
         [answerRefs removeAllObjects];
         
@@ -187,27 +204,30 @@ SystemSoundID winSoundID;
 - (void) nextRound
 {
     gameState = Game;
+    
     [AnswerData incrementIndex];
+    
     [tileGrid createRound];
     [answerGrid createRound];
+    
     NSString *let = [answerGrid getCurrentCorrectLetter];
     [tileGrid setSelectableByLetter:let];
+    
+    indexes = [AnswerData getCurrentIndexes];
+    
     [self setOrientation];
 }
 
 - (void)didReceiveMemoryWarning
 {
-    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [answerGrid setup];
+    [answerGrid setup]; // answer grid needs to be setup first
     [tileGrid setup];
     
     answerRefs = [[NSMutableArray alloc] initWithCapacity:20];    
@@ -236,13 +256,7 @@ SystemSoundID winSoundID;
     tickURLRef = [[NSBundle mainBundle] URLForResource:@"win" withExtension:@"caf"];
     AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &winSoundID);  
     
-    [self setOrientation];
-    
-    NSString *let = [answerGrid getCurrentCorrectLetter];
-    if(let != nil)
-    {
-        [tileGrid setSelectableByLetter:let];
-    }    
+    [self nextRound];  
 }
 
 - (void)viewDidUnload

@@ -8,7 +8,6 @@
 float tw;
 float th;
 NSMutableArray *gapsInserted;
-
 -(id)init
 {
     self = [super init];
@@ -138,7 +137,7 @@ NSMutableArray *gapsInserted;
 }
 
 - (void) createLetters
-{ 
+{     
     NSString *testString = [AnswerData getCurrentGrid];
     int index = 0;
     for (Tile* t in tiles) 
@@ -321,10 +320,10 @@ NSMutableArray *gapsInserted;
     }
 }
 
--(void) removeWordAndDrop:(NSArray *) indexes
+-(void) removeWordAndDrop:(NSArray *) indexesToRemove
 {
     animationDelay = 0.3;
-    for (Tile *t in indexes) 
+    for (Tile *t in indexesToRemove) 
     {
         [self removeTile:t.gridIndex];
     }

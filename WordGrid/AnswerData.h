@@ -9,7 +9,8 @@
 + (int)        getCurrentIndex;
 + (NSString *)  getCurrentQuote;
 + (NSString *)  getCurrentSource;
-+ (NSString *) getCurrentGrid;
++ (NSArray *)   getCurrentIndexes;
++ (NSString *)  getCurrentGrid;
 + (void)       incrementIndex;
 
 @end

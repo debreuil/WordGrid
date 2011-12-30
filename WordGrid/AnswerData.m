@@ -4,10 +4,12 @@
 
 static int currentIndex;
 static NSArray *quotes;
+static BOOL hasPlayed;
 
 + (void) initialize
 {
     currentIndex = 0;
+    hasPlayed = NO;
     quotes = [NSArray arrayWithObjects:
               
               
@@ -28,6 +30,7 @@ static NSArray *quotes;
               //[NSArray arrayWithObjects:@"THERE ARE LIES, DAMNED LIES AND STATISTICS.", @"", @"MARK TWAIN", nil],
               //[NSArray arrayWithObjects:@"I'VE NEVER LET MY SCHOOLING INTERFERE WITH MY EDUCATION.", @"", @"MARK TWAIN", nil],
              //[NSArray arrayWithObjects:@"ACTION SPEAKS LOUDER THAN WORDS, BUT NOT NEARLY AS OFTEN.", @"", @"MARK TWAIN", nil],
+              
   /*             [NSArray arrayWithObjects:@"ANY EMOTION, IF IT IS SINCERE, IS INVOLUNTARY.", @"", @"MARK TWAIN", nil],
               [NSArray arrayWithObjects:@"BUY LAND, THEY'RE NOT MAKING IT ANYMORE.", @"", @"MARK TWAIN", nil],
               [NSArray arrayWithObjects:@"CAULIFLOWER IS NOTHING BUT CABBAGE WITH A COLLEGE EDUCATION.", @"", @"MARK TWAIN", nil],
@@ -47,26 +50,29 @@ static NSArray *quotes;
               [NSArray arrayWithObjects:@"REALITY IS MERELY AN ILLUSION, ALBEIT A VERY PERSISTENT ONE.", @"", @"ALBERT EINSTEIN", nil],
               [NSArray arrayWithObjects:@"TIME IS WHAT PREVENTS EVERYTHING FROM HAPPENING AT ONCE.", @"", @"ALBERT EINSTEIN", nil],
 */              
-              
               [NSArray arrayWithObjects:
-               @"FIND ALL THE WORDS", 
-               @"                                       TW      ALHO   FINDLERDS", nil
+               @"PRESS ON THE ANSWER TO UNDO WORDS",
+               @"                             UTHE     AWORERP NNNDOSTO OSWERSDS",
+               @"WAS THE CORRECT ANSWER!",
+               @"44,43,42,51,60,55,55,30,31,32,38,47,56,57,58,59,52,53,56,57,58,59,57,58,59,61,62", nil
                ],
               [NSArray arrayWithObjects:
-               @"PRESS ON THE ANSWER AREA TO UNDO SOME WORDS", 
-               @"                     SW    UNDOOO   PRESSMRDSANSAREETOTHEWERAON", nil
-               ],
-              [NSArray arrayWithObjects:
-               @"ALL GREAT TRUTHS BEGIN AS BLASPHEMIES",
-               @"             E      TBTH     RUGS     BLINALA EHPGRELS MIEASATS",
-               @"George Bernard Shaw",
-               @"42,43,52,49,50,51,60,61,22,31,32,33,34,43,32,33,42,51,52,60,61,42,43,44,53,52,51,50,59,60,61,62", nil
+               @"FIND ALL THE WORDS",
+               @"                                      F    A   IW THLL  NDOREDS",
+               @"WAS THE CORRECT ANSWER!",
+               @"38,47,56,57,43,52,53,50,51,60,58,59,60,61,62", nil
                ],
               [NSArray arrayWithObjects:
                @"I AM NOT YOUNG ENOUGH TO KNOW EVERYTHING",
                @"         EYOU     VOTN     EKNG     RYOE     HTWNUGH IINGONOTAM",
                @"Oscar Wilde",
                @"53,61,62,60,61,62,12,13,14,23,32,41,50,59,60,61,62,26,25,34,35,44,53,15,24,33,42,43,52,51,60,61,62", nil
+               ],
+              [NSArray arrayWithObjects:
+               @"ALL GREAT TRUTHS BEGIN AS BLASPHEMIES",
+               @"             E      TBTH     RUGS     BLINALA EHPGRELS MIEASATS",
+               @"George Bernard Shaw",
+               @"42,43,52,49,50,51,60,61,22,31,32,33,34,43,32,33,42,51,52,60,61,42,43,44,53,52,51,50,59,60,61,62", nil
                ],
               [NSArray arrayWithObjects:
                @"ONE SHOULD ALWAYS PLAY FAIRLY WHEN ONE HAS THE WINNING CARDS",
@@ -222,11 +228,15 @@ static NSArray *quotes;
 
 + (void) incrementIndex
 {
-    currentIndex++;
-    if(currentIndex >= quotes.count)
+    if(hasPlayed)
     {
-        currentIndex = 0;
+        currentIndex++;
+        if(currentIndex >= quotes.count)
+        {
+            currentIndex = 0;
+        }
     }
+    hasPlayed = YES;
 }
 
 + (NSString *) getCurrentQuote
@@ -241,6 +251,28 @@ static NSArray *quotes;
     if(ar.count > 2)
     {
         result = [ar objectAtIndex:2];
+    }
+    return result;
+}
+
++ (NSArray *) getCurrentIndexes
+{
+    NSArray *result;
+    NSArray *ar = [quotes objectAtIndex:[AnswerData getCurrentIndex]];
+    if(ar.count > 3)
+    {
+        NSString *s = [ar objectAtIndex:3];
+        NSArray *sInts = [s componentsSeparatedByString:@","];
+        int count = sInts.count;
+        id nums[count];        
+        
+        for (int i = 0; i < count; i++) 
+        {
+            int num = [[sInts objectAtIndex:i] intValue];
+            nums[i] = [NSNumber numberWithInt:num];
+        }
+        
+        result = [NSArray arrayWithObjects:nums count:count];
     }
     return result;
 }

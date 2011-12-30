@@ -22,14 +22,7 @@ NSMutableArray *wordBoundries;
 - (void) setDirection:(int)dir
 {
     direction = dir;
-    if(dir == 1)
-    {
-        currentIndex = 0;        
-    }
-    else
-    {
-        currentIndex = answerLength - 1;
-    }
+    currentIndex = (direction == 1) ? 0 : answerLength - 1;
 }
 
 - (void) createLetters
@@ -40,7 +33,6 @@ NSMutableArray *wordBoundries;
     answer = [answer stringByReplacingOccurrencesOfString:@"'" withString:@""];
     answerWords = [answer componentsSeparatedByString: @" "];
     wordBoundries = [[NSMutableArray alloc] init];
-    currentIndex = 0;
     answerLength = 0;
     
     int wordIndex = 0;       
@@ -87,7 +79,8 @@ NSMutableArray *wordBoundries;
                 }                
             }                
         }             
-    }    
+    } 
+    currentIndex = (direction == 1) ? 0 : answerLength - 1;   
 }
 
 - (void) ownTileSelected:(Tile *)tile;

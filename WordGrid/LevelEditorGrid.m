@@ -9,7 +9,7 @@
 
 int answerIndex;
 int rightmostColumn;
-NSMutableArray *indexes;
+NSMutableArray *sequence;
 AnswerGrid *answerGrid;
 
 - (void) setup
@@ -35,7 +35,7 @@ AnswerGrid *answerGrid;
 { 
     answerGrid = [[GameVC getCurrentGame] getAnswerGrid];    
     [answerGrid setDirection:-1];
-    indexes = [[NSMutableArray alloc] initWithCapacity:100];
+    sequence = [[NSMutableArray alloc] initWithCapacity:100];
         
     for (Tile* t in tiles) 
     {
@@ -179,7 +179,7 @@ AnswerGrid *answerGrid;
     
     [answerGrid setNextTileUsingTile:tile];
     
-    [indexes addObject:[NSNumber numberWithInteger:tile.gridIndex]];
+    [sequence addObject:tile];
     
     answerIndex--;
     if(answerIndex < 0)
@@ -230,7 +230,7 @@ AnswerGrid *answerGrid;
      @"62,61,60,59,58,49,40,31,22,61,60,59,57,48,39,56,55,54,45,36,27,18,60,61,62,46,47,59,58,57,56,47,37,28,19,44,35,34,33,32,23,24,25,26,20,21,12,11,14,15,16", nil
      ],
      */
-    NSMutableString *s = [NSMutableString stringWithCapacity:tiles.count];
+    NSMutableString *s = [NSMutableString stringWithCapacity:tiles.count];  
     [s appendString:@"\r\r[NSArray arrayWithObjects:\r"];    
     [s appendString:@"@\""]; [s appendString:answer]; [s appendString:@"\",\r"];
     
@@ -250,11 +250,11 @@ AnswerGrid *answerGrid;
     
     [s appendString:@"@\""];
     NSString *comma = @"";    
-    for (int i = indexes.count - 1; i >= 0; i--) 
+    for (int i = sequence.count - 1; i >= 0; i--) 
     {
-        NSNumber *n = [indexes objectAtIndex:i];
+        Tile *t = [sequence objectAtIndex:i];
         [s appendString:comma];
-        [s appendString:[NSString stringWithFormat:@"%i", [n intValue]] ];
+        [s appendString:[NSString stringWithFormat:@"%i", t.gridIndex] ];
         comma = @",";
     }    
     [s appendString:@"\", nil\r"];
