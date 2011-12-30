@@ -52,9 +52,9 @@ static BOOL hasPlayed;
 */              
               [NSArray arrayWithObjects:
                @"PRESS ON THE ANSWER TO UNDO WORDS",
-               @"                             UTHE     AWORERP NNNDOSTO OSWERSDS",
+               @"                 S        D O     ERAN    THOUTS EPSWWNDNSROERO",
                @"WAS THE CORRECT ANSWER!",
-               @"44,43,42,51,60,55,55,30,31,32,38,47,56,57,58,59,52,53,56,57,58,59,57,58,59,61,62", nil
+               @"50,58,49,57,47,59,58,42,43,34,40,41,51,52,60,61,52,43,51,60,61,62,62,53,44,35,26", nil
                ],
               [NSArray arrayWithObjects:
                @"FIND ALL THE WORDS",

@@ -161,7 +161,7 @@ SystemSoundID winSoundID;
         Boolean correct = [answerGrid testCurrentWordCorrect];
         if(correct)
         {
- /*         NSRange r = NSMakeRange([answerGrid getAnswerIndex] - answerRefs.count, answerRefs.count);
+         NSRange r = NSMakeRange([answerGrid getAnswerIndex] - answerRefs.count, answerRefs.count);
             NSArray *correctTileIndexes = [indexes subarrayWithRange:r];
             for (int i = 0; i < correctTileIndexes.count; i++) 
             {      
@@ -169,7 +169,6 @@ SystemSoundID winSoundID;
                 Tile *corTile = [tileGrid getTileAtIndex:[corIndex integerValue]];
                 [answerRefs replaceObjectAtIndex:i withObject:corTile];
             }
- */ 
         }
        
         [tileGrid removeWordAndDrop:answerRefs];
