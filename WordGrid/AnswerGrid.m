@@ -35,6 +35,9 @@ NSMutableArray *wordBoundries;
 - (void) createLetters
 {  
     answer = [AnswerData getCurrentQuote];
+    answer = [answer stringByReplacingOccurrencesOfString:@"," withString:@""];
+    answer = [answer stringByReplacingOccurrencesOfString:@"." withString:@""];
+    answer = [answer stringByReplacingOccurrencesOfString:@"'" withString:@""];
     answerWords = [answer componentsSeparatedByString: @" "];
     wordBoundries = [[NSMutableArray alloc] init];
     currentIndex = 0;

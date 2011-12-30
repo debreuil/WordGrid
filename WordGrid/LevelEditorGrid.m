@@ -16,6 +16,9 @@ AnswerGrid *answerGrid;
 {    
     answer = [AnswerData getCurrentQuote];
     //answer = [answer stringByReplacingOccurrencesOfString:@" " withString:@""];
+    answer = [answer stringByReplacingOccurrencesOfString:@"," withString:@""];
+    answer = [answer stringByReplacingOccurrencesOfString:@"." withString:@""];
+    answer = [answer stringByReplacingOccurrencesOfString:@"'" withString:@""];
     answerIndex = [answer length] - 1;
     
     gw = 9;
@@ -41,6 +44,36 @@ AnswerGrid *answerGrid;
     }
 }
 
+- (BOOL) isAtEndOfWord
+{
+    BOOL result = NO;
+    if(answerIndex >= answer.length - 1 || [answer characterAtIndex:answerIndex + 1] == ' ')
+    {
+        result = YES;
+    }
+    return result;
+}
+
+- (BOOL) tileIndicatesColumnInsert:(Tile *)t
+{    
+    BOOL result = NO;
+    
+    // check for top row inserts
+    if (t != nil &&
+        t.gridIndex < gw &&
+        t.gridIndex > rightmostColumn &&
+        t.letter == @" ")
+    {
+        Tile *tileUnder = [tiles objectAtIndex:t.gridIndex + gw];
+        if(tileUnder.letter == @" ")
+        {
+            result = YES;
+        }            
+    }
+
+    return result;
+}
+
 - (BOOL) isValidInsertLocation:(int)index
 {
     BOOL result = NO;
@@ -59,9 +92,16 @@ AnswerGrid *answerGrid;
                 }
             }
         }
+        
+        // check for top row inserts
+        if (result == NO && [self isAtEndOfWord] && [self tileIndicatesColumnInsert:t] )
+        {
+            result = YES;
+        }
     }
     return result;
 }
+
 
 -(void) setAllIsSelectable:(Boolean) sel
 {
@@ -104,10 +144,8 @@ AnswerGrid *answerGrid;
         [t setSelected:NO];
     }
 }
-
-- (void) ownTileSelected:(Tile *)tile;
-{  
-    [self clearAllHovers];
+- (void) insertLetter:(Tile *) tile
+{    
     [self setAllIsSelectable:NO];
     [tile setSelected:YES];
     
@@ -164,30 +202,64 @@ AnswerGrid *answerGrid;
     }
 }
 
+- (void) ownTileSelected:(Tile *)tile;
+{  
+    [self clearAllHovers];
+    if([self tileIndicatesColumnInsert:tile])
+    {
+        int col = tile.gridIndex % gw;
+        [self moveColumn:0 toColumn:col];
+        rightmostColumn--;
+        [self layoutGrid:NO];
+        [self setAllIsSelectable:YES];
+        [self deselectAll];
+    }
+    else
+    {
+        [self insertLetter:tile];
+    }
+}
+
 - (NSString *) serializeGridLetters
 {
+    /*
+     [NSArray arrayWithObjects:
+     @"THE TRUE MYSTERY OF THE WORLD IS THE VISIBLE NOT THE INVISIBLE", 
+     @"           TRIEHT VTEUNTSYMIHINVERYOSEEOIIBLFISWTSTHEEBLORLDEHT",
+     @"Oscar Wilde", 
+     @"62,61,60,59,58,49,40,31,22,61,60,59,57,48,39,56,55,54,45,36,27,18,60,61,62,46,47,59,58,57,56,47,37,28,19,44,35,34,33,32,23,24,25,26,20,21,12,11,14,15,16", nil
+     ],
+     */
     NSMutableString *s = [NSMutableString stringWithCapacity:tiles.count];
+    [s appendString:@"\r\r[NSArray arrayWithObjects:\r"];    
+    [s appendString:@"@\""]; [s appendString:answer]; [s appendString:@"\",\r"];
     
+    
+    [s appendString:@"@\""];
     for (Tile *t in tiles) 
     {
-        //if(t.gridIndex % gw == 0)
-        //{
-        //    [s appendString:@"\r"];
-        //}
         [s appendString:t.letter];
-    } 
+    }     
+    [s appendString:@"\",\r"];
     
-    [s appendString:@"\r\""];
-    NSString *comma = @"";
     
-    for (NSNumber *n in indexes) 
+    [s appendString:@"@\""];
+    [s appendString:[AnswerData getCurrentSource]];
+    [s appendString:@"\",\r"];
+    
+    
+    [s appendString:@"@\""];
+    NSString *comma = @"";    
+    for (int i = indexes.count - 1; i >= 0; i--) 
     {
+        NSNumber *n = [indexes objectAtIndex:i];
         [s appendString:comma];
         [s appendString:[NSString stringWithFormat:@"%i", [n intValue]] ];
         comma = @",";
-    }
+    }    
+    [s appendString:@"\", nil\r"];
     
-    [s appendString:@"\""];
+    [s appendString:@"],\r"];
     return s;
 } 
 

@@ -423,17 +423,7 @@ NSMutableArray *gapsInserted;
 { 
     [super touchesEnded:touches withEvent:event];
     
-    [self clearAllHovers];
-    
-    /*
-    UITouch *t = [touches anyObject];
-    int tileIndex = [self getTileIndexFromMousePoint:[t locationInView:self]];    
-    if(tileIndex > -1)
-    {
-        Tile *tile = [tiles objectAtIndex:tileIndex];
-        [self onSelectTile:tile];
-    }  
-    */
+    [self clearAllHovers];    
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {

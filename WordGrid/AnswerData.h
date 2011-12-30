@@ -8,7 +8,8 @@
 + (int)        getQuoteCount;
 + (int)        getCurrentIndex;
 + (NSString *)  getCurrentQuote;
-+ (NSString *)  getCurrentGrid;
++ (NSString *)  getCurrentSource;
++ (NSString *) getCurrentGrid;
 + (void)       incrementIndex;
 
 @end
