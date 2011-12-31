@@ -11,7 +11,7 @@ typedef enum { Game, Victory } GameState;
 GameState gameState = Game;
 Boolean isLandscape = NO;
 NSArray *indexes;
-
+float letterMoveDelay;
 
 SystemSoundID correctWordSoundID;
 SystemSoundID errorSoundID;
@@ -49,6 +49,11 @@ SystemSoundID winSoundID;
 - (void) tileSelected:(NSNotification *)notification
 {
     Tile *t = (Tile *)[notification object];
+    [self onTileSelected:t];
+}
+
+- (void) onTileSelected:(Tile *)t
+{
     lastSelectedTileIndex = t.gridIndex;
     
     if(t.isSelectable)
@@ -60,12 +65,12 @@ SystemSoundID winSoundID;
                               -answerGrid.frame.origin.y + tileGrid.frame.origin.y + t.frame.origin.y,
                               t.frame.size.width,
                               t.frame.size.height);
-        //NSLog(@"org: %f %f", at.frame.origin.x, at.frame.origin.y);
+        //NSLog(@"org: %f %f", t.frame.size.width, t.frame.size.height);
         [answerGrid setNextTileUsingTile:t];        
         
         [UIView  
          animateWithDuration:0.3
-         delay:0.0
+         delay:letterMoveDelay
          options: UIViewAnimationCurveEaseOut
          animations:^
          {
@@ -108,7 +113,7 @@ SystemSoundID winSoundID;
     Tile *t = (Tile *)[notification object];
     int firstLetter = [answerGrid getWordStartIndex:t.gridIndex];
     int lastRemoved = [answerGrid getCurrentWordStart];
-    [tileGrid resetAnimationDelay];
+    [tileGrid resetAnimationDelay:0];
     
     NSMutableArray *reinsertWordTiles = [NSMutableArray arrayWithCapacity:10];
     
@@ -218,6 +223,21 @@ SystemSoundID winSoundID;
     }
 }
 
+- (void) autoSelectFirstLetter
+{    
+    if([tileGrid isMemberOfClass:[TileGrid class]])
+    {
+        letterMoveDelay = 0.5;
+        NSNumber *firstTileIndex = [indexes objectAtIndex:0];
+        Tile *t = [tileGrid getTileAtIndex:[firstTileIndex integerValue] ];
+        
+        [self.view insertSubview:answerGrid aboveSubview:tileGrid];
+        [tileGrid bringSubviewToFront:t];
+        [tileGrid ownTileSelected:t];
+        letterMoveDelay = 0.0;
+    }
+}
+
 - (void) nextRound
 {
     gameState = Game;
@@ -231,6 +251,9 @@ SystemSoundID winSoundID;
     [tileGrid setSelectableByLetter:let];
     
     indexes = [AnswerData getCurrentIndexes];
+    
+    // first letter is a gift
+    [self autoSelectFirstLetter];
     
     [self setOrientation];
 }

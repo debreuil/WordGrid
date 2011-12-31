@@ -28,10 +28,10 @@ static BOOL hasPlayed;
                @"50,51,52,53,57,58,59,58,59,60,58,59,60,61,62", nil
                ],
               [NSArray arrayWithObjects:
-               @"PRESS ON LOWER PANEL TO REVERT TILES",
-               @"                           PRESS    ONOREVE  PTELTILRTANLOWERES",
+               @"PRESS ON THE LOWER PANEL TO REVERT TILES",
+               @"          P       PL       RO  T    EWTHEIONTSEREVELEOSRANELRTS",
                @"WAS THE CORRECT ANSWER!",
-               @"27,28,29,30,31,36,37,56,57,58,59,60,45,54,55,56,57,55,56,57,49,50,51,52,53,58,59,60,61,62", nil
+               @"18,27,36,45,54,42,43,38,39,40,19,28,37,46,55,55,56,57,58,59,44,53,56,57,58,59,60,61,58,59,60,61,62", nil
                ],
               [NSArray arrayWithObjects:
                @"LETTERS CAN JOIN DIAGONALLY TOO",

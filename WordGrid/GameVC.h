@@ -29,5 +29,6 @@
 - (void) setOrientation;
 - (void) testWordComplete;
 - (IBAction)onDone:(id)sender;
+- (void) onTileSelected:(Tile *)t;
 
 @end

@@ -29,7 +29,7 @@
 - (Tile *)  getTileAtIndex:(int) index;
 - (NSString *) serializeGridLetters;
 - (void)    setSelectableByLetter:(NSString *)let;
-- (void)    resetAnimationDelay;
+- (void)    resetAnimationDelay:(int) delay;
 - (void)    insertLastVerticalGaps;
 - (void)    moveColumn:(int)src toColumn:(int)dest;
 - (void)    clearAllSelections;

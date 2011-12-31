@@ -82,9 +82,9 @@ NSMutableArray *gapsInserted;
     [self layoutGrid:NO];    
 }
 
-- (void)    resetAnimationDelay
+- (void) resetAnimationDelay:(int) delay
 {
-    animationDelay = 0;
+    animationDelay = delay;
 }
 
 - (void) layoutGrid:(Boolean) useAnimation
