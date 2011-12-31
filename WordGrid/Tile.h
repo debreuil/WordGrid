@@ -38,5 +38,6 @@ extern NSString * const LETTERS;
 
 - (void)setup;
 - (Boolean) isCorrectLetter;
+- (NSComparisonResult) compareOriginalIndex: (Tile *) t;
 
 @end

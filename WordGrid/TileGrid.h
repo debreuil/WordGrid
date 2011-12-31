@@ -32,5 +32,6 @@
 - (void)    resetAnimationDelay;
 - (void)    insertLastVerticalGaps;
 - (void)    moveColumn:(int)src toColumn:(int)dest;
+- (void)    clearAllSelections;
 
 @end

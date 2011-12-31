@@ -16,6 +16,17 @@ AnswerGrid *answerGrid;
 
 - (void) setup
 {    
+    gw = 9;
+    gh = 7;
+    margin = 4;    
+        
+    [self createGrid];      
+}
+
+- (void) createLetters
+{ 
+    rightmostColumn = gw;  
+    
     answer = [AnswerData getCurrentQuote];
     //answer = [answer stringByReplacingOccurrencesOfString:@" " withString:@""];
     answer = [answer stringByReplacingOccurrencesOfString:@"," withString:@""];
@@ -23,18 +34,6 @@ AnswerGrid *answerGrid;
     answer = [answer stringByReplacingOccurrencesOfString:@"'" withString:@""];
     answerIndex = [answer length] - 1;
     
-    gw = 9;
-    gh = 7;
-    margin = 4;
-    rightmostColumn = gw;
-        
-    [self createGrid];  
-    [self setAllIsSelectable:YES];
-    
-}
-
-- (void) createLetters
-{ 
     answerGrid = [[GameVC getCurrentGame] getAnswerGrid];    
     [answerGrid setDirection:-1];
     sequence = [[NSMutableArray alloc] initWithCapacity:100];
@@ -45,6 +44,8 @@ AnswerGrid *answerGrid;
         NSString *s = @" "; 
         [t setLetter:s];
     }
+    
+    [self setAllIsSelectable:YES];
 }
 
 - (BOOL) isAtEndOfWord
@@ -133,6 +134,7 @@ AnswerGrid *answerGrid;
             {                
                 Tile *t = [self getTileFromPoint:CGPointMake(i, j)];
                 [result addObject:[NSNumber numberWithInt:j * gw + i]];
+                [self clearAllSelections];
                 [t setIsSelectable:YES];
             }
         }
@@ -155,7 +157,6 @@ AnswerGrid *answerGrid;
     {
         Tile *t = [sequence objectAtIndex:i];
         t.resultIndex = t.gridIndex;
-        NSLog(@"%i", t.gridIndex);
     }
     wordLength = 0;
 }
@@ -201,7 +202,8 @@ AnswerGrid *answerGrid;
     if(answerIndex < 0)
     {
         [self writeWordIndexes];
-        NSLog(@"%@", [self serializeGridLetters]);
+        NSLog(@"%@", [self serializeGridLetters]);    
+        [[GameVC getCurrentGame] nextRound];
     }
     else
     {

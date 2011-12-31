@@ -110,12 +110,13 @@ SystemSoundID winSoundID;
     int lastRemoved = [answerGrid getCurrentWordStart];
     [tileGrid resetAnimationDelay];
     
+    NSMutableArray *reinsertWordTiles = [NSMutableArray arrayWithCapacity:10];
+    
     for (int i = [answerGrid getAnswerIndex] - 1; i >= firstLetter; i--) 
     {
         Tile *rt = [answerGrid removeCurrentTile];  
         [rt setIsSelectable:NO];
         
-        Tile *targ;
         if (i < lastRemoved) 
         {
             if(i + 1 == [answerGrid getWordStartIndex:i + 1])
@@ -123,25 +124,38 @@ SystemSoundID winSoundID;
                 [tileGrid insertLastVerticalGaps];
             }
             
-            targ = [tileGrid insertTile:rt At:rt.originalIndex];
-            
-            targ.frame = CGRectMake( answerGrid.frame.origin.x - tileGrid.frame.origin.x + rt.frame.origin.x,
-                                    answerGrid.frame.origin.y - tileGrid.frame.origin.y + rt.frame.origin.y,
-                                    rt.frame.size.width,
-                                    rt.frame.size.height); 
-            if(i == [answerGrid getWordStartIndex:i])
+            [reinsertWordTiles addObject:rt];
+             
+            int startWord = [answerGrid getWordStartIndex:i];
+            if(i == startWord)
             {
+                NSArray *sortedTiles = [reinsertWordTiles sortedArrayUsingSelector:@selector(compareOriginalIndex:)];
+                [reinsertWordTiles removeAllObjects];
+                for (Tile *answerSrc in sortedTiles)
+                {                    
+                    Tile *targ = [tileGrid insertTile:answerSrc At:answerSrc.originalIndex];
+                    
+                    targ.frame = CGRectMake( 
+                        answerGrid.frame.origin.x - tileGrid.frame.origin.x + answerSrc.frame.origin.x,
+                        answerGrid.frame.origin.y - tileGrid.frame.origin.y + answerSrc.frame.origin.y,
+                        answerSrc.frame.size.width,
+                        answerSrc.frame.size.height);
+                    
+                    [tileGrid bringSubviewToFront:targ]; 
+                    [targ setSelected:NO];
+                    [answerSrc setLetter:@""];
+                }
                 [tileGrid layoutGrid:YES];
             }
         }
         else
         {
-            targ = [tileGrid getTileAtIndex:rt.originalIndex]; 
+            Tile *targ = [tileGrid getTileAtIndex:rt.originalIndex]; 
+            [targ setSelected:NO];
+            [tileGrid bringSubviewToFront:targ]; 
+            [rt setLetter:@""];
         }  
-        
-        [targ setSelected:NO];
-        [tileGrid bringSubviewToFront:targ];         
-        [rt setLetter:@""];
+                
     }
     
     [answerRefs removeAllObjects];
@@ -161,16 +175,20 @@ SystemSoundID winSoundID;
         Boolean correct = [answerGrid testCurrentWordCorrect];
         if(correct)
         {
-         NSRange r = NSMakeRange([answerGrid getAnswerIndex] - answerRefs.count, answerRefs.count);
+            NSRange r = NSMakeRange([answerGrid getAnswerIndex] - answerRefs.count, answerRefs.count);
             NSArray *correctTileIndexes = [indexes subarrayWithRange:r];
+            int curAnswerIndex = [answerGrid getAnswerIndex];
             for (int i = 0; i < correctTileIndexes.count; i++) 
             {      
                 NSNumber *corIndex = [correctTileIndexes objectAtIndex:i];
                 Tile *corTile = [tileGrid getTileAtIndex:[corIndex integerValue]];
                 [answerRefs replaceObjectAtIndex:i withObject:corTile];
+                
+                Tile *answerTile = [answerGrid getTileAtIndex:curAnswerIndex - answerRefs.count + i]; 
+                answerTile.originalIndex = [corIndex integerValue];
             }
         }
-       
+        
         [tileGrid removeWordAndDrop:answerRefs];
         [answerRefs removeAllObjects];
         

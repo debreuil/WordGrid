@@ -206,6 +206,29 @@ NSString * const LETTERS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }   
 
 }
+
+
+- (NSComparisonResult) compareOriginalIndex: (Tile *) t
+{
+    NSComparisonResult result;
+    
+    if (self.originalIndex == t.originalIndex)
+    {
+        result = NSOrderedSame;
+    }
+    else if(t.originalIndex < self.originalIndex)
+    {
+        result = NSOrderedAscending;
+    }
+    else
+    {
+        result = NSOrderedDescending;
+    }
+    
+    return result;
+}
+
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];     
