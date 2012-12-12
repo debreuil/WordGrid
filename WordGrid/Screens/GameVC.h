@@ -1,20 +1,15 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "Game.h"
 #import "Tile.h"
-#import "TileGrid.h"
-#import "AnswerGrid.h"
-
 
 @interface GameVC : UIViewController
 {
-    IBOutlet UIButton *btDone;
-    IBOutlet UIView *bkgH;
-    IBOutlet UIView *bkgV;
-    IBOutlet AnswerGrid *answerGrid;
-    IBOutlet TileGrid *tileGrid;
+    IBOutlet Game *game;
     
-    IBOutlet UIView *victoryH;
-    IBOutlet UIView *victoryV;
+    IBOutlet UIButton *btDone;
+    IBOutlet UIView *bkg;    
+    IBOutlet UIView *victory;
     IBOutlet UILabel *txVictory;
            
     NSMutableArray* answerRefs;
@@ -22,13 +17,14 @@
 }
 
 + (GameVC *) getCurrentGame;
-- (AnswerGrid *) getAnswerGrid;
+
 - (void) nextRound;
-- (void) tileSelected:(Tile *) t;
-- (void) answerSelected:(NSNotification *)notification;
 - (void) setOrientation;
+
+- (void) tileSelected:(Tile *) t;
+- (void) onTileSelected:(Tile *)t;
+- (void) answerSelected:(NSNotification *)notification;
 - (void) testWordComplete;
 - (IBAction)onDone:(id)sender;
-- (void) onTileSelected:(Tile *)t;
 
 @end

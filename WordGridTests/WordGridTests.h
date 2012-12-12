@@ -1,9 +1,9 @@
 //
-//  WordGridTests.h
-//  WordGridTests
+//  WordGridTestsTests.h
+//  WordGridTestsTests
 //
-//  Created by admin on 11-12-18.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Created by admin on 12-12-02.
+//  Copyright (c) 2012 Debreuil Digital Works. All rights reserved.
 //
 
 #import <SenTestingKit/SenTestingKit.h>

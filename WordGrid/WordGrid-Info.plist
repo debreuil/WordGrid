@@ -32,6 +32,8 @@
 	<array>
 		<string>VTC_letterer_pro.ttf</string>
 	</array>
+	<key>UIMainStoryboardFile~ipad</key>
+	<string>LobbyStoryboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

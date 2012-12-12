@@ -1,31 +1,29 @@
 
 #import "LevelEditorGrid.h"
 #import "Tile.h"
-#import "AnswerGrid.h"
 #import "AnswerData.h"
 #import "GameVC.h"
 
 @implementation LevelEditorGrid
+
+@synthesize answerGrid = _answerGrid;
 
 int answerIndex;
 int rightmostColumn;
 NSMutableArray *sequence;
 int wordLength;
 
-AnswerGrid *answerGrid;
-
 - (void) setup
 {    
-    gw = 9;
-    gh = 7;
-    margin = 4;    
+    self.gridWidth = 9;
+    self.gridHeight = 7;
+    self.margin = 4;    
         
-    [self createGrid];      
+    [self createGrid];
 }
-
 - (void) createLetters
 { 
-    rightmostColumn = gw;  
+    rightmostColumn = self.gridWidth;  
     
     answer = [AnswerData getCurrentQuote];
     //answer = [answer stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -34,20 +32,19 @@ AnswerGrid *answerGrid;
     answer = [answer stringByReplacingOccurrencesOfString:@"'" withString:@""];
     answerIndex = [answer length] - 1;
     
-    answerGrid = [[GameVC getCurrentGame] getAnswerGrid];    
-    [answerGrid setDirection:-1];
+    //answerGrid = [[GameVC getCurrentGame] getAnswerGrid];
     sequence = [[NSMutableArray alloc] initWithCapacity:100];
     wordLength = 0;
         
-    for (Tile* t in tiles) 
+    for (Tile* t in self.tiles) 
     {
         NSString *s = @" "; 
         [t setLetter:s];
     }
     
     [self setAllIsSelectable:YES];
+    [self.answerGrid showAllLetters];
 }
-
 - (BOOL) isAtEndOfWord
 {
     BOOL result = NO;
@@ -57,18 +54,17 @@ AnswerGrid *answerGrid;
     }
     return result;
 }
-
 - (BOOL) tileIndicatesColumnInsert:(Tile *)t
 {    
     BOOL result = NO;
     
     // check for top row inserts
     if (t != nil &&
-        t.gridIndex < gw &&
+        t.gridIndex < self.gridWidth &&
         t.gridIndex > rightmostColumn &&
         t.letter == @" ")
     {
-        Tile *tileUnder = [tiles objectAtIndex:t.gridIndex + gw];
+        Tile *tileUnder = [self.tiles objectAtIndex:t.gridIndex + self.gridWidth];
         if(tileUnder.letter == @" ")
         {
             result = YES;
@@ -77,19 +73,18 @@ AnswerGrid *answerGrid;
 
     return result;
 }
-
 - (BOOL) isValidInsertLocation:(int)index
 {
     BOOL result = NO;
-    if(index >= 0 && index < gw * gh)
+    if(index >= 0 && index < self.gridWidth * self.gridHeight)
     {
-        Tile *t = [tiles objectAtIndex:index];
-        if(t != nil && t.hidden == NO && t.gridIndex % gw >= rightmostColumn - 1)
+        Tile *t = [self.tiles objectAtIndex:index];
+        if(t != nil && t.hidden == NO && t.gridIndex % self.gridWidth >= rightmostColumn - 1)
         {
             result = YES;
-            if(t.gridIndex + gw < gw * gh)
+            if(t.gridIndex + self.gridWidth < self.gridWidth * self.gridHeight)
             {
-                Tile *lowerTile = [tiles objectAtIndex:t.gridIndex + gw];
+                Tile *lowerTile = [self.tiles objectAtIndex:t.gridIndex + self.gridWidth];
                 if(lowerTile.letter == @" ")
                 {
                     result = NO;
@@ -105,11 +100,9 @@ AnswerGrid *answerGrid;
     }
     return result;
 }
-
-
 -(void) setAllIsSelectable:(Boolean) sel
 {
-    for (Tile *t in tiles) 
+    for (Tile *t in self.tiles) 
     {
         BOOL select = [self isValidInsertLocation:t.gridIndex] ? sel : NO;
         [t setIsSelectable:select];
@@ -118,9 +111,8 @@ AnswerGrid *answerGrid;
 }
 - (void) setSelectableByLetter:(NSString *)let
 {    
-    [answerGrid showAllLetters];
+    [self.answerGrid showAllLetters];
 }
-
 - (NSMutableArray *) getValidNextInsertionIndexes:(int) index
 {
     NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:8];
@@ -130,10 +122,10 @@ AnswerGrid *answerGrid;
     {
         for (int j = gp.y - 1; j <= gp.y + 1; j++) 
         {
-            if ([self isValidInsertLocation:j * gw + i]) 
+            if ([self isValidInsertLocation:j * self.gridWidth + i]) 
             {                
                 Tile *t = [self getTileFromPoint:CGPointMake(i, j)];
-                [result addObject:[NSNumber numberWithInt:j * gw + i]];
+                [result addObject:[NSNumber numberWithInt:j * self.gridWidth + i]];
                 [self clearAllSelections];
                 [t setIsSelectable:YES];
             }
@@ -141,15 +133,13 @@ AnswerGrid *answerGrid;
     }
     return result;
 }
-
 - (void) deselectAll
 {
-    for (Tile *t in tiles) 
+    for (Tile *t in self.tiles) 
     {
         [t setSelected:NO];
     }
 }
-
 - (void) writeWordIndexes
 {
     int end = sequence.count - 1;
@@ -160,13 +150,12 @@ AnswerGrid *answerGrid;
     }
     wordLength = 0;
 }
-
 - (void) insertLetter:(Tile *) tile
 {    
     [self setAllIsSelectable:NO];
     
     int tileIndex = tile.gridIndex; 
-    if (tileIndex % gw < rightmostColumn) 
+    if (tileIndex % self.gridWidth < rightmostColumn) 
     {
         rightmostColumn--;
     }
@@ -175,17 +164,17 @@ AnswerGrid *answerGrid;
     {
         // shift letters up         
         CGPoint p = [self getPointFromIndex:tileIndex];
-        int srcTileIndex = p.y * gw + p.x;
-        Tile *srcTile = [tiles objectAtIndex:srcTileIndex];        
+        int srcTileIndex = p.y * self.gridWidth + p.x;
+        Tile *srcTile = [self.tiles objectAtIndex:srcTileIndex];        
         Tile *destTile;
         
-        for (int i = srcTileIndex; i >= 0; i -= gw) 
+        for (int i = srcTileIndex; i >= 0; i -= self.gridWidth) 
         {
-            destTile = [tiles objectAtIndex:i];
-            [tiles replaceObjectAtIndex:i withObject:srcTile];
+            destTile = [self.tiles objectAtIndex:i];
+            [self.tiles replaceObjectAtIndex:i withObject:srcTile];
             srcTile = destTile;
         }
-        [tiles replaceObjectAtIndex:tileIndex withObject:srcTile];
+        [self.tiles replaceObjectAtIndex:tileIndex withObject:srcTile];
         tile = srcTile;
         [self layoutGrid:NO];
     }
@@ -193,7 +182,7 @@ AnswerGrid *answerGrid;
     [tile setSelected:YES];    
     [tile setLetter:[answer substringWithRange:NSMakeRange(answerIndex, 1)]];
     
-    [answerGrid setNextTileUsingTile:tile];
+    [self.answerGrid setNextTileUsingTile:tile];
     
     [sequence addObject:tile];
     wordLength++;
@@ -221,13 +210,12 @@ AnswerGrid *answerGrid;
         }
     }
 }
-
 - (void) ownTileSelected:(Tile *)tile;
 {  
     [self clearAllHovers];
     if([self tileIndicatesColumnInsert:tile])
     {
-        int col = tile.gridIndex % gw;
+        int col = tile.gridIndex % self.gridWidth;
         [self moveColumn:0 toColumn:col];
         rightmostColumn--;
         [self layoutGrid:NO];
@@ -239,7 +227,6 @@ AnswerGrid *answerGrid;
         [self insertLetter:tile];
     }
 }
-
 - (NSString *) serializeGridLetters
 {
     /*
@@ -250,13 +237,13 @@ AnswerGrid *answerGrid;
      @"62,61,60,59,58,49,40,31,22,61,60,59,57,48,39,56,55,54,45,36,27,18,60,61,62,46,47,59,58,57,56,47,37,28,19,44,35,34,33,32,23,24,25,26,20,21,12,11,14,15,16", nil
      ],
      */
-    NSMutableString *s = [NSMutableString stringWithCapacity:tiles.count];  
+    NSMutableString *s = [NSMutableString stringWithCapacity:self.tiles.count];  
     [s appendString:@"\r\r[NSArray arrayWithObjects:\r"];    
     [s appendString:@"@\""]; [s appendString:answer]; [s appendString:@"\",\r"];
     
     
     [s appendString:@"@\""];
-    for (Tile *t in tiles) 
+    for (Tile *t in self.tiles) 
     {
         [s appendString:t.letter];
     }     

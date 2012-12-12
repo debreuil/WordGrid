@@ -1,42 +1,25 @@
-#import <UIKit/UIKit.h>
-#import <AudioToolbox/AudioToolbox.h>
+
+#import "Letter.h"
 
 extern NSString * const LETTERS;
 
-@interface Tile : UIView
-{
-    UIImage *image;
-    NSString *letter;
-    NSString *correctLetter;
-    Boolean letterShowing;
-    Boolean isHovering;
-    Boolean selected;
-    Boolean isSelectable;
-    Boolean errorMarkVisible;
-    int gridIndex;
-    CGRect animatingFrom;
-    int resultIndex;
-    Boolean isResultTile;
-    CGRect scaleNormalRect;
-    CGRect scaleUpRect;
-    int originalIndex;
+@interface Tile : NSObject
 
-}
+@property (nonatomic, readonly) NSString *letter;
+@property (nonatomic, readonly) NSString *correctLetter;
 
-@property int gridIndex;
-@property int originalIndex;
-@property (nonatomic, retain) NSString *letter;
-@property (nonatomic, retain) NSString *correctLetter;
-@property (nonatomic) Boolean isHovering;
-@property (nonatomic) Boolean selected;
-@property (nonatomic) Boolean isSelectable;
-@property (nonatomic) Boolean errorMarkVisible;
+@property (nonatomic) Boolean hidden;
+@property (nonatomic) int gridIndex;
+@property (nonatomic) int resultIndex;
 @property (nonatomic) Boolean letterShowing;
-@property (nonatomic) CGRect animatingFrom;
-@property int resultIndex;
+
+@property (nonatomic) int originalIndex;
 @property (nonatomic) Boolean isResultTile;
 
-- (void)setup;
+@property (nonatomic) Boolean selected;
+@property (nonatomic) Boolean isSelectable;
+
+
 - (Boolean) isCorrectLetter;
 - (NSComparisonResult) compareOriginalIndex: (Tile *) t;
 

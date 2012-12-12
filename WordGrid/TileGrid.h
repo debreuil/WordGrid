@@ -1,37 +1,37 @@
 #import <UIKit/UIKit.h>
-#import "GridProtocol.h"
 #import "Tile.h"
+#import "TileGridView.h"
 
-@interface TileGrid : UIView <GridProtocol>
-{    
-    int gw;
-    int gh;
-    int margin;
-    float slotWidth;
-    float slotHeight;
-    NSMutableArray *tiles;
-    UIInterfaceOrientation io;
-    int lastHoverTileIndex;
-    float animationDelay;
-    Boolean hasGap;
-}
+@interface TileGrid : NSObject 
 
-- (void)    genericSetup;
+@property (nonatomic, strong) TileGridView *tileGridView;
+@property (nonatomic, strong) NSMutableArray *tiles;
+@property (nonatomic, strong) NSMutableArray *gapsInserted;
+@property (nonatomic) int gridWidth;
+@property (nonatomic) int gridHeight;
+
 - (void)    setup;
+- (void)    createGrid;
 - (void)    createLetters;
-- (void)    clearAllHovers;
+- (void)    resetGrid;
+
 - (Tile *)  insertTile:(Tile *)tile At:(int) index;
-- (void)    removeVerticalGaps;
-- (CGPoint)  getPointFromIndex:(int)index;
-- (void)    setSelectableAroundIndex:(int) index;
-- (void)    onSelectTile:(NSNotification *)notification;
-- (void)    ownTileSelected:(Tile *)tile;
+- (void)    removeWord:(NSArray *) indexes;
+- (void)    removeTile:(int) index;
+
+- (Tile *)  getTileFromPoint:(CGPoint) p;
+- (CGPoint) getPointFromIndex:(int)index;
 - (Tile *)  getTileAtIndex:(int) index;
-- (NSString *) serializeGridLetters;
-- (void)    setSelectableByLetter:(NSString *)let;
-- (void)    resetAnimationDelay:(int) delay;
+
+- (void)    removeVerticalGaps;
 - (void)    insertLastVerticalGaps;
-- (void)    moveColumn:(int)src toColumn:(int)dest;
-- (void)    clearAllSelections;
+
+- (void)    didAppear;
+- (void)    didDisappear;
+
+- (NSString *) serializeGridLetters;
+
+
+
 
 @end

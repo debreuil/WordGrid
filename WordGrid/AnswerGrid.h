@@ -12,16 +12,16 @@
 - (int)         getAnswerIndex;
 - (int)         getWordStartIndex:(int)index;
 - (int)         getCurrentWordStart;
-- (NSString *)   getCurrentLetter;
-- (NSString *)   getCurrentCorrectLetter;
+- (NSString *)  getCurrentLetter;
+- (NSString *)  getCurrentCorrectLetter;
 - (Tile *)      removeCurrentTile;
 - (Tile *)      getNextTile;
 - (void)        setNextTileUsingTile:(Tile *)srcTile;
 - (BOOL)        atWordBoundry;
 - (void)        showFirstLetterHints;
 - (void)        showVowelHints;
-- (Boolean)      testCurrentWordCorrect;
-- (Boolean)      didWin;
+- (Boolean)     testCurrentWordCorrect;
+- (Boolean)     didWin;
 - (void)        showAllLetters;
 - (void)        setDirection:(int)dir;
 

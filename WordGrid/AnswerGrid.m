@@ -11,9 +11,9 @@ NSMutableArray *wordBoundries;
 
 - (void) setup
 {    
-    gw = 15;
-    gh = 4;
-    margin = 2;  
+    self.gridWidth = 15;
+    self.gridHeight = 4;
+    self.margin = 2;  
     direction = 1;
     
     [self createGrid];
@@ -41,7 +41,7 @@ NSMutableArray *wordBoundries;
     NSString *curLetter;   
     BOOL complete = NO;
     
-    for (Tile* t in tiles) 
+    for (Tile* t in self.tiles) 
     {        
         [t setIsSelectable:NO];
         [t setSelected:NO];
@@ -91,10 +91,10 @@ NSMutableArray *wordBoundries;
 
 - (void) layoutGrid:(Boolean)useAnimation
 {    
-    Tile *tile = [tiles objectAtIndex:0];
+    Tile *tile = [self.tiles objectAtIndex:0];
     
-    float spcH = tile.bounds.size.width + margin;
-    float spcV = tile.bounds.size.height + margin;
+    float spcH = tile.bounds.size.width + self.margin;
+    float spcV = tile.bounds.size.height + self.margin;
     
     float l = 0;
     float t = 0;
@@ -106,7 +106,7 @@ NSMutableArray *wordBoundries;
     NSString *curWord = [answerWords objectAtIndex:wordIndex];
     BOOL complete = NO;
     
-    for (tile in tiles) 
+    for (tile in self.tiles) 
     {        
         if(!complete)
         {    
@@ -123,7 +123,7 @@ NSMutableArray *wordBoundries;
                 if(wordIndex < [answerWords count])
                 {
                     curWord = [answerWords objectAtIndex:wordIndex]; 
-                    if(fr.origin.x + [curWord length] * spcH > gw * spcH)
+                    if(fr.origin.x + [curWord length] * spcH > self.gridWidth * spcH)
                     {
                         fr.origin.x = l;
                         fr.origin.y += spcV;
@@ -141,7 +141,7 @@ NSMutableArray *wordBoundries;
 
 - (void) showAllLetters
 {
-    for(Tile *t in tiles)
+    for(Tile *t in self.tiles)
     {
         [t setLetterShowing:YES];
     }
@@ -152,7 +152,7 @@ NSMutableArray *wordBoundries;
     for (int wordIndex = 0; wordIndex < answerWords.count; wordIndex++) 
     {
         NSString *word = [answerWords objectAtIndex:wordIndex];
-        Tile *t = [tiles objectAtIndex:counter];
+        Tile *t = [self.tiles objectAtIndex:counter];
         [t setLetterShowing:YES];
         counter += word.length;
     }
@@ -169,7 +169,7 @@ NSMutableArray *wordBoundries;
             unichar letter = [word characterAtIndex:let];
             if(letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O' || letter == 'U')
             {
-                Tile *t = [tiles objectAtIndex:counter + let];
+                Tile *t = [self.tiles objectAtIndex:counter + let];
                 [t setLetterShowing:YES];
                 //break;
             }
@@ -183,7 +183,7 @@ NSMutableArray *wordBoundries;
     Tile * result = nil;
     if(currentIndex < answerLength && currentIndex >= 0)
     {
-        result = [tiles objectAtIndex:currentIndex];
+        result = [self.tiles objectAtIndex:currentIndex];
     }
     return result;
 }
@@ -192,7 +192,7 @@ NSMutableArray *wordBoundries;
 {    
     if(currentIndex < answerLength)
     {
-        Tile *newTile = [tiles objectAtIndex:currentIndex];
+        Tile *newTile = [self.tiles objectAtIndex:currentIndex];
         [newTile setLetter:[srcTile letter]];
         [newTile setOriginalIndex:srcTile.gridIndex];
         //[newTile setIsSelectable:YES];
@@ -251,7 +251,7 @@ NSMutableArray *wordBoundries;
     NSString *result = nil;
     if(currentIndex > 0)
     {
-        Tile *t = [tiles objectAtIndex:currentIndex];
+        Tile *t = [self.tiles objectAtIndex:currentIndex];
         result = t.letter;
     }
     return result;
@@ -261,7 +261,7 @@ NSMutableArray *wordBoundries;
     NSString *result = nil;
     if(currentIndex >= 0)
     {
-        Tile *t = [tiles objectAtIndex:currentIndex];
+        Tile *t = [self.tiles objectAtIndex:currentIndex];
         result = t.correctLetter;
     }
     return result;
@@ -272,14 +272,14 @@ NSMutableArray *wordBoundries;
     Tile *result = nil;
     if(currentIndex > 0)
     {
-        result = [tiles objectAtIndex:currentIndex - 1];
+        result = [self.tiles objectAtIndex:currentIndex - 1];
         //[result setLetter:@""];
         [result setIsSelectable:NO];
         [result setSelected:NO];
         [result setErrorMarkVisible:NO];
         
         currentIndex += -direction;
-        [[tiles objectAtIndex:currentIndex] setIsSelectable:YES];
+        [[self.tiles objectAtIndex:currentIndex] setIsSelectable:YES];
     }
     return result;
 }
@@ -331,7 +331,7 @@ NSMutableArray *wordBoundries;
         NSRange range = [self getWordRange];
         for (int i = range.location; i < range.location + range.length; i++) 
         {
-            Tile *t = [tiles objectAtIndex:i];
+            Tile *t = [self.tiles objectAtIndex:i];
             if(![t isCorrectLetter])
             {
                 result = NO;
@@ -342,7 +342,7 @@ NSMutableArray *wordBoundries;
         {            
             for (int i = range.location; i < range.location + range.length; i++) 
             {
-                Tile *t = [tiles objectAtIndex:i];
+                Tile *t = [self.tiles objectAtIndex:i];
                 [t setErrorMarkVisible:YES];           
             }
         }
@@ -355,7 +355,7 @@ NSMutableArray *wordBoundries;
     Boolean result = YES;
     for (int i = 0; i < answerLength; i++)
     {
-        if(![[tiles objectAtIndex:i] isCorrectLetter])
+        if(![[self.tiles objectAtIndex:i] isCorrectLetter])
         {
             result = NO;
             break;
@@ -363,6 +363,7 @@ NSMutableArray *wordBoundries;
     }
     return result;
 }
+
 
 @end
 

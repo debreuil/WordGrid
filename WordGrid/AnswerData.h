@@ -5,8 +5,9 @@
 }
 
 + (NSArray *)   getQuotePairAt:(int)index;
-+ (int)        getQuoteCount;
-+ (int)        getCurrentIndex;
++ (int)         getQuoteCount;
++ (int)         getCurrentIndex;
++ (void)        setCurrentIndex:(int)value;
 + (NSString *)  getCurrentQuote;
 + (NSString *)  getCurrentSource;
 + (NSArray *)   getCurrentIndexes;

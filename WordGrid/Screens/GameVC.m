@@ -10,6 +10,7 @@ static GameVC *currentGame;
 typedef enum { Game, Victory } GameState;
 GameState gameState = Game;
 Boolean isLandscape = NO;
+
 NSArray *indexes;
 float letterMoveDelay;
 
@@ -308,8 +309,8 @@ SystemSoundID winSoundID;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-	return YES;//(interfaceOrientation == UIInterfaceOrientationLandscapeLeft);;
+	return YES;//    (interfaceOrientation == UIInterfaceOrientationPortrait ||
+            // interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (void) setOrientation
@@ -379,6 +380,11 @@ SystemSoundID winSoundID;
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self setOrientation];
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 @end
