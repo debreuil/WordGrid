@@ -7,21 +7,25 @@
 //
 
 #import "GameViewController.h"
+#import "Game.h"
 #import "Round.h"
 #import "GridView.h"
 #import "AnswerView.h"
 #import "Tile.h"
+#import "Answer.h"
+#import "Grid.h"
 
 @interface GameViewController ()
-
+{
+    Game *game;
+}
 @property (strong) NSArray *indexes;
 @property (strong) NSMutableArray* answerRefs;
-
 @end
 
 @implementation GameViewController
 
-@synthesize round = _round;
+
 @synthesize gridView = _gridView;
 @synthesize answerView = _answerView;
 
@@ -37,8 +41,8 @@ SystemSoundID winSoundID;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
     }
     return self;
 }
@@ -47,10 +51,12 @@ SystemSoundID winSoundID;
 {
     [super viewDidLoad];
     
-//    [self.tileGrid setHidden:NO];
+    game = [Game instance];
+    
+//    [self.gridView setHidden:NO];
 //    
 //    [self.answerGrid setup]; // answer grid needs to be setup first
-//    [self.tileGrid setup];
+//    [self.gridView setup];
     
     self.answerRefs = [[NSMutableArray alloc] initWithCapacity:20];
     
@@ -76,7 +82,7 @@ SystemSoundID winSoundID;
 	[[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(tileSelected:)
-     name:@"onGridTileSelected"
+     name:@"onTileSelected"
      object:nil];
     
 	[[NSNotificationCenter defaultCenter]
@@ -92,42 +98,38 @@ SystemSoundID winSoundID;
     }
     
     
-//    [self.tileGrid subviewDidAppear];
+//    [self.gridView subviewDidAppear];
 //    [self.answerGrid subviewDidAppear];
     
 }
 -(void) viewDidDisappear:(BOOL)animated
 {
 //    [super viewDidDisappear:animated];
-//    [self.tileGrid subviewDidDisappear];
+//    [self.gridView subviewDidDisappear];
 //    [self.answerGrid subviewDidDisappear];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onGridTileSelected" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onAnswerGridTileSelected" object:nil];
 }
 
 - (void) newRound
 {
-//    [self.tileGrid setHidden:NO];
-//    
-//    [AnswerData incrementIndex];
-//    
-//    [self.tileGrid createRound];
-//    [self.answerGrid createRound];
-//    
-//    NSString *let = [self.answerGrid getCurrentCorrectLetter];
-//    [self.tileGrid setSelectableByLetter:let];
-//    
-//    self.indexes = [AnswerData getCurrentIndexes];
-//    
-//    // first letter is a gift
-//    [self autoSelectFirstLetter];    
+    [self.gridView setHidden:NO];
+    
+    self.gridView.grid = game.currentRound.grid;
+            
+    NSString *let = [game.currentRound currentCorrectLetter];
+    [game.currentRound setSelectableByLetter:let];    
+    
+    // first letter is a gift
+    [self autoSelectFirstLetter];    
 }
 
 - (void) tileSelected:(NSNotification *)notification
 {
     Tile *t = (Tile *)[notification object];
     [self onTileSelected:t];
+    NSLog(@"Tile: %@", t);
 }
 
 - (void) onTileSelected:(Tile *)t
@@ -139,8 +141,8 @@ SystemSoundID winSoundID;
 //        Tile *at = [self.answerGrid getNextTile];
 //        CGRect orgFrame = at.frame;//CGRectInset(at.frame, 0, 0);
 //        at.hidden = NO;
-//        at.frame = CGRectMake( -self.answerGrid.frame.origin.x + self.tileGrid.frame.origin.x + t.frame.origin.x,
-//                              -self.answerGrid.frame.origin.y + self.tileGrid.frame.origin.y + t.frame.origin.y,
+//        at.frame = CGRectMake( -self.answerGrid.frame.origin.x + self.gridView.frame.origin.x + t.frame.origin.x,
+//                              -self.answerGrid.frame.origin.y + self.gridView.frame.origin.y + t.frame.origin.y,
 //                              t.frame.size.width,
 //                              t.frame.size.height);
 //        //NSLog(@"org: %f %f", t.frame.size.width, t.frame.size.height);
@@ -171,7 +173,7 @@ SystemSoundID winSoundID;
 //            Boolean correct = [self.answerGrid testCurrentWordCorrect];
 //            if(correct)
 //            {
-//                [self.tileGrid setAllIsSelectable:NO];
+//                [self.gridView setAllIsSelectable:NO];
 //                AudioServicesPlaySystemSound(correctWordSoundID);
 //            }
 //            else
@@ -181,7 +183,7 @@ SystemSoundID winSoundID;
 //        }
 //        else
 //        {
-//            [self.tileGrid setSelectableAroundIndex:lastSelectedTileIndex];
+//            [self.gridView setSelectableAroundIndex:lastSelectedTileIndex];
 //        }
 //    }
 }
@@ -191,7 +193,7 @@ SystemSoundID winSoundID;
 //    Tile *t = (Tile *)[notification object];
 //    int firstLetter = [self.answerGrid getWordStartIndex:t.gridIndex];
 //    int lastRemoved = [self.answerGrid getCurrentWordStart];
-//    [self.tileGrid resetAnimationDelay:0];
+//    [self.gridView resetAnimationDelay:0];
 //    
 //    NSMutableArray *reinsertWordTiles = [NSMutableArray arrayWithCapacity:10];
 //    
@@ -204,7 +206,7 @@ SystemSoundID winSoundID;
 //        {
 //            if(i + 1 == [self.answerGrid getWordStartIndex:i + 1])
 //            {
-//                [self.tileGrid insertLastVerticalGaps];
+//                [self.gridView insertLastVerticalGaps];
 //            }
 //            
 //            [reinsertWordTiles addObject:rt];
@@ -216,36 +218,36 @@ SystemSoundID winSoundID;
 //                [reinsertWordTiles removeAllObjects];
 //                for (Tile *answerSrc in sortedTiles)
 //                {
-//                    Tile *targ = [self.tileGrid insertTile:answerSrc At:answerSrc.originalIndex];
+//                    Tile *targ = [self.gridView insertTile:answerSrc At:answerSrc.originalIndex];
 //                    
 //                    targ.frame = CGRectMake(
-//                                            self.answerGrid.frame.origin.x - self.tileGrid.frame.origin.x + answerSrc.frame.origin.x,
-//                                            self.answerGrid.frame.origin.y - self.tileGrid.frame.origin.y + answerSrc.frame.origin.y,
+//                                            self.answerGrid.frame.origin.x - self.gridView.frame.origin.x + answerSrc.frame.origin.x,
+//                                            self.answerGrid.frame.origin.y - self.gridView.frame.origin.y + answerSrc.frame.origin.y,
 //                                            answerSrc.frame.size.width,
 //                                            answerSrc.frame.size.height);
 //                    
-//                    [self.tileGrid bringSubviewToFront:targ];
+//                    [self.gridView bringSubviewToFront:targ];
 //                    [targ setSelected:NO];
 //                    [answerSrc setLetter:@""];
 //                }
-//                [self.tileGrid layoutGrid:YES];
+//                [self.gridView layoutGrid:YES];
 //            }
 //        }
 //        else
 //        {
-//            Tile *targ = [self.tileGrid getTileAtIndex:rt.originalIndex];
+//            Tile *targ = [self.gridView getTileAtIndex:rt.originalIndex];
 //            [targ setSelected:NO];
-//            [self.tileGrid bringSubviewToFront:targ];
+//            [self.gridView bringSubviewToFront:targ];
 //            [rt setLetter:@""];
 //        }
 //        
 //    }
 //    
 //    [self.answerRefs removeAllObjects];
-//    [self.tileGrid resetGrid];
-//    [self.tileGrid layoutGrid:YES];
+//    [self.gridView resetGrid];
+//    [self.gridView layoutGrid:YES];
 //    NSString *let = [self.answerGrid getCurrentCorrectLetter];
-//    [self.tileGrid setSelectableByLetter:let];
+//    [self.gridView setSelectableByLetter:let];
 //    AudioServicesPlaySystemSound(returnWordsSoundID);
 }
 
@@ -253,7 +255,7 @@ SystemSoundID winSoundID;
 {
 //    if([self.answerGrid atWordBoundry])
 //    {
-//        [self.tileGrid resetGrid];
+//        [self.gridView resetGrid];
 //        
 //        Boolean correct = [self.answerGrid testCurrentWordCorrect];
 //        if(correct)
@@ -264,7 +266,7 @@ SystemSoundID winSoundID;
 //            for (int i = 0; i < correctTileIndexes.count; i++)
 //            {
 //                NSNumber *corIndex = [correctTileIndexes objectAtIndex:i];
-//                Tile *corTile = [self.tileGrid getTileAtIndex:[corIndex integerValue]];
+//                Tile *corTile = [self.gridView getTileAtIndex:[corIndex integerValue]];
 //                [self.answerRefs replaceObjectAtIndex:i withObject:corTile];
 //                
 //                Tile *answerTile = [self.answerGrid getTileAtIndex:curAnswerIndex - self.answerRefs.count + i];
@@ -272,7 +274,7 @@ SystemSoundID winSoundID;
 //            }
 //        }
 //        
-//        [self.tileGrid removeWordAndDrop:self.answerRefs];
+//        [self.gridView removeWordAndDrop:self.answerRefs];
 //        [self.answerRefs removeAllObjects];
 //        
 //        Tile *nextTile = [self.answerGrid getNextTile];
@@ -302,22 +304,22 @@ SystemSoundID winSoundID;
 //        else if([nextTile letterShowing])
 //        {
 //            NSString *let = [self.answerGrid getCurrentCorrectLetter];
-//            [self.tileGrid setSelectableByLetter:let];
+//            [self.gridView setSelectableByLetter:let];
 //        }
 //    }
 }
 
 - (void) autoSelectFirstLetter
 {
-//    if([self.tileGrid isMemberOfClass:[TileGrid class]])
+//    if([self.gridView isMemberOfClass:[GridView class]])
 //    {
 //        letterMoveDelay = 0.5;
 //        NSNumber *firstTileIndex = [self.indexes objectAtIndex:0];
-//        Tile *t = [self.tileGrid getTileAtIndex:[firstTileIndex integerValue] ];
+//        Tile *t = [self.gridView getTileAtIndex:[firstTileIndex integerValue] ];
 //        
-//        [self.view insertSubview:self.answerGrid aboveSubview:self.tileGrid];
-//        [self.tileGrid bringSubviewToFront:t];
-//        [self.tileGrid ownTileSelected:t];
+//        [self.view insertSubview:self.answerGrid aboveSubview:self.gridView];
+//        [self.gridView bringSubviewToFront:t];
+//        [self.gridView ownTileSelected:t];
 //        letterMoveDelay = 0.0;
 //    }
 }

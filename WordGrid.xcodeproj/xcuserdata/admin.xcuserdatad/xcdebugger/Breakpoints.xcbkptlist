@@ -9,6 +9,14 @@
          continueAfterRunningActions = "No"
          symbolName = "[NSException raise]"
          moduleName = "">
+         <Locations>
+            <Location
+               shouldBeEnabled = "Yes"
+               ignoreCount = "0"
+               continueAfterRunningActions = "No"
+               symbolName = "-[NSException raise]">
+            </Location>
+         </Locations>
       </SymbolicBreakpoint>
       <SymbolicBreakpoint
          shouldBeEnabled = "Yes"

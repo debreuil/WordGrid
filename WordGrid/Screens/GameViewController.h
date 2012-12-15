@@ -16,7 +16,6 @@
 
 @interface GameViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet Round *round;
 @property (strong, nonatomic) IBOutlet GridView *gridView;
 @property (strong, nonatomic) IBOutlet AnswerView *answerView;
 

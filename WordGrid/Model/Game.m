@@ -53,6 +53,7 @@
     _currentIndex = answerIndex;
     [_quotePack setAnswerIndex:_currentIndex];
     _currentRound = [[Round alloc] initWithAnswer:_quotePack.currentAnswer];
+    [self loadRound];
 }
 
 - (int) quoteCount
@@ -73,6 +74,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *loadName = [_quotePack.quotePackName stringByAppendingString:[NSString stringWithFormat:@"%d",_currentIndex]];
     NSString *guessedKeys = [defaults objectForKey:loadName];
+    [_currentRound guessKeysFromString:guessedKeys];
 }
 -(void) resetRound
 {

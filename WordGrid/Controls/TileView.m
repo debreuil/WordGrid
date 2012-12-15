@@ -17,8 +17,6 @@
     Boolean errorMarkVisible;
 }
 
-@property (nonatomic, weak) Tile *tile;
-
 @end
 
 @implementation TileView
@@ -37,17 +35,37 @@ static SystemSoundID tickSoundID;
     self = [super initWithFrame:frame];
     if(self)
     {
-        self.tile = t;
+        _tile = t;
         [self setup];
     }
     return self;
 }
 
+-(void) setIsHovering:(Boolean)hovering
+{
+    if(_isHovering != hovering)
+    {
+        _isHovering = hovering;
+        
+        if(_isHovering)
+        {        
+            [self.superview bringSubviewToFront:self];
+            self.bounds = scaleUpRect;
+        }
+        else
+        {
+            self.bounds = scaleNormalRect;        
+        }
+        
+        [self setNeedsDisplay];
+    }
+}
 
 - (void) setup
 {
     image = [imageStates objectAtIndex:0];
     self.animatingFrom = CGRectNull;
+    _isHovering = NO;
     
     CGRect f = [self frame];
     float xBorder = ((f.size.width * hoverScale) - f.size.width) / 2.0;
@@ -77,30 +95,34 @@ static SystemSoundID tickSoundID;
 
 - (void)drawRect:(CGRect)rect
 {
+    self.clipsToBounds = NO;
+    
+    CGRect r = self.bounds;
+    
 	//[image drawAtPoint:(CGPointMake(0.0f, 0.0f))];
-    [image drawInRect:[self bounds]];
+    [image drawInRect:r];
     
     if(errorMarkVisible)
     {
-        [errorImage drawInRect:[self bounds]];
+        [errorImage drawInRect:r];
     }
     
-    float sc = self.bounds.size.width / 48.0;
     
     [[UIColor whiteColor] set];
+    float sc = r.size.width / 48.0;
     UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];
-    CGRect r = CGRectOffset([self bounds], 0.0,(2.0 * sc));
     
+    CGRect letR = CGRectOffset(r, 0.0, 2.0);
     if(![self.tile isEmptyTile] && self.tile.letter == @"")
     {
-        [self.tile.letter drawInRect:r
+        [self.tile.letter drawInRect:letR
                                  withFont:f
                                  lineBreakMode:UILineBreakModeClip
                                  alignment:UITextAlignmentCenter];
     }
     else
     {
-        [self.tile.letter drawInRect:r withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        [self.tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
     }
     
     if(self.tile.isSelectable)
@@ -108,9 +130,8 @@ static SystemSoundID tickSoundID;
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSetLineWidth(context, 4);
         CGContextSetRGBStrokeColor(context, 0.2, 0.5, 1.0, 1);
-        CGContextStrokeRect(context, [self bounds]);
-    }
-    
+        CGContextStrokeRect(context, r);
+    }    
 }
 
 
@@ -118,6 +139,8 @@ static SystemSoundID tickSoundID;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
+    // move hover to grid
+    self.isHovering = YES;
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -126,12 +149,14 @@ static SystemSoundID tickSoundID;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
+    self.isHovering = NO;
     //NSLog(@"%i", gridIndex);
     if(self.tile.isSelectable)
     {
         AudioServicesPlaySystemSound(tickSoundID);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];
     }
+    [self setNeedsDisplay];
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {

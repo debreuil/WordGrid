@@ -13,10 +13,7 @@
 #import "Tile.h"
 
 @interface Round()
-{
-    Grid *grid;    
-    Answer *answer;    
-    
+{   
     NSMutableArray *tileWords;
     NSMutableArray *guessedKeys;
 }
@@ -26,17 +23,20 @@
 
 @implementation Round
 
+@synthesize grid = _grid;
+@synthesize answer = _answer;
 @synthesize letterIndex = _letterIndex;
 @synthesize wordIndex = _wordIndex;
 @synthesize currentFullGuess = _currentFullGuess;
 @synthesize currentWord = _currentWord;
+@synthesize currentCorrectLetter = _currentCorrectLetter;
 
 - (id)initWithAnswer:(Answer *)ans
 {
     self = [super init];
     if(self)
     {
-        answer = ans;
+        _answer = ans;
         [self resetRound];
     }
     return self;
@@ -48,12 +48,12 @@
     _wordIndex = 0;
     _currentFullGuess = @"";
         
-    grid = [[Grid alloc]init];
-    [grid deserializeCurrentRound:answer];
+    _grid = [[Grid alloc]init];
+    [_grid deserializeCurrentRound:_answer];
     
     if(tileWords == nil)
     {
-        tileWords = [[NSMutableArray alloc] initWithCapacity:answer.quoteWords.count];
+        tileWords = [[NSMutableArray alloc] initWithCapacity:_answer.quoteWords.count];
     }
     else
     {
@@ -62,7 +62,7 @@
     
     if(guessedKeys == nil)
     {
-        guessedKeys = [[NSMutableArray alloc] initWithCapacity:answer.quoteLettersOnly.length];
+        guessedKeys = [[NSMutableArray alloc] initWithCapacity:_answer.quoteLettersOnly.length];
     }
     else
     {
@@ -71,7 +71,7 @@
     
     if(_currentWord == nil)
     {
-        _currentWord = [[TileWord alloc] initWithAnswer:[answer.quoteWords objectAtIndex:_wordIndex]];
+        _currentWord = [[TileWord alloc] initWithAnswer:[_answer.quoteWords objectAtIndex:_wordIndex]];
     }
     else
     {
@@ -79,14 +79,33 @@
     }        
 }
 
+- (NSString *) currentCorrectLetter
+{
+    NSString *let;
+    if(_letterIndex >= 0 && _letterIndex < self.answer.keys.count)
+    {
+        let = [self.answer.quoteLettersOnly substringWithRange:NSMakeRange(_letterIndex, 1)];
+    }
+    else
+    {
+        let = @"-";
+    }
+    return let;
+}
+
+-(void) setSelectableByLetter:(NSString *)let
+{
+    [self.grid setSelectableByLetter:let];
+}
+
 - (Boolean) guessTile:(int)index
 {
-    Tile *guessedTile = [grid getTileFromIndex:index];
+    Tile *guessedTile = [_grid getTileFromIndex:index];
     [_currentWord addTile:guessedTile];
     [guessedKeys addObject:[NSNumber numberWithInt:index]];
     _currentFullGuess = [_currentFullGuess stringByAppendingString:guessedTile.letter];
     
-    NSString *correctLetter = [[answer quoteLettersOnly] substringWithRange:NSMakeRange(_letterIndex, 1)];
+    NSString *correctLetter = [[_answer quoteLettersOnly] substringWithRange:NSMakeRange(_letterIndex, 1)];
     Boolean result = [correctLetter isEqualToString:guessedTile.letter];
     _letterIndex++;
     if([_currentWord isFullyGuessed])
@@ -101,16 +120,16 @@
         }
         
         [tileWords addObject:_currentWord];
-        [grid removeWord:_currentWord];
+        [_grid removeWord:_currentWord];
         _wordIndex++;
         
-        if(_wordIndex >= answer.quoteWords.count)
+        if(_wordIndex >= _answer.quoteWords.count)
         {
             [self onRoundComplete];
         }
         else
         {
-            _currentWord = [[TileWord alloc] initWithAnswer:[answer.quoteWords objectAtIndex:_wordIndex]];
+            _currentWord = [[TileWord alloc] initWithAnswer:[_answer.quoteWords objectAtIndex:_wordIndex]];
         }
     }
     return result;
@@ -134,7 +153,7 @@
 
 -(Boolean) isFullyGuessed
 {
-    return _letterIndex == answer.quoteLettersOnly.length;
+    return _letterIndex == _answer.quoteLettersOnly.length;
 }
 
 -(Boolean) isCorrectlyGuessed
@@ -142,7 +161,7 @@
     Boolean result = [self isFullyGuessed];
     if(result)
     {
-        result = [answer.quoteLettersOnly isEqualToString:_currentFullGuess];
+        result = [_answer.quoteLettersOnly isEqualToString:_currentFullGuess];
     }
     return result;
 }
@@ -151,6 +170,7 @@
 {
     return [guessedKeys componentsJoinedByString:@","];
 }
+
 -(void) guessKeysFromString:(NSString *) value
 {
     [self resetRound];
@@ -179,7 +199,7 @@
 
 - (NSString *) trace
 {
-    NSMutableString *s = [NSMutableString stringWithString:[grid trace]];
+    NSMutableString *s = [NSMutableString stringWithString:[_grid trace]];
     [s appendString:@"\ranswer:\r"];
     for(int i = 0; i < tileWords.count; i++)
     for(TileWord *tw in tileWords)
@@ -189,7 +209,7 @@
     
     [s appendString:[_currentWord getGuessedWord]];
     
-    [s appendString:[[answer.quoteLettersOnly substringFromIndex:_letterIndex] lowercaseString]];
+    [s appendString:[[_answer.quoteLettersOnly substringFromIndex:_letterIndex] lowercaseString]];
     [s appendString:@"\r"];
     
     return s;

@@ -13,7 +13,7 @@
 
 @interface GridView : UIView
 
-@property (nonatomic, weak) Grid *tileGrid;
+@property (nonatomic, weak) Grid *grid;
 @property (nonatomic, strong) NSMutableArray *tileViews;
 
 @property (nonatomic) int margin;

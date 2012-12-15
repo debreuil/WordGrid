@@ -13,7 +13,7 @@
 
 @implementation GridView
 
-@synthesize tileGrid;
+@synthesize grid = _grid;
 @synthesize tileViews;
 
 @synthesize margin;
@@ -29,6 +29,10 @@ UIInterfaceOrientation io;
 -(id)init
 {
     self = [super init];
+    if(self)
+    {
+        self.tileViews = [NSMutableArray arrayWithCapacity:200];
+    }
     return self;
 }
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -36,6 +40,7 @@ UIInterfaceOrientation io;
     self = [super initWithCoder:aDecoder];
     if(self)
     {
+        self.tileViews = [NSMutableArray arrayWithCapacity:200];
     }
     return self;
 }
@@ -43,7 +48,8 @@ UIInterfaceOrientation io;
 {
     self = [super initWithFrame:frame];
     if (self)
-    {
+    {        
+        self.tileViews = [NSMutableArray arrayWithCapacity:200];
     }
     return self;
 }
@@ -61,15 +67,30 @@ UIInterfaceOrientation io;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
 }
 
+- (void) setGrid:(Grid *)g
+{
+    [self clearGrid];
+    _grid = g;
+    [self createGrid];
+}
+
+- (void) clearGrid
+{
+    for(TileView *tv in self.tileViews)
+    {
+        [tv removeFromSuperview];
+    }
+    [self.tileViews removeAllObjects];
+    _grid = nil;
+}
 
 - (void) createGrid
-{
-    // todo: fix up
+{        
     self.margin = 4;    
     self.lastHoverTileIndex = -1;
     
-    int gw = self.tileGrid.gridSize.width;
-    int gh = self.tileGrid.gridSize.height;
+    int gw = self.grid.gridSize.width;
+    int gh = self.grid.gridSize.height;
     
     self.tileWidth = (self.bounds.size.width - self.margin * (gw - 2)) / gw;
     self.tileHeight = (self.bounds.size.height - self.margin * (gh - 2)) / gh;
@@ -78,14 +99,13 @@ UIInterfaceOrientation io;
     
     Tile *tile;
     TileView *tileView;
-    self.tileViews = [NSMutableArray arrayWithCapacity:gw * gh];
     
     CGRect r = CGRectMake(0, 0, self.tileWidth, self.tileHeight);
     for (int i = 0; i < gh; i++)
     {
         for (int j = 0; j < gw; j++)
         {
-            tile = [self.tileGrid getTileFromIndex:i * gw + j];
+            tile = [self.grid getTileFromIndex:i * gw + j];
             tileView = [[TileView alloc] initWithFrame:r andTile:tile];
             [self.tileViews addObject:tileView];
             [self addSubview:tileView];
@@ -102,8 +122,8 @@ UIInterfaceOrientation io;
 
 - (void) layoutGrid:(Boolean) useAnimation
 {
-    int gw = self.tileGrid.gridSize.width;
-    int gh = self.tileGrid.gridSize.height;
+    int gw = self.grid.gridSize.width;
+    int gh = self.grid.gridSize.height;
     
     float l = self.margin / 2.0 + (gw - 1) * self.slotWidth;
     float t = self.margin / 2.0 + (gh - 1) * self.slotHeight;
@@ -159,8 +179,8 @@ UIInterfaceOrientation io;
     {
         int tx = (int)(point.x / self.slotWidth);
         int ty = (int)(point.y / self.slotHeight);
-        tileIndex = ty * tileGrid.gridSize.width + tx;
-        Tile *t = [self.tileGrid getTileFromIndex:tileIndex];
+        tileIndex = ty * self.grid.gridSize.width + tx;
+        Tile *t = [self.grid getTileFromIndex:tileIndex];
         if(tileIndex >= [self.tileViews count] || [t isEmptyTile] || !t.isSelectable) // || t.selected
         {
             tileIndex = -1;

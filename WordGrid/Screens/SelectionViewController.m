@@ -77,6 +77,7 @@ NSMutableArray *tiles;
         CGRect r = CGRectMake(curLeft, curTop, tw, th);
         tile = [[Tile alloc] initWithLetter:[NSString stringWithFormat:@"%i", i]];
         tv = [[TileView alloc] initWithFrame:r andTile:tile];
+        tv.tile.isSelectable = YES;
         [tiles addObject:tv];
         [self.view addSubview:tv];
         col++;
