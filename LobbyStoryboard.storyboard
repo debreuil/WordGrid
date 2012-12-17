@@ -403,7 +403,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="grid" destination="lIN-iA-s1o" id="9ZO-fX-aV6"/>
+                        <outlet property="gridView" destination="lIN-iA-s1o" id="lZw-AT-hdl"/>
                         <outlet property="txTitle" destination="GVQ-ou-A6D" id="CVA-5a-8dX"/>
                         <segue destination="tOf-gt-KqZ" kind="push" identifier="toPlayScreen" id="gsm-eI-RJx"/>
                     </connections>

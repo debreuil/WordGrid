@@ -11,6 +11,7 @@
 @class Answer;
 @class Grid;
 @class TileWord;
+@class Tile;
 
 @interface Round : NSObject
 
@@ -24,7 +25,8 @@
 
 - (id)initWithAnswer:(Answer *)answer;
 
-- (Boolean) guessTile:(int)index;
+- (Boolean) guessTileByIndex:(int)index;
+- (Boolean) guessTile:(Tile *)guessedTile;
 - (void) undoLastWord;
 
 -(Boolean) isFullyGuessed;

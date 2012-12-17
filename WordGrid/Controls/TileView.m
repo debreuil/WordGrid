@@ -25,6 +25,11 @@
 @synthesize tile = _tile;
 @synthesize animatingFrom = _animatingFrom;
 @synthesize isHovering = _isHovering;
+@synthesize isEmptyHidden = _isEmptyHidden;
+
+@synthesize currentIndex = _currentIndex;
+@synthesize isSelectable = _isSelectable;
+@synthesize isSelected = _isSelected;
 
 static NSArray *imageStates;
 static UIImage *errorImage;
@@ -74,6 +79,9 @@ static SystemSoundID tickSoundID;
     image = [imageStates objectAtIndex:0];
     self.animatingFrom = CGRectNull;
     _isHovering = NO;
+    _currentIndex = CGPointMake(-1, -1);
+    _isSelected = NO;
+    _isSelectable = NO;
     
     CGRect f = [self frame];
     float xBorder = ((f.size.width * hoverScale) - f.size.width) / 2.0;
@@ -99,43 +107,49 @@ static SystemSoundID tickSoundID;
 
 - (void)drawRect:(CGRect)rect
 {
-    self.clipsToBounds = NO;
-    
-    CGRect r = self.bounds;
-    
-	//[image drawAtPoint:(CGPointMake(0.0f, 0.0f))];
-    [image drawInRect:r];
-    
-    if(errorMarkVisible)
+    if([self.tile isEmptyTile] && self.isEmptyHidden)
     {
-        [errorImage drawInRect:r];
-    }
-    
-    
-    [[UIColor whiteColor] set];
-    float sc = r.size.width / 48.0;
-    UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];
-    
-    CGRect letR = CGRectOffset(r, 0.0, 2.0);
-    if(![self.tile isEmptyTile] && self.tile.letter == @"")
-    {
-        [self.tile.letter drawInRect:letR
-                                 withFont:f
-                                 lineBreakMode:UILineBreakModeClip
-                                 alignment:UITextAlignmentCenter];
+        self.hidden = YES;
     }
     else
     {
-        [self.tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        //self.clipsToBounds = NO;
+        
+        CGRect r = self.bounds;
+        
+        //[image drawAtPoint:(CGPointMake(0.0f, 0.0f))];
+        [image drawInRect:r];
+        
+        if(errorMarkVisible)
+        {
+            [errorImage drawInRect:r];
+        }
+        
+        [[UIColor whiteColor] set];
+        float sc = r.size.width / 48.0;
+        UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];
+        
+        CGRect letR = CGRectOffset(r, 0.0, 2.0);
+        if(![self.tile isEmptyTile] && self.tile.letter == @"")
+        {
+            [self.tile.letter drawInRect:letR
+                                     withFont:f
+                                     lineBreakMode:UILineBreakModeClip
+                                     alignment:UITextAlignmentCenter];
+        }
+        else
+        {
+            [self.tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        }
+        
+        if(self.tile.isSelectable)
+        {
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            CGContextSetLineWidth(context, 4);
+            CGContextSetRGBStrokeColor(context, 0.2, 0.5, 1.0, 1);
+            CGContextStrokeRect(context, r);
+        }
     }
-    
-    if(self.tile.isSelectable)
-    {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetLineWidth(context, 4);
-        CGContextSetRGBStrokeColor(context, 0.2, 0.5, 1.0, 1);
-        CGContextStrokeRect(context, r);
-    }    
 }
 
 

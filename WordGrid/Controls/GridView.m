@@ -12,8 +12,12 @@
 #import "Tile.h"
 
 @interface GridView()
+{
+    UIView *blankView;
+}
 - (void)    createGrid;
 - (void)    layoutGrid:(Boolean) useAnimation;
+
 @end
 
 @implementation GridView
@@ -28,50 +32,23 @@
 @synthesize slotWidth;
 @synthesize slotHeight;
 @synthesize animationDelay;
+@synthesize isEmptyHidden;
 
 UIInterfaceOrientation io;
 
--(id)init
-{
-    self = [super init];
-    if(self)
-    {
-        self.tileViews = [NSMutableArray arrayWithCapacity:200];
-    }
-    return self;
-}
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if(self)
     {
+        self.margin = 4;
         self.tileViews = [NSMutableArray arrayWithCapacity:200];
+        blankView = [[UIView alloc] init];
+        blankView.hidden = YES;
+        [self addSubview:blankView];
     }
     return self;
 }
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self)
-    {        
-        self.tileViews = [NSMutableArray arrayWithCapacity:200];
-    }
-    return self;
-}
-
--(void) subviewDidAppear
-{
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(onSelectTile:)
-     name:@"onTileSelected"
-     object:nil];
-}
--(void) subviewDidDisappear
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
-}
-
 - (void) setGrid:(Grid *)g
 {
     [self clearGrid];
@@ -90,8 +67,7 @@ UIInterfaceOrientation io;
 }
 
 - (void) createGrid
-{        
-    self.margin = 4;    
+{           
     self.lastHoverTileIndex = -1;
     
     int gw = self.grid.gridSize.width;
@@ -105,13 +81,14 @@ UIInterfaceOrientation io;
     Tile *tile;
     TileView *tileView;
     
-    CGRect r = CGRectMake(0, 0, self.tileWidth, self.tileHeight);
+    CGRect r = CGRectMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0, self.tileWidth, self.tileHeight);
     for (int i = 0; i < gh; i++)
     {
         for (int j = 0; j < gw; j++)
         {
-            tile = [self.grid getTileFromIndex:i * gw + j];
+            tile = [self.grid getTileFromIndex:i * gw + j];            
             tileView = [[TileView alloc] initWithFrame:r andTile:tile];
+            tileView.isEmptyHidden = self.isEmptyHidden;            
             [self.tileViews addObject:tileView];
             [self addSubview:tileView];
         }
@@ -127,53 +104,42 @@ UIInterfaceOrientation io;
 
 - (void) layoutGrid:(Boolean) useAnimation
 {
-    int gw = self.grid.gridSize.width;
-    int gh = self.grid.gridSize.height;
+    [self resetAnimationDelay:0];
+    //int gw = self.grid.gridSize.width;
+    //int gh = self.grid.gridSize.height;
     
-    float l = self.margin / 2.0 + (gw - 1) * self.slotWidth;
-    float t = self.margin / 2.0 + (gh - 1) * self.slotHeight;
-    
-    CGRect fr = CGRectMake(l, t, self.tileWidth, self.tileHeight);
-    TileView *tileView;
-    
-    for (int i = gh - 1; i >= 0; i--)
+    [self bringSubviewToFront:blankView];
+    UIView *topView = blankView;
+            
+    for(TileView * tv in self.tileViews)
     {
-        for (int j = gw - 1; j >= 0; j--)
-        {
-            tileView = [self.tileViews objectAtIndex: i * gw + j];
-            //tileView.gridIndex = i * gw + j;
-            if(!tileView.hidden)
-            {
-                if(useAnimation && !CGRectEqualToRect(fr, tileView.frame))
-                {
-                    if(!CGRectEqualToRect(tileView.animatingFrom, CGRectNull))
-                    {
-                        tileView.frame = tileView.animatingFrom;
-                        tileView.animatingFrom = CGRectNull;
-                    }
-                    
-                    tileView.animatingFrom = tileView.frame;
-                    self.animationDelay += .01;
-                    [UIView
-                     animateWithDuration:0.3
-                     delay:self.animationDelay
-                     options: UIViewAnimationCurveEaseOut
-                     animations:^
-                     {
-                         tileView.frame = fr;
-                     }
-                     completion:^(BOOL finished){tileView.animatingFrom = CGRectNull;}
-                     ];
-                }
-                else
-                {
-                    tileView.frame = fr;
-                }
-            }
-            fr.origin.x -= self.slotWidth;
+        BOOL hasAnimation = NO;
+        CGPoint org = self.frame.origin;
+        if(tv.currentIndex.x != tv.tile.currentIndex.x)
+        {            
+            org = CGPointMake(self.margin / 2.0 + self.slotWidth * tv.tile.currentIndex.x, org.y);
+            hasAnimation = YES;
         }
-        fr.origin.x = l;
-        fr.origin.y -= self.slotHeight;
+        
+        if(tv.currentIndex.y != tv.tile.currentIndex.y)
+        {
+            org = CGPointMake(org.x, self.margin / 2.0 + self.slotHeight * tv.tile.currentIndex.y);
+            hasAnimation = YES;
+        }
+        
+        if(hasAnimation)
+        {
+            [self insertSubview:tv belowSubview:topView];
+            topView = tv;
+            CGRect fr = CGRectMake(org.x, org.y, self.tileWidth, self.tileHeight);
+            self.animationDelay += .01;
+            
+            [UIView
+             animateWithDuration:0.3 delay:self.animationDelay options: UIViewAnimationCurveEaseOut
+             animations:^{ tv.frame = fr; }
+             completion:^(BOOL finished){}
+             ];
+        }
     }
 }
 
@@ -244,13 +210,6 @@ UIInterfaceOrientation io;
     //[self removeVerticalGaps];
 }
 
-- (void) onSelectTile:(NSNotification *)notification
-{
-    Tile *tile = (Tile *)[notification object];    
-    tile.isSelected = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"onGridTileSelected" object:tile];
-}
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
@@ -277,12 +236,11 @@ UIInterfaceOrientation io;
     if(tile.isSelectable)
     {
         //AudioServicesPlaySystemSound(tickSoundID);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
+        [self layoutGrid:YES];
     }
-    [self setNeedsDisplay];
-
-    
     [self clearAllHovers];
+    [self setNeedsDisplay];  
     
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

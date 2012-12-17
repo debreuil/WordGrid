@@ -18,6 +18,7 @@
 -(Tile *) getTileFromIndex:(int)index;
 -(Tile *) getTileFromBoxedIndex:(NSNumber *)index;
 -(Tile *) getTileFromPoint:(CGPoint)pt;
+-(int)    getIndexFromTile:(Tile *)tile;
 
 -(int) getIndexFromPoint:(CGPoint)pt;
 -(CGPoint) getPointFromIndex:(int)index;
@@ -35,6 +36,7 @@
 
 -(NSString *) serialize;
 -(void) deserializeCurrentRound:(Answer *) ans;
+-(void) deserializeSelections:(NSArray *) ar;
 -(NSString *)  trace;
 
 @end

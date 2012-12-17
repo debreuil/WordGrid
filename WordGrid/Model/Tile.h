@@ -12,6 +12,7 @@
 @property (nonatomic, readonly) NSString *letter;
 @property (nonatomic, readonly) NSString *displayLetter;
 @property (nonatomic) CGPoint currentIndex;
+@property (nonatomic, readonly) int currentLinearIndex;
 @property (nonatomic) CGPoint targetIndex;
 @property (nonatomic) Boolean isSelectable;
 @property (nonatomic) Boolean isSelected;

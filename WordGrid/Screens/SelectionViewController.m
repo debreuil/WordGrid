@@ -9,10 +9,16 @@
 #import "SelectionViewController.h"
 #import "Tile.h"
 #import "Game.h"
+#import "Grid.h"
+#import "GridView.h"
 #import "TileView.h"
+#import "QuotePack.h"
+#import "Answer.h"
 
 @interface SelectionViewController ()
-
+{
+    Grid *grid;
+}
 - (void) createChoices;
 
 @end
@@ -20,7 +26,7 @@
 @implementation SelectionViewController
 
 @synthesize txTitle = _txTitle;
-@synthesize grid = _grid;
+@synthesize gridView = _gridView;
 
 NSMutableArray *tiles;
 
@@ -31,6 +37,29 @@ NSMutableArray *tiles;
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	
+    Game *g = [Game instance];
+    NSMutableArray *answers = [g.quotePack answers];
+    NSMutableArray *ar = [[NSMutableArray alloc] initWithCapacity:g.quoteCount];
+    for(int i = 0; i < g.quoteCount; i++)
+    {
+        Answer *ans = [answers objectAtIndex:i];
+        [ar addObject:[NSNumber numberWithInt:ans.savedRating]];
+    }
+    grid = [[Grid alloc] init];
+    [grid deserializeSelections:[NSArray arrayWithArray:ar]];
+    [grid setAllIsSelectable:YES];
+    
+    _gridView.isEmptyHidden = YES;
+    _gridView.margin = 15;
+    [_gridView setGrid:grid];
+    
+    //[self createGrid];
 }
 
 - (void) createChoices
@@ -55,7 +84,7 @@ NSMutableArray *tiles;
 }
 
 -(void) createGrid
-{
+{return;
     int ansCount = [[Game instance] quoteCount];
     int itemsPerRow = 8;
     float l =  self.txTitle.frame.origin.x;
@@ -98,18 +127,11 @@ NSMutableArray *tiles;
 
 - (void) onSelectTile:(NSNotification *)notification
 {
-    TileView *tv = (TileView *)[notification object];
-    int index = [tv.tile.letter integerValue];
+    Tile *tile = (Tile *)[notification object];
+    int index = [tile.letter integerValue];
     [Game instance].currentIndex = index;
     
     [self performSegueWithIdentifier:@"toPlayScreen" sender:self];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	
-    [self createGrid];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,7 +143,6 @@ NSMutableArray *tiles;
 - (void)viewDidUnload
 {
     [self setTxTitle:nil];
-    [self setGrid:nil];
     [super viewDidUnload];
 }
 

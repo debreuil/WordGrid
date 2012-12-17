@@ -39,7 +39,7 @@ Round *testRound;
     
     for (int i = 0; i < keys.count; i++)
     {
-        [testRound guessTile:[[keys objectAtIndex:i] intValue]];
+        [testRound guessTileByIndex:[[keys objectAtIndex:i] intValue]];
     }
     
     STAssertEquals((NSUInteger)testRound.letterIndex, keys.count, @"at last letter");
@@ -58,8 +58,8 @@ Round *testRound;
     TileWord *firstWord = testRound.currentWord;
     
     // guess 2 letters
-    [testRound guessTile:37];
-    [testRound guessTile:46];
+    [testRound guessTileByIndex:37];
+    [testRound guessTileByIndex:46];
     
     STAssertEquals(testRound.letterIndex, 2, @"at letter");
     STAssertEquals(testRound.wordIndex, 0, @"at word");
@@ -77,7 +77,7 @@ Round *testRound;
     // guess wrong word
     for (int i = 0; i < keys.count; i++)
     {
-        [testRound guessTile:[[keys objectAtIndex:i] intValue]];
+        [testRound guessTileByIndex:[[keys objectAtIndex:i] intValue]];
     }
     NSString *guessedKeys = [testRound getGuessedKeysAsString];
     STAssertTrue([guessedKeys isEqualToString:@"61,53,43,51,52"], @"guessed Keys");
@@ -97,7 +97,7 @@ Round *testRound;
     
     for (int i = 0; i < 5; i++)
     {
-        [testRound guessTile:[[answer.keys objectAtIndex:i] intValue]];
+        [testRound guessTileByIndex:[[answer.keys objectAtIndex:i] intValue]];
     }
     
     STAssertEquals(testRound.letterIndex, 5, @"at letter");

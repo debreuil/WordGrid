@@ -98,11 +98,16 @@
     [self.grid setSelectableByLetter:let];
 }
 
-- (Boolean) guessTile:(int)index
+- (Boolean) guessTileByIndex:(int)index
 {
     Tile *guessedTile = [_grid getTileFromIndex:index];
+    return [self guessTile:guessedTile];
+}
+
+- (Boolean) guessTile:(Tile *)guessedTile
+{
     [_currentWord addTile:guessedTile];
-    [guessedKeys addObject:[NSNumber numberWithInt:index]];
+    [guessedKeys addObject:[NSNumber numberWithInt:[self.grid getIndexFromTile:guessedTile]]];
     _currentFullGuess = [_currentFullGuess stringByAppendingString:guessedTile.letter];
     
     NSString *correctLetter = [[_answer quoteLettersOnly] substringWithRange:NSMakeRange(_letterIndex, 1)];
@@ -180,7 +185,7 @@
     {
         NSString *val = (NSString *)ar[i];
         int index = [val intValue];
-        [self guessTile:index];
+        [self guessTileByIndex:index];
     }
 }
 

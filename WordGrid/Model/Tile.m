@@ -40,8 +40,9 @@ static Tile *emptyTileHolder;
 
 - (Boolean) isEmptyTile
 {
-    return [self.letter isEqual:@" "];
+    return [self.letter isEqual:@" "] || [self.letter isEqual:@""];
 }
+
 - (NSComparisonResult)compareFromBottomRight:(Tile *)otherObject
 {
     if(self.currentIndex.y > otherObject.currentIndex.y)

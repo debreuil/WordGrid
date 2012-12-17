@@ -37,6 +37,8 @@
     self = [super init];
     if(self)
     {
+        _gridSize = CGSizeMake(8, 7); // default
+        
         grid = [[NSMutableArray alloc] initWithCapacity:127];
         selectedLetters = [[NSMutableArray alloc] initWithCapacity:30];
     }
@@ -60,6 +62,11 @@
 -(Tile *) getTileFromIndex:(int)index
 {
     return (Tile *)[grid objectAtIndex:index];
+}
+
+- (int) getIndexFromTile:(Tile *)tile
+{
+    return tile.currentIndex.x + tile.currentIndex.y * self.gridSize.width;
 }
 
 -(Tile *) getTileFromBoxedIndex:(NSNumber *)index
@@ -339,6 +346,21 @@
     return s;
 }
 
+-(void) deserializeSelections:(NSArray *) ar
+{
+    [grid removeAllObjects];
+    int len = _gridSize.width * _gridSize.height;
+
+    for (int i = 0; i < len; i++)
+    {
+        NSString *s = (i < ar.count) ? [NSString stringWithFormat:@"%d", i] : @" ";
+        Tile *t;
+        t = [[Tile alloc] initWithLetter:s];        
+        t.currentIndex = [self getPointFromIndex:i];
+        [grid addObject:t];
+    }
+
+}
 -(void) deserializeCurrentRound:(Answer *) ans
 {
     [grid removeAllObjects];

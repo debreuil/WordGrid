@@ -129,63 +129,63 @@ SystemSoundID winSoundID;
 {
     Tile *t = (Tile *)[notification object];
     [self onTileSelected:t];
-    NSLog(@"Tile: %@", t);
 }
 
 - (void) onTileSelected:(Tile *)t
-{
-//    lastSelectedTileIndex = t.gridIndex;
-//    
-//    if(t.isSelectable)
-//    {
-//        Tile *at = [self.answerGrid getNextTile];
-//        CGRect orgFrame = at.frame;//CGRectInset(at.frame, 0, 0);
-//        at.hidden = NO;
-//        at.frame = CGRectMake( -self.answerGrid.frame.origin.x + self.gridView.frame.origin.x + t.frame.origin.x,
-//                              -self.answerGrid.frame.origin.y + self.gridView.frame.origin.y + t.frame.origin.y,
-//                              t.frame.size.width,
-//                              t.frame.size.height);
-//        //NSLog(@"org: %f %f", t.frame.size.width, t.frame.size.height);
-//        [self.answerGrid setNextTileUsingTile:t];
-//        
-//        [UIView
-//         animateWithDuration:0.3
-//         delay:letterMoveDelay
-//         options: UIViewAnimationCurveEaseOut
-//         animations:^
-//         {
-//             at.frame = orgFrame;
-//         }
-//         completion:^(BOOL finished)
-//         {
-//             if(finished)
-//             {
-//                 [at setIsSelectable:YES];
-//                 [self testWordComplete];
-//             }
-//         }
-//         ];
-//        
-//        [self.answerRefs addObject:t];
-//        
-//        if([self.answerGrid atWordBoundry])
-//        {
-//            Boolean correct = [self.answerGrid testCurrentWordCorrect];
-//            if(correct)
-//            {
-//                [self.gridView setAllIsSelectable:NO];
-//                AudioServicesPlaySystemSound(correctWordSoundID);
-//            }
-//            else
-//            {
-//                AudioServicesPlaySystemSound(errorSoundID);
-//            }
-//        }
-//        else
-//        {
-//            [self.gridView setSelectableAroundIndex:lastSelectedTileIndex];
-//        }
-//    }
+{    
+    if(t.isSelectable)
+    {
+        [game.currentRound guessTile:t];
+        /*
+        Tile *at = [self.answerGrid getNextTile];
+        CGRect orgFrame = at.frame;//CGRectInset(at.frame, 0, 0);
+        at.hidden = NO;
+        at.frame = CGRectMake( -self.answerGrid.frame.origin.x + self.gridView.frame.origin.x + t.frame.origin.x,
+                              -self.answerGrid.frame.origin.y + self.gridView.frame.origin.y + t.frame.origin.y,
+                              t.frame.size.width,
+                              t.frame.size.height);
+        //NSLog(@"org: %f %f", t.frame.size.width, t.frame.size.height);
+        [self.answerGrid setNextTileUsingTile:t];
+        
+        [UIView
+         animateWithDuration:0.3
+         delay:letterMoveDelay
+         options: UIViewAnimationCurveEaseOut
+         animations:^
+         {
+             at.frame = orgFrame;
+         }
+         completion:^(BOOL finished)
+         {
+             if(finished)
+             {
+                 [at setIsSelectable:YES];
+                 [self testWordComplete];
+             }
+         }
+         ];
+        
+        [self.answerRefs addObject:t];
+        
+        if([self.answerGrid atWordBoundry])
+        {
+            Boolean correct = [self.answerGrid testCurrentWordCorrect];
+            if(correct)
+            {
+                [self.gridView setAllIsSelectable:NO];
+                AudioServicesPlaySystemSound(correctWordSoundID);
+            }
+            else
+            {
+                AudioServicesPlaySystemSound(errorSoundID);
+            }
+        }
+        else
+        {
+            [self.gridView setSelectableAroundIndex:lastSelectedTileIndex];
+        }
+         */
+    }
 }
 
 - (void) answerSelected:(NSNotification *)notification

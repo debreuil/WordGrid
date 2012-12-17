@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class GridView;
+
 @interface SelectionViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UILabel *txTitle;
-@property (strong, nonatomic) IBOutlet GridView *grid;
+@property (strong, nonatomic) IBOutlet GridView *gridView;
 
 @end
