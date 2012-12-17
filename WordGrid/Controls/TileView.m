@@ -13,6 +13,7 @@
 {
     UIImage *image;
     CGRect scaleNormalRect;
+    CGRect scaleMidRect;
     CGRect scaleUpRect;
     Boolean errorMarkVisible;
 }
@@ -50,7 +51,14 @@ static SystemSoundID tickSoundID;
         if(_isHovering)
         {        
             [self.superview bringSubviewToFront:self];
-            self.bounds = scaleUpRect;
+            if(self.tile.isSelectable)
+            {
+                self.bounds = scaleUpRect;
+            }
+            else
+            {
+                self.bounds = scaleMidRect;
+            }
         }
         else
         {
@@ -70,14 +78,10 @@ static SystemSoundID tickSoundID;
     CGRect f = [self frame];
     float xBorder = ((f.size.width * hoverScale) - f.size.width) / 2.0;
     float yBorder = ((f.size.height * hoverScale) - f.size.height) / 2.0;
-    scaleNormalRect = f;
-    scaleUpRect = CGRectMake(
-                             f.origin.x - xBorder,
-                             f.origin.y - yBorder,
-                             f.size.width + xBorder * 2,
-                             f.size.height + yBorder * 2);
+    scaleNormalRect = f;    
+    scaleMidRect = CGRectInset(f, -xBorder / 3.0f, -yBorder / 3.0f);
+    scaleUpRect = CGRectInset(f, -xBorder, -yBorder);
 }
-
 
 + (void) load
 {
@@ -136,31 +140,31 @@ static SystemSoundID tickSoundID;
 
 
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesBegan:touches withEvent:event];
-    // move hover to grid
-    self.isHovering = YES;
-}
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesMoved:touches withEvent:event];
-}
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesEnded:touches withEvent:event];
-    self.isHovering = NO;
-    //NSLog(@"%i", gridIndex);
-    if(self.tile.isSelectable)
-    {
-        AudioServicesPlaySystemSound(tickSoundID);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];
-    }
-    [self setNeedsDisplay];
-}
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesEnded:touches withEvent:event];
-}
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesBegan:touches withEvent:event];
+//    // move hover to grid
+//    self.isHovering = YES;
+//}
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesMoved:touches withEvent:event];
+//}
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesEnded:touches withEvent:event];
+//    self.isHovering = NO;
+//    //NSLog(@"%i", gridIndex);
+//    if(self.tile.isSelectable)
+//    {
+//        AudioServicesPlaySystemSound(tickSoundID);
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];
+//    }
+//    [self setNeedsDisplay];
+//}
+//- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesEnded:touches withEvent:event];
+//}
 
 @end

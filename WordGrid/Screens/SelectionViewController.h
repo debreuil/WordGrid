@@ -10,5 +10,6 @@
 
 @interface SelectionViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UILabel *txTitle;
+@property (strong, nonatomic) IBOutlet GridView *grid;
 
 @end

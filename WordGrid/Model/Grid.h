@@ -19,9 +19,6 @@
 -(Tile *) getTileFromBoxedIndex:(NSNumber *)index;
 -(Tile *) getTileFromPoint:(CGPoint)pt;
 
--(void) insertWord:(TileWord *) indexesToRemove;
--(void) removeWord:(TileWord *) indexesToRemove;
-
 -(int) getIndexFromPoint:(CGPoint)pt;
 -(CGPoint) getPointFromIndex:(int)index;
 -(NSString *) getLetterFromIndex:(int)index;
@@ -29,8 +26,12 @@
 
 - (void)    clearAllSelections;
 - (void)    setAllIsSelectable:(Boolean) isSelectable;
+
 - (void)    setSelectableAroundIndex:(int) index;
 - (void)    setSelectableByLetter:(NSString *)let;
+
+-(void) insertWord:(TileWord *) indexesToRemove;
+-(void) removeWord:(TileWord *) indexesToRemove;
 
 -(NSString *) serialize;
 -(void) deserializeCurrentRound:(Answer *) ans;

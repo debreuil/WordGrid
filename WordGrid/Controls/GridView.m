@@ -11,6 +11,11 @@
 #import "TileView.h"
 #import "Tile.h"
 
+@interface GridView()
+- (void)    createGrid;
+- (void)    layoutGrid:(Boolean) useAnimation;
+@end
+
 @implementation GridView
 
 @synthesize grid = _grid;
@@ -172,6 +177,19 @@ UIInterfaceOrientation io;
     }
 }
 
+- (Tile *) getTileFromMousePoint:(CGPoint) point
+{
+    Tile *result = nil;
+    if(CGRectContainsPoint(self.bounds, point))
+    {
+        int tx = (int)(point.x / self.slotWidth);
+        int ty = (int)(point.y / self.slotHeight);
+        int tileIndex = ty * self.grid.gridSize.width + tx;
+        result = [self.grid getTileFromIndex:tileIndex];
+    }
+    return result;
+}
+
 - (int) getTileIndexFromMousePoint:(CGPoint) point
 {
     int tileIndex = -1;
@@ -180,8 +198,8 @@ UIInterfaceOrientation io;
         int tx = (int)(point.x / self.slotWidth);
         int ty = (int)(point.y / self.slotHeight);
         tileIndex = ty * self.grid.gridSize.width + tx;
-        Tile *t = [self.grid getTileFromIndex:tileIndex];
-        if(tileIndex >= [self.tileViews count] || [t isEmptyTile] || !t.isSelectable) // || t.selected
+        //Tile *t = [self.grid getTileFromIndex:tileIndex];
+        if(tileIndex >= [self.tileViews count])// || [t isEmptyTile] || !t.isSelectable) // || t.selected
         {
             tileIndex = -1;
         }
@@ -200,8 +218,11 @@ UIInterfaceOrientation io;
         }
         TileView *t = [self.tileViews objectAtIndex:tileIndex];
         t.isHovering = YES;
-        [self bringSubviewToFront:t];
         self.lastHoverTileIndex = tileIndex;
+    }
+    else
+    {
+        [self clearAllHovers];
     }
 }
 
@@ -250,7 +271,19 @@ UIInterfaceOrientation io;
 {
     [super touchesEnded:touches withEvent:event];
     
+    UITouch *t = [touches anyObject];
+    Tile *tile = [self getTileFromMousePoint:[t locationInView:self]];
+
+    if(tile.isSelectable)
+    {
+        //AudioServicesPlaySystemSound(tickSoundID);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];
+    }
+    [self setNeedsDisplay];
+
+    
     [self clearAllHovers];
+    
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {

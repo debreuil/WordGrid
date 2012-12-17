@@ -24,13 +24,11 @@
 @property (nonatomic) float slotHeight;
 @property (nonatomic) float animationDelay;
 
-- (void)    createGrid;
-- (void)    layoutGrid:(Boolean) useAnimation;
-
 - (void)    subviewDidAppear;
 - (void)    subviewDidDisappear;
 - (void)    hoverTileAtPoint:(CGPoint) point;
 - (void)    clearAllHovers;
+- (Tile *)  getTileFromMousePoint:(CGPoint) point;
 - (int)     getTileIndexFromMousePoint:(CGPoint) point;
 - (void)    onSelectTile:(NSNotification *)notification;
 - (void)    resetAnimationDelay:(int) delay;

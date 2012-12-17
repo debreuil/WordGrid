@@ -37,18 +37,7 @@
     self = [super init];
     if(self)
     {
-        grid = [[NSMutableArray alloc] initWithCapacity:100];
-        selectedLetters = [[NSMutableArray alloc] initWithCapacity:30];
-    }
-    return self;
-}
-
-- (id)initWithAnswer:(Answer *)answer
-{
-    self = [super init];
-    if(self)
-    {
-        grid = [[NSMutableArray alloc] initWithCapacity:answer.gridSize.width * answer.gridSize.height];
+        grid = [[NSMutableArray alloc] initWithCapacity:127];
         selectedLetters = [[NSMutableArray alloc] initWithCapacity:30];
     }
     return self;

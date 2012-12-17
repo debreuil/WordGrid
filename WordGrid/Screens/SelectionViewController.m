@@ -20,6 +20,8 @@
 @implementation SelectionViewController
 
 @synthesize txTitle = _txTitle;
+@synthesize grid = _grid;
+
 NSMutableArray *tiles;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -119,6 +121,7 @@ NSMutableArray *tiles;
 - (void)viewDidUnload
 {
     [self setTxTitle:nil];
+    [self setGrid:nil];
     [super viewDidUnload];
 }
 
