@@ -16,6 +16,7 @@
 @property (nonatomic) CGPoint targetIndex;
 @property (nonatomic) Boolean isSelectable;
 @property (nonatomic) Boolean isSelected;
+@property (nonatomic) Boolean isHidden;
 
 
 -(id) initWithLetter:(NSString *) letter;

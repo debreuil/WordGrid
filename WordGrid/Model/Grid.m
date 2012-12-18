@@ -47,21 +47,40 @@
 
 -(int) getIndexFromPoint:(CGPoint)pt
 {
-    return pt.y * self.gridSize.width + pt.x;
+    int result = -1;    
+    if(pt.x >= 0 && pt.x < _gridSize.width && pt.y >= 0 && pt.y < _gridSize.height)
+    {
+        result = pt.y * self.gridSize.width + pt.x;
+    }
+    return result;
 }
 
 -(Tile *) getTileFromPoint:(CGPoint)pt
 {
-    return (Tile *)[grid objectAtIndex:pt.y * self.gridSize.width + pt.x];
+    Tile *t = nil;
+    if(pt.x >= 0 && pt.x < _gridSize.width && pt.y >= 0 && pt.y < _gridSize.height)
+    {
+        int index = pt.y * self.gridSize.width + pt.x;
+        t = [grid objectAtIndex:index];
+    }
+    return t;
 }
 -(void) setTile:(Tile *) t atPoint:(CGPoint)pt
 {
-    [grid setObject:t atIndexedSubscript:pt.y * self.gridSize.width + pt.x];
+    if(pt.x >= 0 && pt.x < _gridSize.width && pt.y >= 0 && pt.y < _gridSize.height)
+    {
+        [grid setObject:t atIndexedSubscript:pt.y * self.gridSize.width + pt.x];
+    }
 }
 
 -(Tile *) getTileFromIndex:(int)index
 {
-    return (Tile *)[grid objectAtIndex:index];
+    Tile *t = nil;
+    if(index >= 0 && index < grid.count)
+    {
+        t = [grid objectAtIndex:index];
+    }
+    return t;
 }
 
 - (int) getIndexFromTile:(Tile *)tile
@@ -69,9 +88,15 @@
     return tile.currentIndex.x + tile.currentIndex.y * self.gridSize.width;
 }
 
--(Tile *) getTileFromBoxedIndex:(NSNumber *)index
+-(Tile *) getTileFromBoxedIndex:(NSNumber *)boxedIndex
 {
-    return (Tile *)[grid objectAtIndex:[index intValue]];
+    Tile *t = nil;
+    int index = [boxedIndex intValue];
+    if(index >= 0 && index < grid.count)
+    {
+        t = [grid objectAtIndex:index];
+    }
+    return t;
 }
 -(CGPoint) getPointFromIndex:(int)index
 {
@@ -80,8 +105,8 @@
 
 -(NSString *) getLetterFromIndex:(int)index
 {
-    Tile *t = [grid objectAtIndex:index];
-    return t.letter;
+    Tile *t = [self getTileFromIndex:index];
+    return (t == nil) ? @"" : t.letter;
 }
 
 -(TileWord *) getTileWordFromIndexes:(NSArray *)indexes
@@ -103,6 +128,7 @@
 
 -(void) removeTile:(Tile *) t
 {
+    t.isHidden = YES;
     int index = [self getIndexFromPoint:t.currentIndex];
     [grid replaceObjectAtIndex:index withObject:[Tile emptyTile]];
     
@@ -126,6 +152,7 @@
 
 -(void) insertTile:(Tile *) t
 {
+    t.isHidden = NO;
     int index = [self getIndexFromPoint:t.currentIndex];
     Tile * oldTile = [grid objectAtIndex:index];
     [grid replaceObjectAtIndex:index withObject:t];
@@ -168,7 +195,7 @@
     {
         [self insertTile:t];
     }
-    //NSLog(@"\r***full\r%@",  [self getGridTrace]);
+    //NSLog(@"\n***full\n%@",  [self getGridTrace]);
 }
 
 -(void) clearAllSelections
@@ -195,14 +222,13 @@
     }
 }
 
--(void) setSelectableAroundIndex:(int) index
+-(void) setSelectableAroundPoint:(CGPoint) point
 {
     [self setAllIsSelectable:NO];
     
-    CGPoint gp = [self getPointFromIndex:index];
-    for (int i = gp.x - 1; i <= gp.x + 1; i++)
+    for (int i = point.x - 1; i <= point.x + 1; i++)
     {
-        for (int j = gp.y - 1; j <= gp.y + 1; j++)
+        for (int j = point.y - 1; j <= point.y + 1; j++)
         {
             Tile *t = [self getTileFromPoint:CGPointMake(i, j)];
             if(t && !t.isEmptyTile && !t.isSelected)
@@ -256,7 +282,7 @@
             [self swapColumns:i toColumn:i + word.gaps.count];
         }        
     }
-    //NSLog(@"\r%@ ff: %d\r%@", word.gaps, firstFilled, [self getGridTrace]);
+    //NSLog(@"\n%@ ff: %d\n%@", word.gaps, firstFilled, [self trace]);
 }
 -(void) insertVerticalGaps:(TileWord *) word
 {
@@ -292,11 +318,11 @@
                 head++;
             }
         }
-        //NSLog(@"%@ \r%@", revGaps, [self getGridTrace]);
+        //NSLog(@"%@ \n%@", revGaps, [self getGridTrace]);
     }
     else
     {        
-        //NSLog(@"No Gaps \r%@",  [self getGridTrace]);
+        //NSLog(@"No Gaps \n%@",  [self getGridTrace]);
     }
     
     [word.gaps removeAllObjects];
@@ -326,12 +352,12 @@
     {
         if(count++ % (int)(self.gridSize.width) == 0)
         {
-            [s appendString:[NSString stringWithFormat:@"\r% 1d|", (int)(count / self.gridSize.width)]];
+            [s appendString:[NSString stringWithFormat:@"\n% 1d|", (int)(count / self.gridSize.width)]];
         }
         [s appendString:t.letter];
     }
-    [s appendString:@"\r   ----------"];
-    [s appendString:@"\r   0123456789"];
+    [s appendString:@"\n   ----------"];
+    [s appendString:@"\n   0123456789"];
     return s;
 }
 

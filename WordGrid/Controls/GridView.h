@@ -30,6 +30,7 @@
 - (Tile *)  getTileFromMousePoint:(CGPoint) point;
 - (int)     getTileIndexFromMousePoint:(CGPoint) point;
 - (void)    resetAnimationDelay:(int) delay;
+- (void)    layoutGrid:(Boolean) useAnimation;
 
 
 

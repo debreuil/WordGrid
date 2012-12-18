@@ -69,10 +69,10 @@ Grid *grid;
     int answerIndex = testGame.currentIndex;
     Answer *ans = testGame.currentAnswer;
     NSString *quote = ans.quoteLettersOnly;
-    NSLog(@"\r\rquote: %@\r\r", quote);
+    NSLog(@"\n\nquote: %@\n\n", quote);
     
     NSArray *answerKeys = ans.keys;
-    NSLog(@"\ranswerKeys: %@\r\r", answerKeys);
+    NSLog(@"\nanswerKeys: %@\n\n", answerKeys);
     
     for (int i = 0; i < answerKeys.count; i++)
     {

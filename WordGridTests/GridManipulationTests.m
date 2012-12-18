@@ -90,7 +90,7 @@ Grid *grid;
     
     for(int i = 0; i < indexes.count; i++)
     {
-        //NSLog(@"%@\r\r",[grid getGridTrace]);
+        //NSLog(@"%@\n\n",[grid getGridTrace]);
         TileWord *tw = [grid getTileWordFromIndexes:indexes[i]];
         [tileWords addObject:tw];
         NSString *word = [tw getGuessedWord];
@@ -100,7 +100,7 @@ Grid *grid;
     
     for(int i = tileWords.count - 1; i >= 0; i--)
     {
-        //NSLog(@"%@\r\r",[grid getGridTrace]);
+        //NSLog(@"%@\n\n",[grid getGridTrace]);
         [grid insertWord:[tileWords objectAtIndex:i]];
     }
     NSString *finalGrid = [grid serialize];

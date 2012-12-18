@@ -16,8 +16,6 @@
     UIView *blankView;
 }
 - (void)    createGrid;
-- (void)    layoutGrid:(Boolean) useAnimation;
-
 @end
 
 @implementation GridView
@@ -112,35 +110,42 @@ UIInterfaceOrientation io;
     UIView *topView = blankView;
             
     for(TileView * tv in self.tileViews)
-    {
-        BOOL hasAnimation = NO;
-        CGPoint org = self.frame.origin;
-        if(tv.currentIndex.x != tv.tile.currentIndex.x)
-        {            
-            org = CGPointMake(self.margin / 2.0 + self.slotWidth * tv.tile.currentIndex.x, org.y);
-            hasAnimation = YES;
+    {    
+        //NSLog(@"%@   %@", NSStringFromCGPoint(tv.tile.currentIndex), NSStringFromCGRect(tv.frame));
+        
+        if(tv.isSelected != tv.tile.isSelected ||
+           tv.isSelectable != tv.tile.isSelectable ||
+           tv.isHidden != tv.tile.isHidden)
+        {
+            tv.isSelected = tv.tile.isSelected;
+            tv.isSelectable = tv.tile.isSelectable;
+            tv.isHidden = tv.tile.isHidden;
+            [tv setNeedsDisplay];
         }
         
-        if(tv.currentIndex.y != tv.tile.currentIndex.y)
+        if(tv.currentIndex.x != tv.tile.currentIndex.x || tv.currentIndex.y != tv.tile.currentIndex.y)
         {
-            org = CGPointMake(org.x, self.margin / 2.0 + self.slotHeight * tv.tile.currentIndex.y);
-            hasAnimation = YES;
-        }
-        
-        if(hasAnimation)
-        {
+            //NSLog(@"v:%d,%d t:%d,%d",  (int)tv.currentIndex.x, (int)tv.currentIndex.y, (int)tv.tile.currentIndex.x, (int)tv.tile.currentIndex.y);
+            tv.isHovering = NO;
+            tv.currentIndex = tv.tile.currentIndex;
+            
             [self insertSubview:tv belowSubview:topView];
             topView = tv;
-            CGRect fr = CGRectMake(org.x, org.y, self.tileWidth, self.tileHeight);
-            self.animationDelay += .01;
+            CGRect fr = CGRectMake(
+                    self.margin / 2.0 + self.slotWidth * tv.tile.currentIndex.x,
+                    self.margin / 2.0 + self.slotHeight * tv.tile.currentIndex.y,
+                    self.tileWidth, self.tileHeight);            
             
             [UIView
              animateWithDuration:0.3 delay:self.animationDelay options: UIViewAnimationCurveEaseOut
              animations:^{ tv.frame = fr; }
              completion:^(BOOL finished){}
              ];
+            
+            self.animationDelay += .01;
         }
     }
+    [self setNeedsDisplay];
 }
 
 - (Tile *) getTileFromMousePoint:(CGPoint) point
@@ -201,15 +206,6 @@ UIInterfaceOrientation io;
     self.lastHoverTileIndex = -1;
 }
 
-
--(void) dropRemovedWord
-{
-    self.animationDelay = 0.3;
-    [self layoutGrid:YES];
-    self.animationDelay += 0.1;
-    //[self removeVerticalGaps];
-}
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
@@ -237,11 +233,8 @@ UIInterfaceOrientation io;
     {
         //AudioServicesPlaySystemSound(tickSoundID);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
-        [self layoutGrid:YES];
     }
-    [self clearAllHovers];
-    [self setNeedsDisplay];  
-    
+    [self clearAllHovers];      
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {

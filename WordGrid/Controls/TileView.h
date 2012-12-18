@@ -13,8 +13,9 @@
 @property (nonatomic) BOOL  isEmptyHidden;
 
 @property (nonatomic) CGPoint currentIndex;
-@property (nonatomic) Boolean isSelectable;
-@property (nonatomic) Boolean isSelected;
+@property (nonatomic) BOOL isSelectable;
+@property (nonatomic) BOOL isSelected;
+@property (nonatomic) BOOL isHidden;
 
 -(id) initWithFrame:(CGRect)frame andTile:(Tile *) tile;
 

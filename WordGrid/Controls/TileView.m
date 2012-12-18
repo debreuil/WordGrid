@@ -30,6 +30,7 @@
 @synthesize currentIndex = _currentIndex;
 @synthesize isSelectable = _isSelectable;
 @synthesize isSelected = _isSelected;
+@synthesize isHidden = _isHidden;
 
 static NSArray *imageStates;
 static UIImage *errorImage;
@@ -82,6 +83,7 @@ static SystemSoundID tickSoundID;
     _currentIndex = CGPointMake(-1, -1);
     _isSelected = NO;
     _isSelectable = NO;
+    _isHidden = YES;
     
     CGRect f = [self frame];
     float xBorder = ((f.size.width * hoverScale) - f.size.width) / 2.0;
@@ -111,6 +113,10 @@ static SystemSoundID tickSoundID;
     {
         self.hidden = YES;
     }
+    else if(self.tile.isHidden)
+    {
+        self.hidden = YES;
+    }
     else
     {
         //self.clipsToBounds = NO;
@@ -125,20 +131,20 @@ static SystemSoundID tickSoundID;
             [errorImage drawInRect:r];
         }
         
-        [[UIColor whiteColor] set];
         float sc = r.size.width / 48.0;
-        UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];
-        
+        UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];        
         CGRect letR = CGRectOffset(r, 0.0, 2.0);
-        if(![self.tile isEmptyTile] && self.tile.letter == @"")
+        if(![self.tile isEmptyTile])
         {
-            [self.tile.letter drawInRect:letR
-                                     withFont:f
-                                     lineBreakMode:UILineBreakModeClip
-                                     alignment:UITextAlignmentCenter];
-        }
-        else
-        {
+            if(self.tile.isSelected)
+            {
+                [[UIColor lightGrayColor] set];
+            }
+            else
+            {
+                [[UIColor whiteColor] set];
+            }
+            
             [self.tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
         }
         
@@ -152,6 +158,15 @@ static SystemSoundID tickSoundID;
     }
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"canSel:%@ sel:%@, let:%@, pt:%d,%d",
+            self.isSelectable ? @"Y" : @"N",
+            self.isSelected ? @"Y" : @"N",
+            self.tile.letter,
+            (int)self.currentIndex.x,
+            (int)self.currentIndex.y];
+}
 
 
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

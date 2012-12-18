@@ -28,7 +28,7 @@
 - (void)    clearAllSelections;
 - (void)    setAllIsSelectable:(Boolean) isSelectable;
 
-- (void)    setSelectableAroundIndex:(int) index;
+- (void)    setSelectableAroundPoint:(CGPoint) point;
 - (void)    setSelectableByLetter:(NSString *)let;
 
 -(void) insertWord:(TileWord *) indexesToRemove;

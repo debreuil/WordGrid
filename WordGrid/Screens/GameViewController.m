@@ -72,6 +72,7 @@ SystemSoundID winSoundID;
     tickURLRef = [[NSBundle mainBundle] URLForResource:@"win" withExtension:@"caf"];
     AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &winSoundID);    
 
+    _gridView.isEmptyHidden = YES;
 }
 
 
@@ -95,19 +96,11 @@ SystemSoundID winSoundID;
     {
         roundComplete = NO;        
         [self newRound];
-    }
-    
-    
-//    [self.gridView subviewDidAppear];
-//    [self.answerGrid subviewDidAppear];
-    
+    }    
 }
+
 -(void) viewDidDisappear:(BOOL)animated
-{
-//    [super viewDidDisappear:animated];
-//    [self.gridView subviewDidDisappear];
-//    [self.answerGrid subviewDidDisappear];
-    
+{    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onAnswerGridTileSelected" object:nil];
 }
@@ -122,7 +115,9 @@ SystemSoundID winSoundID;
     [game.currentRound setSelectableByLetter:let];    
     
     // first letter is a gift
-    [self autoSelectFirstLetter];    
+    //[self autoSelectFirstLetter];
+    
+    [self.gridView layoutGrid:YES];
 }
 
 - (void) tileSelected:(NSNotification *)notification
@@ -136,6 +131,8 @@ SystemSoundID winSoundID;
     if(t.isSelectable)
     {
         [game.currentRound guessTile:t];
+        [self.gridView layoutGrid:YES];
+        
         /*
         Tile *at = [self.answerGrid getNextTile];
         CGRect orgFrame = at.frame;//CGRectInset(at.frame, 0, 0);

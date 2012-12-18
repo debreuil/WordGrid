@@ -18,6 +18,7 @@ static Tile *emptyTileHolder;
 @synthesize targetIndex;
 @synthesize isSelectable;
 @synthesize isSelected;
+@synthesize isHidden;
 
 -(id) initWithLetter:(NSString *) letter
 {    

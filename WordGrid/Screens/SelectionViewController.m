@@ -83,48 +83,6 @@ NSMutableArray *tiles;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
 }
 
--(void) createGrid
-{return;
-    int ansCount = [[Game instance] quoteCount];
-    int itemsPerRow = 8;
-    float l =  self.txTitle.frame.origin.x;
-    float t = self.txTitle.frame.origin.y + self.txTitle.frame.size.height + 100;
-    float w =  self.txTitle.frame.size.width;
-    
-    tiles = [[NSMutableArray alloc] initWithCapacity:ansCount];
-    Tile *tile;
-    TileView *tv;
-
-    int tw = 48;
-    int th = 48;
-    int slotWidth = (int)((w - (tw * itemsPerRow)) / (float)(itemsPerRow - 1));
-    int slotHeight = slotWidth;
-    int curLeft = l;
-    int curTop = t;
-    
-    int col = 0;
-    for (int i = 0; i < ansCount; i++)
-    {
-        CGRect r = CGRectMake(curLeft, curTop, tw, th);
-        tile = [[Tile alloc] initWithLetter:[NSString stringWithFormat:@"%i", i]];
-        tv = [[TileView alloc] initWithFrame:r andTile:tile];
-        tv.tile.isSelectable = YES;
-        [tiles addObject:tv];
-        [self.view addSubview:tv];
-        col++;
-        if(col >= itemsPerRow)
-        {
-            col = 0;
-            curLeft = l;
-            curTop += th + slotHeight;            
-        }
-        else
-        {
-            curLeft += tw + slotWidth;
-        }
-    }
-}
-
 - (void) onSelectTile:(NSNotification *)notification
 {
     Tile *tile = (Tile *)[notification object];
