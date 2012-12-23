@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic) IBOutlet GridView *gridView;
 @property (strong, nonatomic) IBOutlet AnswerView *answerView;
+@property (strong, nonatomic) IBOutlet UIButton *btReset;
+@property (strong, nonatomic) IBOutlet UIButton *btMenu;
 
 
 - (void) tileSelected:(Tile *) t;

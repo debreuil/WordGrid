@@ -76,6 +76,7 @@
     NSString *guessedKeys = [defaults objectForKey:loadName];
     [_currentRound guessKeysFromString:guessedKeys];
 }
+
 -(void) resetRound
 {
     

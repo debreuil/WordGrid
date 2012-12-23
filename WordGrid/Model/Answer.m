@@ -3,23 +3,31 @@
 
 @implementation Answer
 
+static NSRegularExpression *letRegex;
 static NSCharacterSet *nonLetterSet;
 static NSCharacterSet *nonLetterSpaceSet;
 + (void)initialize
 {
+    NSError *regexError;
+    letRegex = [NSRegularExpression regularExpressionWithPattern:@"\\w"
+               options:NSRegularExpressionCaseInsensitive error:&regexError];
+    
     nonLetterSet = [[NSCharacterSet letterCharacterSet]invertedSet];    
     NSMutableCharacterSet *letterSpaceSet = [NSMutableCharacterSet characterSetWithCharactersInString:@" "];
     [letterSpaceSet formUnionWithCharacterSet:[NSCharacterSet letterCharacterSet]];
+    
     nonLetterSpaceSet = [letterSpaceSet invertedSet];
 }
 
 @synthesize gridSize = _gridSize;
 @synthesize quote = _quote;
+@synthesize quoteUnderscores = _quoteUnderscores;
 @synthesize quoteLettersOnly = _quoteLettersOnly;
 @synthesize quoteWords = _quoteWords;
 @synthesize gridLetters = _gridLetters;
 @synthesize keys = _keys;
 @synthesize keyWordArrays = _keyWordArrays;
+@synthesize letterPositionsInQuote = _letterPositionsInQuote;
 @synthesize victoryBlurb = _victoryBlurb;
 
 -(id) initWithData:(NSArray *) quoteData
@@ -44,8 +52,14 @@ static NSCharacterSet *nonLetterSpaceSet;
     _victoryBlurb = [quoteData objectAtIndex:2];
     _gridSize = CGSizeFromString([quoteData objectAtIndex:4]);
     
-    _quoteLettersOnly = [[_quote componentsSeparatedByCharactersInSet:nonLetterSet]componentsJoinedByString:@""];
-    NSString *wordsWithSpaces = [[_quote componentsSeparatedByCharactersInSet:nonLetterSpaceSet]componentsJoinedByString:@""];
+    NSString *quoteUpper = [_quote uppercaseString];
+        
+    _quoteUnderscores = [letRegex stringByReplacingMatchesInString:_quote
+                              options:0 range:NSMakeRange(0, _quote.length) withTemplate:@"□"];
+    
+    
+    _quoteLettersOnly = [[quoteUpper componentsSeparatedByCharactersInSet:nonLetterSet]componentsJoinedByString:@""];
+    NSString *wordsWithSpaces = [[quoteUpper componentsSeparatedByCharactersInSet:nonLetterSpaceSet]componentsJoinedByString:@""];
     _quoteWords = [wordsWithSpaces componentsSeparatedByString:@" "];
     
     // answerKeys
@@ -71,6 +85,19 @@ static NSCharacterSet *nonLetterSpaceSet;
         i++;
     }
     _keyWordArrays = [NSArray arrayWithObjects:kws count:_quoteWords.count];
+    
+    // note: obj c doesn't allow '‿' as a character
+    NSString *us = [letRegex stringByReplacingMatchesInString:_quote
+                    options:0 range:NSMakeRange(0, _quote.length) withTemplate:@"|"];
+    NSMutableArray *positions = [[NSMutableArray alloc]initWithCapacity:us.length];
+    for(int i = 0; i < _quoteUnderscores.length; i++)
+    {
+        if([us characterAtIndex:i] == '|')
+        {
+            [positions addObject:[NSNumber numberWithInt:i]];
+        }
+    }    
+    _letterPositionsInQuote = [NSArray arrayWithArray:positions];
     
     //NSLog(@"_answerKeyWords: %@", _keyWordArrays);
 }

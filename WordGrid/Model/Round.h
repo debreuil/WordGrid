@@ -25,12 +25,14 @@
 
 - (id)initWithAnswer:(Answer *)answer;
 
-- (Boolean) guessTileByIndex:(int)index;
-- (Boolean) guessTile:(Tile *)guessedTile;
+- (void) resetRound;
+- (BOOL) guessTileByIndex:(int)index;
+- (BOOL) guessTile:(Tile *)guessedTile;
 - (void) undoLastWord;
 
--(Boolean) isFullyGuessed;
--(Boolean) isCorrectlyGuessed;
+-(BOOL) isFullyGuessed;
+-(BOOL) isCorrectlyGuessed;
+-(BOOL) isWordCorrectlyGuessed:(int)index;
 
 -(void) setSelectableByLetter:(NSString *)let;
 

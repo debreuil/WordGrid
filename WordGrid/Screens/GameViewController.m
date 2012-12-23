@@ -28,10 +28,12 @@
 
 @synthesize gridView = _gridView;
 @synthesize answerView = _answerView;
+@synthesize btMenu = _btMenu;
+@synthesize btReset = _btReset;
 
 float letterMoveDelay;
 int lastSelectedTileIndex;
-bool roundComplete = YES;
+bool roundComplete;
 
 SystemSoundID correctWordSoundID;
 SystemSoundID errorSoundID;
@@ -53,10 +55,6 @@ SystemSoundID winSoundID;
     
     game = [Game instance];
     
-//    [self.gridView setHidden:NO];
-//    
-//    [self.answerGrid setup]; // answer grid needs to be setup first
-//    [self.gridView setup];
     
     self.answerRefs = [[NSMutableArray alloc] initWithCapacity:20];
     
@@ -75,7 +73,6 @@ SystemSoundID winSoundID;
     _gridView.isEmptyHidden = YES;
 }
 
-
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -92,17 +89,19 @@ SystemSoundID winSoundID;
      name:@"onAnswerGridTileSelected"
      object:nil];
     
-    if(roundComplete)
-    {
-        roundComplete = NO;        
-        [self newRound];
-    }    
+    [_btReset addTarget:self action:@selector(onReset:) forControlEvents:UIControlEventTouchUpInside];
+    [_btMenu addTarget:self action:@selector(onGotoSelectionMenu:) forControlEvents:UIControlEventTouchUpInside];
+    
+    roundComplete = NO;        
+    [self newRound];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onAnswerGridTileSelected" object:nil];
+    [_btReset removeTarget:self action:@selector(onReset:) forControlEvents:UIControlEventTouchUpInside];
+    [_btMenu removeTarget:self action:@selector(onGotoSelectionMenu:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) newRound
@@ -110,6 +109,7 @@ SystemSoundID winSoundID;
     [self.gridView setHidden:NO];
     
     self.gridView.grid = game.currentRound.grid;
+    self.answerView.round = game.currentRound;
             
     NSString *let = [game.currentRound currentCorrectLetter];
     [game.currentRound setSelectableByLetter:let];    
@@ -126,12 +126,23 @@ SystemSoundID winSoundID;
     [self onTileSelected:t];
 }
 
+- (IBAction) onReset:(id) sender
+{
+    [game.currentRound resetRound];
+    [self newRound];
+}
+- (IBAction) onGotoSelectionMenu:(id) sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void) onTileSelected:(Tile *)t
 {    
     if(t.isSelectable)
     {
         [game.currentRound guessTile:t];
         [self.gridView layoutGrid:YES];
+        [self.answerView setNeedsDisplay];
         
         /*
         Tile *at = [self.answerGrid getNextTile];
@@ -323,6 +334,8 @@ SystemSoundID winSoundID;
 
 - (void)viewDidUnload
 {
+    [self setBtReset:nil];
+    [self setBtMenu:nil];
     [super viewDidUnload];
 }
 

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Round;
+
 @interface AnswerView : UIView
+
+@property (nonatomic, weak) Round *round;
 
 @end
