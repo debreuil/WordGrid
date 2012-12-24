@@ -33,6 +33,7 @@
 @implementation AnswerView
 
 @synthesize round = _round;
+@synthesize showErrors = _showErrors;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -91,7 +92,7 @@
         CGRect wordRect = CGRectMake(leftSize.width - w / 2.0f + margin, row * h, sz.width - leftSize.width + w, h);
         [wordRects addObject:[NSValue valueWithCGRect:wordRect]];
         
-        NSLog(@"%@ **%@**", NSStringFromCGRect(wordRect), s);
+        //NSLog(@"%@ **%@**", NSStringFromCGRect(wordRect), s);
     }
 }
 
@@ -99,6 +100,7 @@
 {
     if(_round != nil)
     {        
+        // draw letters
         [[UIColor whiteColor] set];
         
         NSString *ga = _round.currentFullGuess;
@@ -113,32 +115,36 @@
         
         [s drawInRect:textArea withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
         
-        // draw bounds
-        CGRect r;
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        for(int i = 0; i < _round.wordIndex; i++)
+        if(_showErrors)
         {
-            r = [wordRects[i] CGRectValue];
-            if([_round isWordCorrectlyGuessed:i])
-            {
-                [self drawCorrect:context withRect:r];
-            }
-            else
-            {
-                [self drawIncorrect:context withRect:r];
-            }
-        }
-        
-        r = [wordRects[_round.wordIndex] CGRectValue];
-        [self drawIncomplete:context withRect:r];
-        
-        // strikeout
-        if (clearIndexFrom > -1)
-        {
-            for(int i = _round.wordIndex; i >= clearIndexFrom; i--)
+            // draw bounds
+            CGRect r;
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            for(int i = 0; i < _round.wordIndex; i++)
             {
                 r = [wordRects[i] CGRectValue];
-                [self strikeOutWord:context withRect:r];
+                if([_round isWordCorrectlyGuessed:i])
+                {
+                    [self drawCorrect:context withRect:r];
+                }
+                else
+                {
+                    [self drawIncorrect:context withRect:r];
+                }
+            }
+            
+            r = [wordRects[_round.wordIndex] CGRectValue];
+            [self drawIncomplete:context withRect:r];
+            
+            
+            // strikeout
+            if (clearIndexFrom > -1)
+            {
+                for(int i = _round.wordIndex; i >= clearIndexFrom; i--)
+                {
+                    r = [wordRects[i] CGRectValue];
+                    [self strikeOutWord:context withRect:r];
+                }
             }
         }
     }
@@ -221,10 +227,22 @@
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
-    clearIndexFrom = -1;
     
+    if(clearIndexFrom > -1)
+    {
+        NSDictionary* dict = [NSDictionary dictionaryWithObject:
+                                [NSNumber numberWithInt:clearIndexFrom] forKey:@"clearIndexFrom"];
+        
+        [[NSNotificationCenter defaultCenter]
+                                postNotificationName:@"onAnswerWordSelected"
+                                object:self
+                                userInfo:dict];
+    }
+    
+    clearIndexFrom = -1;
     [self setNeedsDisplay];
 }
+
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesCancelled:touches withEvent:event];

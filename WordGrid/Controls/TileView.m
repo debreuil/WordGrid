@@ -121,6 +121,7 @@ static SystemSoundID tickSoundID;
     {
         //self.clipsToBounds = NO;
         
+        self.hidden = NO;
         CGRect r = self.bounds;
         
         //[image drawAtPoint:(CGPointMake(0.0f, 0.0f))];

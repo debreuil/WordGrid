@@ -153,6 +153,8 @@
 -(void) insertTile:(Tile *) t
 {
     t.isHidden = NO;
+    t.isSelected = NO;
+    t.isSelectable = NO;
     int index = [self getIndexFromPoint:t.currentIndex];
     Tile * oldTile = [grid objectAtIndex:index];
     [grid replaceObjectAtIndex:index withObject:t];

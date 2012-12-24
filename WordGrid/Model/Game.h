@@ -22,4 +22,6 @@
 @property (nonatomic, readonly) Round *currentRound;
 @property (nonatomic, readonly) Answer *currentAnswer;
 
+- (void) incrementIndex;
+
 @end

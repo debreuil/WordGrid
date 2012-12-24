@@ -62,6 +62,15 @@
         [tileWords removeAllObjects];
     }
     
+    if(guessedKeys == nil)
+    {
+        guessedKeys = [[NSMutableArray alloc] initWithCapacity:_answer.keys.count];
+    }
+    else
+    {
+        [guessedKeys removeAllObjects];
+    }
+    
     isCorrectGuessedWords = [[NSMutableArray alloc] initWithCapacity:_answer.quoteWords.count];
 }
 
@@ -144,6 +153,7 @@
         
         if(_wordIndex >= _answer.quoteWords.count)
         {
+            _wordIndex = _answer.quoteWords.count - 1;
             [self onRoundComplete];
         }
         else
@@ -161,20 +171,31 @@
 }
 - (void) undoLastWord
 {
+    int guessedLetterCount = 0;
     if(_currentWord.guessedLetterCount == 0)
     {
         if(_wordIndex > 0)
         {
             _wordIndex--;
-            _currentWord = [tileWords objectAtIndex:_wordIndex];            
+            _currentWord = [tileWords objectAtIndex:_wordIndex];
             [isCorrectGuessedWords removeLastObject];
+            [_grid insertWord:_currentWord];
+            guessedLetterCount = [_currentWord getGuessedWord].length;
         }
     }
+    else
+    {
+        guessedLetterCount = [_currentWord guessedLetterCount];
+    }
     
-    int guessedLetterCount = [_currentWord guessedLetterCount];
-    [guessedKeys removeObjectsInRange:NSMakeRange(guessedKeys.count - guessedLetterCount, guessedKeys.count)];
+    NSRange removeRange = NSMakeRange(guessedKeys.count - guessedLetterCount, guessedLetterCount);
+    [guessedKeys removeObjectsInRange:removeRange];
+    _currentFullGuess = [_currentFullGuess substringToIndex:_currentFullGuess.length - guessedLetterCount];
      _letterIndex -= guessedLetterCount;
     [_currentWord reset];
+    
+    [_grid clearAllSelections];
+    [self setSelectableByLetter:[self currentCorrectLetter]];
 }
 
 -(BOOL) isFullyGuessed
@@ -230,7 +251,9 @@
 }
 -(void) onRoundComplete
 {
-    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onRoundComplete"
+     object:self];    
 }
 
 - (NSString *) trace

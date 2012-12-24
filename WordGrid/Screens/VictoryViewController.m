@@ -8,6 +8,7 @@
 
 #import "VictoryViewController.h"
 #import "AnswerView.h"
+#import "Game.h"
 
 @interface VictoryViewController ()
 -(void) onNextRound:(id)sender;
@@ -33,25 +34,20 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-//    [self.answerView subviewDidAppear];
-    
+        
     [self.btNextRound addTarget:self action:@selector(onNextRound:)
                       forControlEvents:(UIControlEvents)UIControlEventTouchDown];
     
     [self.btSelectGame addTarget:self action:@selector(onSelectGame:)
                 forControlEvents:(UIControlEvents)UIControlEventTouchDown];
     
-//    [self.answerView createRound];
-//    [self.answerView showAllLetters];
+    self.answerView.round = [Game instance].currentRound;
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-//    [self.answerView subviewDidDisappear];
-    
+        
     [self.btNextRound removeTarget:self action:@selector(onNextRound:)
                   forControlEvents:(UIControlEvents)UIControlEventTouchDown];
     
@@ -61,12 +57,12 @@
 
 -(void) onNextRound:(id)sender
 {
-//    [AnswerData incrementIndex];
-//    [self.navigationController popViewControllerAnimated:YES];
+    [[Game instance] incrementIndex];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void) onSelectGame:(id)sender
 {
-//   [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+   [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)viewDidLoad

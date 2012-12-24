@@ -13,5 +13,6 @@
 @interface AnswerView : UIView
 
 @property (nonatomic, weak) Round *round;
+@property (nonatomic) BOOL showErrors;
 
 @end

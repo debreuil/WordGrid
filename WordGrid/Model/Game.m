@@ -56,6 +56,17 @@
     [self loadRound];
 }
 
+- (void) incrementIndex
+{
+    int answerIndex = _currentIndex + 1;
+    if(answerIndex > self.quoteCount)
+    {
+        answerIndex = 0;
+    }
+    
+    [self setCurrentIndex:answerIndex];
+}
+
 - (int) quoteCount
 {
     return _quotePack.answers.count;
