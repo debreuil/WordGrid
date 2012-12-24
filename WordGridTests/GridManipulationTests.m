@@ -95,7 +95,7 @@ Grid *grid;
         [tileWords addObject:tw];
         NSString *word = [tw getGuessedWord];
         [grid removeWord:tw];
-        STAssertEqualObjects(word, words[i], [NSString stringWithFormat: @"round %d.", i]);
+        STAssertEqualObjects(word, words[i], [NSString stringWithFormat: @"round %d word %d.", puzzleIndex, i]);
     }
     
     for(int i = tileWords.count - 1; i >= 0; i--)

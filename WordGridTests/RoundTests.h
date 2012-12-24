@@ -10,6 +10,5 @@
 
 @interface RoundTests : SenTestCase
 
-- (void)testCorrectRound;
 
 @end

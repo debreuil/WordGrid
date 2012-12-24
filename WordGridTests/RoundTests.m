@@ -28,9 +28,17 @@ Round *testRound;
     [super tearDown];
 }
 
-- (void)testCorrectRound
+- (void) testAllRounds
 {
-    int testRoundIndex = 15;
+    for(int i = 0; i < testGame.quoteCount; i++)
+    {
+        [self roundTestOfIndex:i];
+    }
+}
+
+- (void)roundTestOfIndex:(int)index
+{
+    int testRoundIndex = index;
     testGame.currentIndex = testRoundIndex;
     testRound = testGame.currentRound;
     Answer *answer = testGame.currentAnswer;
@@ -43,8 +51,8 @@ Round *testRound;
     }
     
     STAssertEquals((NSUInteger)testRound.letterIndex, keys.count, @"at last letter");
-    STAssertEquals((NSUInteger)testRound.wordIndex, answer.quoteWords.count, @"at last word");
-    STAssertTrue([testRound isCorrectlyGuessed], @"correctly guessed");
+    STAssertEquals((NSUInteger)testRound.wordIndex, answer.quoteWords.count - 1, @"at last word");
+    STAssertTrue([testRound isCorrectlyGuessed], @"round error %d. Answer: %@", index, testRound.currentFullGuess);
 }
 
 - (void)testIncorrectRound

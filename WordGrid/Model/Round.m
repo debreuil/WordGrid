@@ -147,20 +147,18 @@
             [self onWordIncorrect];
         }
         
-        [tileWords addObject:_currentWord];
-        [_grid removeWord:_currentWord];
-        _wordIndex++;
-        
-        if(_wordIndex >= _answer.quoteWords.count)
+        if(_wordIndex < _answer.quoteWords.count - 1)
         {
-            _wordIndex = _answer.quoteWords.count - 1;
-            [self onRoundComplete];
-        }
-        else
-        {
-            _currentWord = [[TileWord alloc] initWithAnswer:[_answer.quoteWords objectAtIndex:_wordIndex]];            
+            [tileWords addObject:_currentWord];
+            [_grid removeWord:_currentWord];
+            _wordIndex++;
+            _currentWord = [[TileWord alloc] initWithAnswer:[_answer.quoteWords objectAtIndex:_wordIndex]];
             NSString *let = [self currentCorrectLetter];
             [self setSelectableByLetter:let];
+        }
+        else if([self isCorrectlyGuessed])
+        {
+            [self onRoundComplete];
         }
     }
     else

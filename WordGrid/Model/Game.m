@@ -40,10 +40,6 @@
     }
 }
 
--(Answer *) currentAnswer
-{
-    return _quotePack.currentAnswer;
-}
 -(int)currentIndex
 {
     return _currentIndex;
@@ -54,6 +50,11 @@
     [_quotePack setAnswerIndex:_currentIndex];
     _currentRound = [[Round alloc] initWithAnswer:_quotePack.currentAnswer];
     [self loadRound];
+}
+
+-(Answer *) currentAnswer
+{
+    return _quotePack.currentAnswer;
 }
 
 - (void) incrementIndex

@@ -72,6 +72,7 @@ SystemSoundID winSoundID;
     AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &winSoundID);    
 
     _gridView.isEmptyHidden = YES;
+    _answerView.showErrors = YES;
 }
 
 -(void) viewDidAppear:(BOOL)animated

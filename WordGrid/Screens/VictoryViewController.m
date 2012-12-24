@@ -9,6 +9,7 @@
 #import "VictoryViewController.h"
 #import "AnswerView.h"
 #import "Game.h"
+#import "Answer.h"
 
 @interface VictoryViewController ()
 -(void) onNextRound:(id)sender;
@@ -42,6 +43,8 @@
                 forControlEvents:(UIControlEvents)UIControlEventTouchDown];
     
     self.answerView.round = [Game instance].currentRound;
+    self.txQuoteSource.text = [Game instance].currentAnswer.victoryBlurb;
+    
 }
 
 -(void) viewDidDisappear:(BOOL)animated

@@ -120,7 +120,8 @@
             // draw bounds
             CGRect r;
             CGContextRef context = UIGraphicsGetCurrentContext();
-            for(int i = 0; i < _round.wordIndex; i++)
+            int wi = (_round.wordIndex < wordRects.count) ? _round.wordIndex : wordRects.count - 1;
+            for(int i = 0; i < wi; i++)
             {
                 r = [wordRects[i] CGRectValue];
                 if([_round isWordCorrectlyGuessed:i])
@@ -133,14 +134,14 @@
                 }
             }
             
-            r = [wordRects[_round.wordIndex] CGRectValue];
+            r = [wordRects[wi] CGRectValue];
             [self drawIncomplete:context withRect:r];
             
             
             // strikeout
             if (clearIndexFrom > -1)
             {
-                for(int i = _round.wordIndex; i >= clearIndexFrom; i--)
+                for(int i = wi; i >= clearIndexFrom; i--)
                 {
                     r = [wordRects[i] CGRectValue];
                     [self strikeOutWord:context withRect:r];
@@ -193,7 +194,8 @@
 - (int) getWordIndexOfPoint:(CGPoint)pt
 {
     int result = -1;
-    for(int i = _round.wordIndex; i >= 0; i--)
+    int wi = (_round.wordIndex < wordRects.count) ? _round.wordIndex : wordRects.count - 1;
+    for(int i = wi; i >= 0; i--)
     {
         if(CGRectContainsPoint([[wordRects objectAtIndex:i] CGRectValue], pt))
         {
