@@ -191,6 +191,7 @@
     _currentFullGuess = [_currentFullGuess substringToIndex:_currentFullGuess.length - guessedLetterCount];
      _letterIndex -= guessedLetterCount;
     [_currentWord reset];
+    [tileWords removeObjectsInRange:NSMakeRange(_wordIndex, tileWords.count - _wordIndex)];
     
     [_grid clearAllSelections];
     [self setSelectableByLetter:[self currentCorrectLetter]];
