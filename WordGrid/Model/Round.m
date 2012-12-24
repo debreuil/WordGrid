@@ -231,14 +231,17 @@
     [self resetRound];
     
     //NSLog(@"%@", [self trace]);
-    NSArray *ar = [value componentsSeparatedByString:@","];
-    for(int i = 0; i < ar.count; i++)
+    if(value.length > 0)
     {
-        NSString *val = (NSString *)ar[i];
-        int index = [val intValue];
-        [self guessTileByIndex:index];
+        NSArray *ar = [value componentsSeparatedByString:@","];
+        for(int i = 0; i < ar.count; i++)
+        {
+            NSString *val = (NSString *)ar[i];
+            int index = [val intValue];
+            [self guessTileByIndex:index];
+        }
     }
-    NSLog(@"%@", [self trace]);
+    //NSLog(@"%@", [self trace]);
 }
 
 -(void) onWordCorrect

@@ -24,19 +24,8 @@
     if(self)
     {
         _letter = letter;
-        _isHidden = (letter == @" " || letter == @"");
     }
     return self;
-}
-
-+ (Tile *) newEmptyTile
-{
-    return [[Tile alloc] initWithLetter:@" "];
-}
-
-- (Boolean) isEmptyTile
-{
-    return [self.letter isEqual:@" "] || [self.letter isEqual:@""];
 }
 
 - (NSComparisonResult)compareFromBottomRight:(Tile *)otherObject

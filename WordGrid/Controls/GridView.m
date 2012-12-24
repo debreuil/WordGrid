@@ -110,6 +110,7 @@ UIInterfaceOrientation io;
     for(TileView * tv in self.tileViews)
     {    
         //NSLog(@"%@   %@", NSStringFromCGPoint(tv.tile.currentIndex), NSStringFromCGRect(tv.frame));
+        if(tv.tile == (id)[NSNull null]) continue;
         
         if(tv.isSelected != tv.tile.isSelected ||
            tv.isSelectable != tv.tile.isSelectable ||
@@ -169,7 +170,7 @@ UIInterfaceOrientation io;
         int ty = (int)(point.y / self.slotHeight);
         tileIndex = ty * self.grid.gridSize.width + tx;
         //Tile *t = [self.grid getTileFromIndex:tileIndex];
-        if(tileIndex >= [self.tileViews count])// || [t isEmptyTile] || !t.isSelectable) // || t.selected
+        if(tileIndex >= [self.tileViews count])
         {
             tileIndex = -1;
         }
@@ -187,8 +188,11 @@ UIInterfaceOrientation io;
             [[self.tileViews objectAtIndex:self.lastHoverTileIndex] setIsHovering:(NO)];
         }
         TileView *t = [self.tileViews objectAtIndex:tileIndex];
-        t.isHovering = YES;
-        self.lastHoverTileIndex = tileIndex;
+        if(t.tile != (id)[NSNull null])
+        {
+            t.isHovering = YES;
+            self.lastHoverTileIndex = tileIndex;
+        }
     }
     else
     {
@@ -200,6 +204,8 @@ UIInterfaceOrientation io;
 {
     for(TileView *t in self.tileViews)
     {
+        if(t.tile == (id)[NSNull null]) continue;
+        
         t.isHovering = NO;
     }
     self.lastHoverTileIndex = -1;

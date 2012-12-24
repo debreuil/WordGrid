@@ -47,6 +47,22 @@ static SystemSoundID tickSoundID;
     return self;
 }
 
+-(Tile *)tile
+{
+    return _tile;
+}
+
+-(void)setTile:(Tile *)t
+{
+    _tile = t;
+    if(t == (id)[NSNull null])
+    {        
+        self.isHidden = YES;
+        self.isSelectable = NO;
+        self.isSelected = NO;
+    }
+}
+
 -(void) setIsHovering:(Boolean)hovering
 {
     if(_isHovering != hovering)
@@ -108,7 +124,7 @@ static SystemSoundID tickSoundID;
 
 - (void)drawRect:(CGRect)rect
 {
-    if([self.tile isEmptyTile])
+    if(self.tile == (id)[NSNull null] || self.tile.isHidden)
     {
         self.hidden = YES;
     }
@@ -130,19 +146,17 @@ static SystemSoundID tickSoundID;
         float sc = r.size.width / 48.0;
         UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];        
         CGRect letR = CGRectOffset(r, 0.0, 2.0);
-        if(![self.tile isEmptyTile])
+
+        if(self.tile.isSelected)
         {
-            if(self.tile.isSelected)
-            {
-                [[UIColor lightGrayColor] set];
-            }
-            else
-            {
-                [[UIColor whiteColor] set];
-            }
-            
-            [self.tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+            [[UIColor lightGrayColor] set];
         }
+        else
+        {
+            [[UIColor whiteColor] set];
+        }
+        
+        [self.tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
         
         if(self.tile.isSelectable)
         {

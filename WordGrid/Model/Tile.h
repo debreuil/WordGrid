@@ -20,9 +20,6 @@
 
 
 - (id) initWithLetter:(NSString *) letter;
-- (Boolean) isEmptyTile;
 - (NSComparisonResult) compareFromBottomRight:(Tile *)otherObject;
-
-+ (Tile *) newEmptyTile;
 
 @end

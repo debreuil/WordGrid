@@ -86,6 +86,8 @@
     NSMutableString *s = [[NSMutableString alloc] initWithCapacity:self.tiles.count];
     for (Tile *t in self.tiles)
     {
+        if(t == (id)[NSNull null]) continue;
+        
         [s appendString:t.letter];
     }
     return [NSString stringWithString:s];
@@ -98,6 +100,8 @@
     NSMutableString *s = [[NSMutableString alloc] initWithCapacity:self.tiles.count];
     for (Tile *t in result)
     {
+        if(t == (id)[NSNull null]) continue;
+        
         [s appendString:t.letter];
     }
     return result;

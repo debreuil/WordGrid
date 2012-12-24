@@ -23,7 +23,7 @@
 - (void) removeVerticalGaps:(TileWord *) word;
 - (void) insertVerticalGaps:(TileWord *) word;
 - (void) swapColumns:(int)src toColumn:(int)dest;
-- (void) setTile:(Tile *) t atPoint:(CGPoint)pt;
+- (void) setTile:(id) t atPoint:(CGPoint)pt;
 - (void) clearAllSelections;
 
 @end
@@ -66,7 +66,7 @@
     }
     return t;
 }
--(void) setTile:(Tile *) t atPoint:(CGPoint)pt
+-(void) setTile:(id) t atPoint:(CGPoint)pt
 {
     if(pt.x >= 0 && pt.x < _gridSize.width && pt.y >= 0 && pt.y < _gridSize.height)
     {
@@ -130,16 +130,19 @@
 -(void) removeTile:(Tile *) t
 {
     t.isHidden = YES;
+    t.isSelected = NO;
+    t.isSelectable = NO;
+    
     int index = [self getIndexFromPoint:t.currentIndex];
-    [grid replaceObjectAtIndex:index withObject:[Tile newEmptyTile]];
+    [grid replaceObjectAtIndex:index withObject:[NSNull null]];
     
     for (int i = t.currentIndex.y - 1; i >= 0; i--)
     {
         int newIndex = [self getIndexFromPoint:CGPointMake(t.currentIndex.x, i)];
         Tile *stackedTile = [grid objectAtIndex:newIndex];
-        if(![stackedTile isEmptyTile])
+        if(stackedTile != (id)[NSNull null])
         {
-            [grid replaceObjectAtIndex:newIndex withObject:[Tile newEmptyTile]];
+            [grid replaceObjectAtIndex:newIndex withObject:[NSNull null]];
             [grid setObject:stackedTile atIndexedSubscript:index];
             stackedTile.currentIndex = CGPointMake(stackedTile.currentIndex.x, i + 1);
             index = newIndex;
@@ -156,6 +159,7 @@
     t.isHidden = NO;
     t.isSelected = NO;
     t.isSelectable = NO;
+    
     int index = [self getIndexFromPoint:t.currentIndex];
     Tile * oldTile = [grid objectAtIndex:index];
     [grid replaceObjectAtIndex:index withObject:t];
@@ -163,7 +167,7 @@
     Tile *temp;
     for (int i = t.currentIndex.y - 1; i >= 0; i--)
     {
-        if(![oldTile isEmptyTile])
+        if(oldTile != (id)[NSNull null] && !oldTile.isHidden)//todo:check
         {
             CGPoint p = CGPointMake(t.currentIndex.x, i);
             int newIndex = [self getIndexFromPoint:p];
@@ -183,6 +187,8 @@
 {
     for (Tile *t in word.tiles)
     {
+        if(t == (id)[NSNull null]) continue;
+        
         [self removeTile:t];
     }
     
@@ -196,6 +202,9 @@
     NSArray *reversed = [[word.tiles reverseObjectEnumerator] allObjects];
     for (Tile *t in reversed)
     {
+        
+        if(t == (id)[NSNull null]) continue;
+                
         [self insertTile:t];
     }
     //NSLog(@"\n***full\n%@",  [self getGridTrace]);
@@ -205,7 +214,10 @@
 {
     for(Tile *t in grid)
     {
-        t.isSelected = NO;
+        if(t != (id)[NSNull null])
+        {
+            t.isSelected = NO;
+        }
     }
 }
 
@@ -213,6 +225,8 @@
 {
     for (Tile *t in grid)
     {
+        if(t == (id)[NSNull null]) continue;
+        
         t.isSelectable = isSelectable;
     }
 }
@@ -222,6 +236,8 @@
     [self clearAllSelections];
     for (Tile *t in grid)
     {
+        if(t == (id)[NSNull null]) continue;
+        
         t.isSelectable = [t.letter isEqualToString:let];
     }
 }
@@ -235,7 +251,7 @@
         for (int j = point.y - 1; j <= point.y + 1; j++)
         {
             Tile *t = [self getTileFromPoint:CGPointMake(i, j)];
-            if(t && !t.isEmptyTile && !t.isSelected)
+            if(t != (id)[NSNull null] && !t.isSelected)
             {
                 t.isSelectable = YES;
             }
@@ -251,7 +267,7 @@
     {
         CGPoint p = CGPointMake(firstFilled, self.gridSize.height - 1);
         Tile *t = [self getTileFromPoint:p];
-        if(!t.isEmptyTile)
+        if(t != (id)[NSNull null] && !t.isHidden) // todo:check
         {
             break;
         }
@@ -270,7 +286,7 @@
     {        
         CGPoint p = CGPointMake(i, self.gridSize.height - 1);
         Tile *t = [self getTileFromPoint:p];
-        if(t.isEmptyTile)
+        if(t == (id)[NSNull null])
         {
             if(i < firstFilled)// + (int)word.gaps.count + 1)
             {
@@ -338,12 +354,20 @@
     {
         CGPoint srcPt = CGPointMake(src, j);
         CGPoint destPt = CGPointMake(dest, j);
-        Tile *srcTile = [self getTileFromPoint:srcPt];
-        Tile *destTile = [self getTileFromPoint:destPt];
+        id srcTile = [self getTileFromPoint:srcPt];
+        id destTile = [self getTileFromPoint:destPt];
         [self setTile:srcTile atPoint:destPt];        
         [self setTile:destTile atPoint:srcPt];
-        srcTile.currentIndex = destPt;        
-        destTile.currentIndex = srcPt;
+        
+        if(srcTile != (id)[NSNull null])
+        {
+            ((Tile *)srcTile).currentIndex = destPt;
+        }
+        
+        if(destTile != (id)[NSNull null])
+        {
+            ((Tile *)destTile).currentIndex = srcPt;
+        }
     }
 }
 
@@ -354,11 +378,20 @@
     int count = 0;
     for (Tile *t in grid)
     {
+        
         if(count++ % (int)(self.gridSize.width) == 0)
         {
             [s appendString:[NSString stringWithFormat:@"\n% 1d|", (int)(count / self.gridSize.width)]];
         }
-        [s appendString:t.letter];
+        
+        if(t == (id)[NSNull null])
+        {
+            [s appendString:@" "];
+        }
+        else
+        {
+            [s appendString:t.letter];
+        }
     }
     [s appendString:@"\n   ----------"];
     [s appendString:@"\n   0123456789"];
@@ -371,26 +404,18 @@
     
     for (Tile *t in grid)
     {
-        [s appendString:t.letter];
+        if(t == (id)[NSNull null])
+        {
+            [s appendString:@" "];
+        }
+        else
+        {
+            [s appendString:t.letter];
+        }
     }
     return s;
 }
 
--(void) deserializeSelections:(NSArray *) ar
-{
-    [grid removeAllObjects];
-    int len = _gridSize.width * _gridSize.height;
-
-    for (int i = 0; i < len; i++)
-    {
-        NSString *s = (i < ar.count) ? [NSString stringWithFormat:@"%d", i] : @" ";
-        Tile *t;
-        t = [[Tile alloc] initWithLetter:s];        
-        t.currentIndex = [self getPointFromIndex:i];
-        [grid addObject:t];
-    }
-
-}
 -(void) deserializeCurrentRound:(Answer *) ans
 {
     [grid removeAllObjects];
@@ -403,11 +428,40 @@
     for (int i = 0; i < elementCount; i++)
     {
         NSString *s = [testString substringWithRange:NSMakeRange(index++, 1)];
-        Tile *t = [[Tile alloc] initWithLetter:s];
         
-        t.currentIndex = [self getPointFromIndex:i];
-        [grid addObject:t];
+        if(![s isEqualToString:@" "])
+        {
+            Tile *t = [[Tile alloc] initWithLetter:s];
+            t.currentIndex = [self getPointFromIndex:i];
+            [grid addObject:t];
+        }
+        else
+        {
+            [grid addObject:[NSNull null]];
+        }        
     }      
+}
+
+-(void) deserializeSelections:(NSArray *) ar
+{
+    [grid removeAllObjects];
+    int len = _gridSize.width * _gridSize.height;
+    
+    for (int i = 0; i < len; i++)
+    {
+        NSString *s = [NSString stringWithFormat:@"%d", i];
+        
+        if(i < ar.count)
+        {
+            Tile *t = [[Tile alloc] initWithLetter:s];
+            t.currentIndex = [self getPointFromIndex:i];
+            [grid addObject:t];
+        }
+        else
+        {
+            [grid addObject:[NSNull null]];
+        }
+    }
 }
 
 @end
