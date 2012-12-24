@@ -34,7 +34,6 @@
             NSArray *data = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name ofType:@"plist"]];
             inst.quotePack = [[QuotePack alloc] initWithData:data];
             inst.quotePack.quotePackName = name;
-            inst.currentIndex = 0;
         }
         return inst;
     }
@@ -74,12 +73,15 @@
 }
 
 - (void) saveRound
-{    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *guessedKeys = [_currentRound getGuessedKeysAsString];
-    NSString *saveName = [_quotePack.quotePackName stringByAppendingString:[NSString stringWithFormat:@"%d",_currentIndex]];
-    [defaults setObject:guessedKeys forKey:saveName];
-    [defaults synchronize];
+{
+    if(_currentRound != nil)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *guessedKeys = [_currentRound getGuessedKeysAsString];
+        NSString *saveName = [_quotePack.quotePackName stringByAppendingString:[NSString stringWithFormat:@"%d",_currentIndex]];
+        [defaults setObject:guessedKeys forKey:saveName];
+        [defaults synchronize];
+    }
 }
 -(void) loadRound
 {

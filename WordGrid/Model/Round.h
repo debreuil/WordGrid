@@ -34,7 +34,7 @@
 -(BOOL) isCorrectlyGuessed;
 -(BOOL) isWordCorrectlyGuessed:(int)index;
 
--(void) setSelectableByLetter:(NSString *)let;
+-(void) setSelectableByLetter;
 
 -(void) onWordCorrect;
 -(void) onWordIncorrect;

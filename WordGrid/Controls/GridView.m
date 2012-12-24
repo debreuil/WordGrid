@@ -30,7 +30,6 @@
 @synthesize slotWidth;
 @synthesize slotHeight;
 @synthesize animationDelay;
-@synthesize isEmptyHidden;
 
 UIInterfaceOrientation io;
 
@@ -86,7 +85,6 @@ UIInterfaceOrientation io;
         {
             tile = [self.grid getTileFromIndex:i * gw + j];            
             tileView = [[TileView alloc] initWithFrame:r andTile:tile];
-            tileView.isEmptyHidden = self.isEmptyHidden;            
             [self.tileViews addObject:tileView];
             [self addSubview:tileView];
         }
@@ -143,6 +141,7 @@ UIInterfaceOrientation io;
              ];
             
             self.animationDelay += .01;
+            [tv setNeedsDisplay];
         }
     }
     [self setNeedsDisplay];

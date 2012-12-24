@@ -19,10 +19,10 @@
 @property (nonatomic) Boolean isHidden;
 
 
--(id) initWithLetter:(NSString *) letter;
+- (id) initWithLetter:(NSString *) letter;
 - (Boolean) isEmptyTile;
--(NSComparisonResult) compareFromBottomRight:(Tile *)otherObject;
+- (NSComparisonResult) compareFromBottomRight:(Tile *)otherObject;
 
-+(Tile *)emptyTile;
++ (Tile *) newEmptyTile;
 
 @end

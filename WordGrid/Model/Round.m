@@ -72,6 +72,8 @@
     }
     
     isCorrectGuessedWords = [[NSMutableArray alloc] initWithCapacity:_answer.quoteWords.count];
+    
+    [self setSelectableByLetter];
 }
 
 - (NSString *) currentCorrectLetter
@@ -88,9 +90,9 @@
     return let;
 }
 
--(void) setSelectableByLetter:(NSString *)let
+-(void) setSelectableByLetter
 {
-    [self.grid setSelectableByLetter:let];
+    [self.grid setSelectableByLetter:[self currentCorrectLetter]];
 }
 
 -(void) replaceCurrentWordWithCorrectTiles
@@ -153,8 +155,8 @@
             [_grid removeWord:_currentWord];
             _wordIndex++;
             _currentWord = [[TileWord alloc] initWithAnswer:[_answer.quoteWords objectAtIndex:_wordIndex]];
-            NSString *let = [self currentCorrectLetter];
-            [self setSelectableByLetter:let];
+
+            [self setSelectableByLetter];
         }
         else if([self isCorrectlyGuessed])
         {
@@ -191,10 +193,7 @@
     _currentFullGuess = [_currentFullGuess substringToIndex:_currentFullGuess.length - guessedLetterCount];
      _letterIndex -= guessedLetterCount;
     [_currentWord reset];
-    [tileWords removeObjectsInRange:NSMakeRange(_wordIndex, tileWords.count - _wordIndex)];
-    
-    [_grid clearAllSelections];
-    [self setSelectableByLetter:[self currentCorrectLetter]];
+    [tileWords removeObjectsInRange:NSMakeRange(_wordIndex, tileWords.count - _wordIndex)];        
 }
 
 -(BOOL) isFullyGuessed
@@ -231,6 +230,7 @@
 {
     [self resetRound];
     
+    //NSLog(@"%@", [self trace]);
     NSArray *ar = [value componentsSeparatedByString:@","];
     for(int i = 0; i < ar.count; i++)
     {
@@ -238,6 +238,7 @@
         int index = [val intValue];
         [self guessTileByIndex:index];
     }
+    NSLog(@"%@", [self trace]);
 }
 
 -(void) onWordCorrect
@@ -258,18 +259,26 @@
 - (NSString *) trace
 {
     NSMutableString *s = [NSMutableString stringWithString:[_grid trace]];
-    [s appendString:@"\nanswer:\n"];
-    for(int i = 0; i < tileWords.count; i++)
+    [s appendString:@"\nprevious guessed words:\n"];
+
     for(TileWord *tw in tileWords)
     {
         [s appendString:[tw getGuessedWord]];
-    }
-    
+        [s appendString:@", "];
+    }    
+    [s appendString:@"\ncurrent guessed word:\n"];    
     [s appendString:[_currentWord getGuessedWord]];
     
-    [s appendString:[[_answer.quoteLettersOnly substringFromIndex:_letterIndex] lowercaseString]];
-    [s appendString:@"\n"];
+    [s appendString:@"\ncorrect so far:\n"];    
+    [s appendString:[_answer.quoteLettersOnly substringToIndex:_letterIndex]];
     
+    [s appendString:@"\ntiles:\n"];    
+    for(int i = 0; i < _answer.quoteLettersOnly.length; i++)
+    {
+        Tile *t = [_grid getTileFromIndex:i];
+        [s appendString:[t description]];
+        [s appendString:@"\n"];
+    }
     return s;
 }
 

@@ -25,7 +25,6 @@
 @synthesize tile = _tile;
 @synthesize animatingFrom = _animatingFrom;
 @synthesize isHovering = _isHovering;
-@synthesize isEmptyHidden = _isEmptyHidden;
 
 @synthesize currentIndex = _currentIndex;
 @synthesize isSelectable = _isSelectable;
@@ -109,11 +108,7 @@ static SystemSoundID tickSoundID;
 
 - (void)drawRect:(CGRect)rect
 {
-    if([self.tile isEmptyTile] && self.isEmptyHidden)
-    {
-        self.hidden = YES;
-    }
-    else if(self.tile.isHidden)
+    if([self.tile isEmptyTile])
     {
         self.hidden = YES;
     }
@@ -161,12 +156,16 @@ static SystemSoundID tickSoundID;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"canSel:%@ sel:%@, let:%@, pt:%d,%d",
-            self.isSelectable ? @"Y" : @"N",
+    return [NSString stringWithFormat:@"canSel:%@t%@ sel:%@t%@, let:%@, pt:%d,%d ptt:%d,%d",
+            self.isSelectable ? @"Y" : @"N",            
+            self.tile.isSelectable ? @"Y" : @"N",
             self.isSelected ? @"Y" : @"N",
+            self.tile.isSelected ? @"Y" : @"N",
             self.tile.letter,
             (int)self.currentIndex.x,
-            (int)self.currentIndex.y];
+            (int)self.currentIndex.y,
+            (int)self.tile.currentIndex.x,
+            (int)self.tile.currentIndex.y];
 }
 
 

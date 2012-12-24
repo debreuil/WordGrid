@@ -23,7 +23,6 @@
 @property (nonatomic) float slotWidth;
 @property (nonatomic) float slotHeight;
 @property (nonatomic) float animationDelay;
-@property (nonatomic) BOOL  isEmptyHidden;
 
 - (void)    hoverTileAtPoint:(CGPoint) point;
 - (void)    clearAllHovers;

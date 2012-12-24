@@ -55,7 +55,6 @@ NSMutableArray *tiles;
     [grid deserializeSelections:[NSArray arrayWithArray:ar]];
     [grid setAllIsSelectable:YES];
     
-    _gridView.isEmptyHidden = YES;
     _gridView.margin = 15;
     [_gridView setGrid:grid];
     

@@ -25,7 +25,6 @@
 -(NSString *) getLetterFromIndex:(int)index;
 -(TileWord *) getTileWordFromIndexes:(NSArray *)indexes;
 
-- (void)    clearAllSelections;
 - (void)    setAllIsSelectable:(Boolean) isSelectable;
 
 - (void)    setSelectableAroundPoint:(CGPoint) point;

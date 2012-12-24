@@ -10,9 +10,9 @@
 @property (nonatomic, readonly) Tile *tile;
 @property (nonatomic) CGRect animatingFrom;
 @property (nonatomic) Boolean isHovering;
-@property (nonatomic) BOOL  isEmptyHidden;
 
 @property (nonatomic) CGPoint currentIndex;
+
 @property (nonatomic) BOOL isSelectable;
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic) BOOL isHidden;

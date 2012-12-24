@@ -71,7 +71,6 @@ SystemSoundID winSoundID;
     tickURLRef = [[NSBundle mainBundle] URLForResource:@"win" withExtension:@"caf"];
     AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &winSoundID);    
 
-    _gridView.isEmptyHidden = YES;
     _answerView.showErrors = YES;
 }
 
@@ -111,6 +110,7 @@ SystemSoundID winSoundID;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onRoundComplete" object:nil];
     [_btReset removeTarget:self action:@selector(onReset:) forControlEvents:UIControlEventTouchUpInside];
     [_btMenu removeTarget:self action:@selector(onGotoSelectionMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [[Game instance] saveRound];
 }
 
 - (void) newRound
@@ -118,14 +118,8 @@ SystemSoundID winSoundID;
     [self.gridView setHidden:NO];
     
     self.gridView.grid = game.currentRound.grid;
-    self.answerView.round = game.currentRound;
-            
-    NSString *let = [game.currentRound currentCorrectLetter];
-    [game.currentRound setSelectableByLetter:let];    
-    
-    // first letter is a gift
-    //[self autoSelectFirstLetter];
-    
+    self.answerView.round = game.currentRound;              
+        
     [self.gridView layoutGrid:YES];
 }
 
@@ -167,6 +161,8 @@ SystemSoundID winSoundID;
     }
     
     [self.gridView layoutGrid:YES];
+    
+    [game.currentRound setSelectableByLetter];
 }
 
 - (void) onRoundComplete:(NSNotification *)notification

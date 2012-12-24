@@ -10,15 +10,13 @@
 
 @implementation Tile
 
-static Tile *emptyTileHolder;
-
 @synthesize letter = _letter;
-@synthesize displayLetter;
-@synthesize currentIndex;
-@synthesize targetIndex;
-@synthesize isSelectable;
-@synthesize isSelected;
-@synthesize isHidden;
+@synthesize displayLetter = _displayLetter;
+@synthesize currentIndex = _currentIndex;
+@synthesize targetIndex = _targetIndex;
+@synthesize isSelectable = _isSelectable;
+@synthesize isSelected = _isSelected;
+@synthesize isHidden = _isHidden;
 
 -(id) initWithLetter:(NSString *) letter
 {    
@@ -26,17 +24,14 @@ static Tile *emptyTileHolder;
     if(self)
     {
         _letter = letter;
+        _isHidden = (letter == @" " || letter == @"");
     }
     return self;
 }
 
-+(Tile *)emptyTile
++ (Tile *) newEmptyTile
 {
-    if(emptyTileHolder == nil)
-    {
-        emptyTileHolder = [[Tile alloc] initWithLetter:@" "];
-    }
-    return emptyTileHolder;
+    return [[Tile alloc] initWithLetter:@" "];
 }
 
 - (Boolean) isEmptyTile
@@ -69,6 +64,6 @@ static Tile *emptyTileHolder;
 }
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Tile l:%@ x:%d y:%d", self.letter, (int)self.currentIndex.x, (int)self.currentIndex.y];
+    return [NSString stringWithFormat:@"Tile l:%@ x:%d y:%d h:%@", self.letter, (int)self.currentIndex.x, (int)self.currentIndex.y, self.isHidden ? @"Y":@"N"];
 }
 @end

@@ -24,6 +24,7 @@
 - (void) insertVerticalGaps:(TileWord *) word;
 - (void) swapColumns:(int)src toColumn:(int)dest;
 - (void) setTile:(Tile *) t atPoint:(CGPoint)pt;
+- (void) clearAllSelections;
 
 @end
 
@@ -130,7 +131,7 @@
 {
     t.isHidden = YES;
     int index = [self getIndexFromPoint:t.currentIndex];
-    [grid replaceObjectAtIndex:index withObject:[Tile emptyTile]];
+    [grid replaceObjectAtIndex:index withObject:[Tile newEmptyTile]];
     
     for (int i = t.currentIndex.y - 1; i >= 0; i--)
     {
@@ -138,7 +139,7 @@
         Tile *stackedTile = [grid objectAtIndex:newIndex];
         if(![stackedTile isEmptyTile])
         {
-            [grid replaceObjectAtIndex:newIndex withObject:[Tile emptyTile]];
+            [grid replaceObjectAtIndex:newIndex withObject:[Tile newEmptyTile]];
             [grid setObject:stackedTile atIndexedSubscript:index];
             stackedTile.currentIndex = CGPointMake(stackedTile.currentIndex.x, i + 1);
             index = newIndex;
@@ -218,6 +219,7 @@
 
 - (void) setSelectableByLetter:(NSString *)let
 {
+    [self clearAllSelections];
     for (Tile *t in grid)
     {
         t.isSelectable = [t.letter isEqualToString:let];
@@ -401,15 +403,7 @@
     for (int i = 0; i < elementCount; i++)
     {
         NSString *s = [testString substringWithRange:NSMakeRange(index++, 1)];
-        Tile *t;
-        if(s == @" ")
-        {
-            t = [Tile emptyTile];
-        }
-        else
-        {
-            t = [[Tile alloc] initWithLetter:s];
-        }
+        Tile *t = [[Tile alloc] initWithLetter:s];
         
         t.currentIndex = [self getPointFromIndex:i];
         [grid addObject:t];
