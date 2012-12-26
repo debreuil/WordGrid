@@ -42,6 +42,7 @@
 
 -(NSString *) getGuessedKeysAsString;
 -(void) guessKeysFromString:(NSString *) value;
+-(NSString *) roundRating;
 
 - (NSString *) trace;
 

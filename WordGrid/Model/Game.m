@@ -80,6 +80,23 @@
         NSString *guessedKeys = [_currentRound getGuessedKeysAsString];
         NSString *saveName = [_quotePack.quotePackName stringByAppendingString:[NSString stringWithFormat:@"%d",_currentIndex]];
         [defaults setObject:guessedKeys forKey:saveName];
+        
+        NSString *roundRatingsName = [_quotePack.quotePackName stringByAppendingString:@"_ratings"];
+        NSString *roundRatings;
+        if([defaults objectForKey:roundRatingsName] == nil)
+        {
+            roundRatings = [@"" stringByPaddingToLength:self.quoteCount withString: @"0" startingAtIndex:0];
+        }
+        else
+        {
+            roundRatings = [defaults objectForKey:roundRatingsName];
+        }
+        
+        NSString *rating = [_currentRound roundRating];
+        NSRange replChar = NSMakeRange(_currentIndex, 1);
+        roundRatings = [roundRatings stringByReplacingCharactersInRange:replChar withString:rating];
+        [defaults setObject:roundRatings forKey:roundRatingsName];
+        
         [defaults synchronize];
     }
 }

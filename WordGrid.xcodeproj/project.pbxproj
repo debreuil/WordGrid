@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8455D8C3168B6C35005A6E41 /* checkTile.png in Resources */ = {isa = PBXBuildFile; fileRef = 8455D8C2168B6C35005A6E41 /* checkTile.png */; };
 		847B031D162BCE3E00D5D50C /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B031C162BCE3E00D5D50C /* GameViewController.m */; };
 		847B032A162BCE8F00D5D50C /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B0327162BCE8F00D5D50C /* LobbyViewController.m */; };
 		847B032D162BCEC300D5D50C /* DesignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B032B162BCEC300D5D50C /* DesignViewController.m */; };
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8455D8C2168B6C35005A6E41 /* checkTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkTile.png; path = Images/checkTile.png; sourceTree = "<group>"; };
 		847B031B162BCE3E00D5D50C /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameViewController.h; path = Screens/GameViewController.h; sourceTree = "<group>"; };
 		847B031C162BCE3E00D5D50C /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameViewController.m; path = Screens/GameViewController.m; sourceTree = "<group>"; };
 		847B0326162BCE8F00D5D50C /* LobbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LobbyViewController.h; path = Screens/LobbyViewController.h; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 		84827BC3149E66AE0098E408 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8455D8C2168B6C35005A6E41 /* checkTile.png */,
 				849E2A0416754D6000AA2DCF /* errorTile.png */,
 				849E2A0516754D6000AA2DCF /* iPadIcon.png */,
 				849E2A0616754D6000AA2DCF /* let_norm.png */,
@@ -432,6 +435,7 @@
 				849E2A1916754D6000AA2DCF /* main_vert.jpg in Resources */,
 				849E2A1A16754D6000AA2DCF /* victory_horz.jpg in Resources */,
 				849E2A1B16754D6000AA2DCF /* victory_vert.jpg in Resources */,
+				8455D8C3168B6C35005A6E41 /* checkTile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

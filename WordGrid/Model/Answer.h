@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    notStarted = 0,
+    inProgress,
+    complete0,
+    complete1,
+    complete2
+} RoundRating;
+
 @interface Answer : NSObject
 
 @property (nonatomic, readonly) CGSize gridSize;
@@ -23,7 +31,6 @@
 @property (nonatomic, readonly) NSArray *letterPositionsInQuote;
 
 @property (nonatomic, readonly) Boolean savedWasCompleted;
-@property (nonatomic, readonly) int savedRating;
 
 -(id) initWithData:(NSArray *) data;
 

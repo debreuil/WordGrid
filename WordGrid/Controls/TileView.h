@@ -17,6 +17,7 @@
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic) BOOL isHidden;
 
+
 -(id) initWithFrame:(CGRect)frame andTile:(Tile *) tile;
 
 @end

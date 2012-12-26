@@ -17,6 +17,7 @@
 @synthesize isSelectable = _isSelectable;
 @synthesize isSelected = _isSelected;
 @synthesize isHidden = _isHidden;
+@synthesize rating = _rating;
 
 -(id) initWithLetter:(NSString *) letter
 {    

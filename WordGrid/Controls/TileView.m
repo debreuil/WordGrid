@@ -33,6 +33,7 @@
 
 static NSArray *imageStates;
 static UIImage *errorImage;
+static UIImage *checkImage;
 static float hoverScale = 1.5;
 static SystemSoundID tickSoundID;
 
@@ -111,6 +112,7 @@ static SystemSoundID tickSoundID;
 + (void) load
 {
     errorImage = [UIImage imageNamed:@"errorTile.png"];
+    checkImage = [UIImage imageNamed:@"checkTile.png"];
     
     imageStates = [[NSArray alloc] initWithObjects:
                    [UIImage imageNamed:@"let_norm.png"],
@@ -124,7 +126,7 @@ static SystemSoundID tickSoundID;
 
 - (void)drawRect:(CGRect)rect
 {
-    if(self.tile == (id)[NSNull null] || self.tile.isHidden)
+    if(_tile == (id)[NSNull null] || _tile.isHidden)
     {
         self.hidden = YES;
     }
@@ -147,7 +149,7 @@ static SystemSoundID tickSoundID;
         UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];        
         CGRect letR = CGRectOffset(r, 0.0, 2.0);
 
-        if(self.tile.isSelected)
+        if(_tile.isSelected)
         {
             [[UIColor lightGrayColor] set];
         }
@@ -156,14 +158,43 @@ static SystemSoundID tickSoundID;
             [[UIColor whiteColor] set];
         }
         
-        [self.tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        [_tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
         
-        if(self.tile.isSelectable)
+        CGContextRef context;
+        if(_tile.isSelectable && _tile.rating < inProgress)
         {
-            CGContextRef context = UIGraphicsGetCurrentContext();
+            context = UIGraphicsGetCurrentContext();
             CGContextSetLineWidth(context, 4);
             CGContextSetRGBStrokeColor(context, 0.2, 0.5, 1.0, 1);
             CGContextStrokeRect(context, r);
+        }
+        
+        
+        switch (_tile.rating)
+        {
+            case notStarted:
+                break;
+                
+            case inProgress:
+                context = UIGraphicsGetCurrentContext();
+                CGContextSetLineWidth(context, 8);
+                CGContextSetRGBStrokeColor(context, 1.0, 0.3, 0.3, 0.3);
+                CGContextStrokeRect(context, CGRectInset(r, 4, 4));
+                break;
+                
+            case complete0:
+            case complete1:
+            case complete2:
+                context = UIGraphicsGetCurrentContext();
+                CGContextSetLineWidth(context, 8);
+                CGContextSetRGBStrokeColor(context, 0.2, 1.0, 0.5, 0.3);
+                CGContextStrokeRect(context, CGRectInset(r, 4, 4));
+                
+                [checkImage drawInRect:r];
+                break;
+                
+            default:
+                break;
         }
     }
 }

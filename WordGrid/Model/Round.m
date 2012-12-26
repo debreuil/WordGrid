@@ -221,6 +221,20 @@
     return result;
 }
 
+-(NSString *) roundRating
+{
+    NSString *result = @"0";
+    if([self isCorrectlyGuessed])
+    {
+        result = [NSString stringWithFormat:@"%d", complete0];
+    }
+    else if(_letterIndex > 0)
+    {
+        result = [NSString stringWithFormat:@"%d", inProgress];
+    }
+    return result;
+}
+
 -(NSString *) getGuessedKeysAsString
 {
     return [guessedKeys componentsJoinedByString:@","];

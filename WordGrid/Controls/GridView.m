@@ -234,7 +234,7 @@ UIInterfaceOrientation io;
     UITouch *t = [touches anyObject];
     Tile *tile = [self getTileFromMousePoint:[t locationInView:self]];
 
-    if(tile.isSelectable)
+    if(tile != (id)[NSNull null] && tile.isSelectable)
     {
         //AudioServicesPlaySystemSound(tickSoundID);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];

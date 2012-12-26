@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Answer.h"
+
 @interface Tile : NSObject
 
 @property (nonatomic, readonly) NSString *letter;
@@ -17,6 +19,8 @@
 @property (nonatomic) Boolean isSelectable;
 @property (nonatomic) Boolean isSelected;
 @property (nonatomic) Boolean isHidden;
+
+@property (nonatomic) RoundRating rating;
 
 
 - (id) initWithLetter:(NSString *) letter;

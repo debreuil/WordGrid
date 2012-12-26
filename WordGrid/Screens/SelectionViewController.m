@@ -44,13 +44,13 @@ NSMutableArray *tiles;
     [super viewDidLoad];
 	
     Game *g = [Game instance];
-    NSMutableArray *answers = [g.quotePack answers];
+    
     NSMutableArray *ar = [[NSMutableArray alloc] initWithCapacity:g.quoteCount];
     for(int i = 0; i < g.quoteCount; i++)
-    {
-        Answer *ans = [answers objectAtIndex:i];
-        [ar addObject:[NSNumber numberWithInt:ans.savedRating]];
+    {        
+        [ar addObject:[NSNumber numberWithInt:0]];
     }
+    
     grid = [[Grid alloc] init];
     [grid deserializeSelections:[NSArray arrayWithArray:ar]];
     [grid setAllIsSelectable:YES];
@@ -74,7 +74,22 @@ NSMutableArray *tiles;
      selector:@selector(onSelectTile:)
      name:@"onTileSelected"
      object:nil];
+    
+    Game *g = [Game instance];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *roundRatingsName = [g.quotePack.quotePackName stringByAppendingString:@"_ratings"];
+    NSString *roundRatings = [defaults objectForKey:roundRatingsName];
+    BOOL firstTime = (roundRatings == nil);
+    
+    for(int i = 0; i < g.quoteCount; i++)
+    {
+        int rating = firstTime ? 0 : [roundRatings characterAtIndex:i] - 48;
+        Tile *t = [grid getTileFromIndex:i];
+        t.rating = rating;
+        [[_gridView.tileViews objectAtIndex:i] setNeedsDisplay];
+    }    
 }
+
 -(void) viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -85,7 +100,7 @@ NSMutableArray *tiles;
 - (void) onSelectTile:(NSNotification *)notification
 {
     Tile *tile = (Tile *)[notification object];
-    int index = [tile.letter integerValue];
+    int index = [tile.letter integerValue] - 1;
     [Game instance].currentIndex = index;
     
     [self performSegueWithIdentifier:@"toPlayScreen" sender:self];

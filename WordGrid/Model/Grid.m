@@ -234,6 +234,7 @@
 - (void) setSelectableByLetter:(NSString *)let
 {
     [self clearAllSelections];
+    
     for (Tile *t in grid)
     {
         if(t == (id)[NSNull null]) continue;
@@ -449,11 +450,12 @@
     
     for (int i = 0; i < len; i++)
     {
-        NSString *s = [NSString stringWithFormat:@"%d", i];
+        NSString *s = [NSString stringWithFormat:@"%d", i + 1];
         
         if(i < ar.count)
         {
             Tile *t = [[Tile alloc] initWithLetter:s];
+            t.rating = [[ar objectAtIndex:i] intValue];
             t.currentIndex = [self getPointFromIndex:i];
             [grid addObject:t];
         }

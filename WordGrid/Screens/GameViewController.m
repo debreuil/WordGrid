@@ -160,9 +160,9 @@ SystemSoundID winSoundID;
         [game.currentRound undoLastWord];
     }
     
+    [game.currentRound setSelectableByLetter];
     [self.gridView layoutGrid:YES];
     
-    [game.currentRound setSelectableByLetter];
 }
 
 - (void) onRoundComplete:(NSNotification *)notification
