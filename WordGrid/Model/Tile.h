@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Answer.h"
+
+@class GameRating;
 
 @interface Tile : NSObject
 
@@ -20,7 +21,7 @@
 @property (nonatomic) Boolean isSelected;
 @property (nonatomic) Boolean isHidden;
 
-@property (nonatomic) RoundRating rating;
+@property (nonatomic) GameRating *rating;
 
 
 - (id) initWithLetter:(NSString *) letter;

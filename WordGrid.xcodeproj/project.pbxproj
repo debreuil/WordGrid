@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8455D8C3168B6C35005A6E41 /* checkTile.png in Resources */ = {isa = PBXBuildFile; fileRef = 8455D8C2168B6C35005A6E41 /* checkTile.png */; };
+		8455D8C6168BC102005A6E41 /* GameRating.m in Sources */ = {isa = PBXBuildFile; fileRef = 8455D8C5168BC101005A6E41 /* GameRating.m */; };
 		847B031D162BCE3E00D5D50C /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B031C162BCE3E00D5D50C /* GameViewController.m */; };
 		847B032A162BCE8F00D5D50C /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B0327162BCE8F00D5D50C /* LobbyViewController.m */; };
 		847B032D162BCEC300D5D50C /* DesignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B032B162BCEC300D5D50C /* DesignViewController.m */; };
@@ -72,6 +73,8 @@
 
 /* Begin PBXFileReference section */
 		8455D8C2168B6C35005A6E41 /* checkTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkTile.png; path = Images/checkTile.png; sourceTree = "<group>"; };
+		8455D8C4168BC101005A6E41 /* GameRating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRating.h; path = Model/GameRating.h; sourceTree = "<group>"; };
+		8455D8C5168BC101005A6E41 /* GameRating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRating.m; path = Model/GameRating.m; sourceTree = "<group>"; };
 		847B031B162BCE3E00D5D50C /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameViewController.h; path = Screens/GameViewController.h; sourceTree = "<group>"; };
 		847B031C162BCE3E00D5D50C /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameViewController.m; path = Screens/GameViewController.m; sourceTree = "<group>"; };
 		847B0326162BCE8F00D5D50C /* LobbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LobbyViewController.h; path = Screens/LobbyViewController.h; sourceTree = "<group>"; };
@@ -328,6 +331,8 @@
 				849E29E816754BC300AA2DCF /* TileWord.m */,
 				849E29E516754BC300AA2DCF /* Tile.h */,
 				849E29E616754BC300AA2DCF /* Tile.m */,
+				8455D8C4168BC101005A6E41 /* GameRating.h */,
+				8455D8C5168BC101005A6E41 /* GameRating.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 				849E2A0216754D2C00AA2DCF /* GridView.m in Sources */,
 				849E2A0316754D2C00AA2DCF /* TileView.m in Sources */,
 				849E2A2416754F8900AA2DCF /* AnswerView.m in Sources */,
+				8455D8C6168BC102005A6E41 /* GameRating.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

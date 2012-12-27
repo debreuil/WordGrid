@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Answer.h"
 
 @class Answer;
 @class Grid;
@@ -42,7 +43,7 @@
 
 -(NSString *) getGuessedKeysAsString;
 -(void) guessKeysFromString:(NSString *) value;
--(NSString *) roundRating;
+-(RoundRating) roundRating;
 
 - (NSString *) trace;
 

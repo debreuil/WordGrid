@@ -9,11 +9,15 @@
 #import "Game.h"
 #import "QuotePack.h"
 #import "Round.h"
+#import "GameRating.h"
 
 @interface Game()
 {
     int _currentIndex;
 }
+
+- (void) tempResetSaves;
+
 @end
 
 @implementation Game
@@ -34,9 +38,20 @@
             NSArray *data = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name ofType:@"plist"]];
             inst.quotePack = [[QuotePack alloc] initWithData:data];
             inst.quotePack.quotePackName = name;
+            
+            //[inst tempResetSaves];
         }
         return inst;
     }
+}
+
+- (void) tempResetSaves
+{
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *roundRatingsName = [_quotePack.quotePackName stringByAppendingString:@"_ratings"];
+    [defaults setObject:nil forKey:roundRatingsName];    
+    [defaults synchronize];
 }
 
 -(int)currentIndex
@@ -81,21 +96,31 @@
         NSString *saveName = [_quotePack.quotePackName stringByAppendingString:[NSString stringWithFormat:@"%d",_currentIndex]];
         [defaults setObject:guessedKeys forKey:saveName];
         
+        NSMutableArray *ratings;
         NSString *roundRatingsName = [_quotePack.quotePackName stringByAppendingString:@"_ratings"];
-        NSString *roundRatings;
+
         if([defaults objectForKey:roundRatingsName] == nil)
         {
-            roundRatings = [@"" stringByPaddingToLength:self.quoteCount withString: @"0" startingAtIndex:0];
+            //roundRatings = [@"" stringByPaddingToLength:self.quoteCount withString: @"0" startingAtIndex:0];
+            ratings = [[NSMutableArray alloc] initWithCapacity:self.quoteCount];
+            for(int i = 0; i < self.quoteCount; i++)
+            {
+                [ratings addObject:[[GameRating alloc]init]];
+            }
         }
         else
         {
-            roundRatings = [defaults objectForKey:roundRatingsName];
+            NSData *data = [defaults objectForKey:roundRatingsName];
+            ratings = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
         }
         
-        NSString *rating = [_currentRound roundRating];
-        NSRange replChar = NSMakeRange(_currentIndex, 1);
-        roundRatings = [roundRatings stringByReplacingCharactersInRange:replChar withString:rating];
-        [defaults setObject:roundRatings forKey:roundRatingsName];
+        RoundRating rating = [_currentRound roundRating];
+        int pc = floor(_currentRound.letterIndex / _currentRound.answer.quoteLettersOnly.length * 100);
+        GameRating *gr = [[GameRating alloc] initWithRating:rating percentComplete:pc points:0];
+        [ratings setObject:gr atIndexedSubscript:_currentIndex];
+               
+        NSData *ratingsData = [NSKeyedArchiver archivedDataWithRootObject:[NSArray arrayWithArray:ratings]];
+        [defaults setObject:ratingsData forKey:roundRatingsName];
         
         [defaults synchronize];
     }

@@ -8,7 +8,6 @@
 
 #import "Round.h"
 #import "Grid.h"
-#import "Answer.h"
 #import "TileWord.h"
 #import "Tile.h"
 
@@ -221,16 +220,16 @@
     return result;
 }
 
--(NSString *) roundRating
+- (RoundRating) roundRating
 {
-    NSString *result = @"0";
+    RoundRating result = notStarted;
     if([self isCorrectlyGuessed])
     {
-        result = [NSString stringWithFormat:@"%d", complete0];
+        result = complete0;
     }
     else if(_letterIndex > 0)
     {
-        result = [NSString stringWithFormat:@"%d", inProgress];
+        result = inProgress;
     }
     return result;
 }

@@ -35,7 +35,7 @@
 
 -(NSString *) serialize;
 -(void) deserializeCurrentRound:(Answer *) ans;
--(void) deserializeSelections:(NSArray *) ar;
+-(void) createSelectionGrid:(int)count;
 -(NSString *)  trace;
 
 @end

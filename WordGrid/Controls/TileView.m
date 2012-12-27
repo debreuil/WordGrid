@@ -8,6 +8,7 @@
 
 #import "TileView.h"
 #import "Tile.h"
+#import "GameRating.h"
 
 @interface TileView()
 {
@@ -161,7 +162,7 @@ static SystemSoundID tickSoundID;
         [_tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
         
         CGContextRef context;
-        if(_tile.isSelectable && _tile.rating < inProgress)
+        if(_tile.isSelectable && (_tile.rating == nil || _tile.rating.roundRating < inProgress))
         {
             context = UIGraphicsGetCurrentContext();
             CGContextSetLineWidth(context, 4);
@@ -169,32 +170,34 @@ static SystemSoundID tickSoundID;
             CGContextStrokeRect(context, r);
         }
         
-        
-        switch (_tile.rating)
+        if(_tile.rating)
         {
-            case notStarted:
-                break;
-                
-            case inProgress:
-                context = UIGraphicsGetCurrentContext();
-                CGContextSetLineWidth(context, 8);
-                CGContextSetRGBStrokeColor(context, 1.0, 0.3, 0.3, 0.3);
-                CGContextStrokeRect(context, CGRectInset(r, 4, 4));
-                break;
-                
-            case complete0:
-            case complete1:
-            case complete2:
-                context = UIGraphicsGetCurrentContext();
-                CGContextSetLineWidth(context, 8);
-                CGContextSetRGBStrokeColor(context, 0.2, 1.0, 0.5, 0.3);
-                CGContextStrokeRect(context, CGRectInset(r, 4, 4));
-                
-                [checkImage drawInRect:r];
-                break;
-                
-            default:
-                break;
+            switch (_tile.rating.roundRating)
+            {
+                case notStarted:
+                    break;
+                    
+                case inProgress:
+                    context = UIGraphicsGetCurrentContext();
+                    CGContextSetLineWidth(context, 8);
+                    CGContextSetRGBStrokeColor(context, 1.0, 0.3, 0.3, 0.3);
+                    CGContextStrokeRect(context, CGRectInset(r, 4, 4));
+                    break;
+                    
+                case complete0:
+                case complete1:
+                case complete2:
+                    context = UIGraphicsGetCurrentContext();
+                    CGContextSetLineWidth(context, 8);
+                    CGContextSetRGBStrokeColor(context, 0.2, 1.0, 0.5, 0.3);
+                    CGContextStrokeRect(context, CGRectInset(r, 4, 4));
+                    
+                    [checkImage drawInRect:r];
+                    break;
+                    
+                default:
+                    break;
+            }
         }
     }
 }

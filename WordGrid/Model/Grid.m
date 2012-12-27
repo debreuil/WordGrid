@@ -443,7 +443,7 @@
     }      
 }
 
--(void) deserializeSelections:(NSArray *) ar
+-(void) createSelectionGrid:(int)count
 {
     [grid removeAllObjects];
     int len = _gridSize.width * _gridSize.height;
@@ -452,10 +452,9 @@
     {
         NSString *s = [NSString stringWithFormat:@"%d", i + 1];
         
-        if(i < ar.count)
+        if(i < count)
         {
             Tile *t = [[Tile alloc] initWithLetter:s];
-            t.rating = [[ar objectAtIndex:i] intValue];
             t.currentIndex = [self getPointFromIndex:i];
             [grid addObject:t];
         }

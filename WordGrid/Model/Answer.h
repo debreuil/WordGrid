@@ -16,6 +16,7 @@ typedef enum {
     complete2
 } RoundRating;
 
+
 @interface Answer : NSObject
 
 @property (nonatomic, readonly) CGSize gridSize;

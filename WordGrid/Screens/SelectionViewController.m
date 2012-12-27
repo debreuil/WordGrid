@@ -14,6 +14,7 @@
 #import "TileView.h"
 #import "QuotePack.h"
 #import "Answer.h"
+#import "GameRating.h"
 
 @interface SelectionViewController ()
 {
@@ -44,15 +45,9 @@ NSMutableArray *tiles;
     [super viewDidLoad];
 	
     Game *g = [Game instance];
-    
-    NSMutableArray *ar = [[NSMutableArray alloc] initWithCapacity:g.quoteCount];
-    for(int i = 0; i < g.quoteCount; i++)
-    {        
-        [ar addObject:[NSNumber numberWithInt:0]];
-    }
-    
+        
     grid = [[Grid alloc] init];
-    [grid deserializeSelections:[NSArray arrayWithArray:ar]];
+    [grid createSelectionGrid:g.quoteCount];
     [grid setAllIsSelectable:YES];
     
     _gridView.margin = 15;
@@ -78,12 +73,19 @@ NSMutableArray *tiles;
     Game *g = [Game instance];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *roundRatingsName = [g.quotePack.quotePackName stringByAppendingString:@"_ratings"];
-    NSString *roundRatings = [defaults objectForKey:roundRatingsName];
-    BOOL firstTime = (roundRatings == nil);
+    NSData *data = [defaults objectForKey:roundRatingsName];
+    
+    NSArray *roundRatings;
+    BOOL firstTime = YES;
+    if(data != nil)
+    {
+        firstTime = NO;
+        roundRatings = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
     
     for(int i = 0; i < g.quoteCount; i++)
     {
-        int rating = firstTime ? 0 : [roundRatings characterAtIndex:i] - 48;
+        GameRating *rating = firstTime ? [[GameRating alloc]init] : (GameRating *)[roundRatings objectAtIndex:i];
         Tile *t = [grid getTileFromIndex:i];
         t.rating = rating;
         [[_gridView.tileViews objectAtIndex:i] setNeedsDisplay];
