@@ -10,6 +10,13 @@
 #import "DDWViewController.h"
 #import "GameViewController.h"
 #import "Game.h"
+//#import <AVFoundation/AVAudioSession.h>
+
+SystemSoundID correctWordSoundID;
+SystemSoundID errorSoundID;
+SystemSoundID returnWordsSoundID;
+SystemSoundID winSoundID;
+SystemSoundID tickSoundID;
 
 @implementation DDWAppDelegate
 
@@ -44,6 +51,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    //[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="11G63" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="JEi-2v-Bmo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="JEi-2v-Bmo">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Lobby View Controller-->
@@ -77,10 +77,11 @@
             </objects>
             <point key="canvasLocation" x="-1743" y="-935"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Controller-->
         <scene sceneID="REn-yG-0wm">
             <objects>
-                <navigationController definesPresentationContext="YES" id="JEi-2v-Bmo" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" modalTransitionStyle="flipHorizontal" id="JEi-2v-Bmo" customClass="DDWNavController" sceneMemberID="viewController">
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y76-zg-n9o">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -90,7 +91,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdQ-yh-PQA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2910" y="-511"/>
+            <point key="canvasLocation" x="-3358" y="286"/>
         </scene>
         <!--Selection View Controller-->
         <scene sceneID="c6w-E9-GNh">
@@ -232,8 +233,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="main_horz.jpg" id="ziT-sL-XNC" userLabel="bkgH">
-                                <rect key="frame" x="-1" y="1" width="1024" height="768"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bkg_1024Game.png" id="ziT-sL-XNC" userLabel="bkgH">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Goo-4n-c4Q" customClass="GridView">
@@ -244,10 +245,10 @@
                                 <rect key="frame" x="278" y="567" width="700" height="170"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fTh-ch-IsZ">
-                                <rect key="frame" x="30" y="179" width="122" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fTh-ch-IsZ">
+                                <rect key="frame" x="20" y="86" width="133" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="RESET">
+                                <state key="normal" backgroundImage="btReset.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -255,10 +256,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BCM-rQ-DCt">
-                                <rect key="frame" x="30" y="215" width="122" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BCM-rQ-DCt">
+                                <rect key="frame" x="862" y="14" width="133" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="MENU">
+                                <state key="normal" backgroundImage="btMenu.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -266,6 +267,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="side_think.png" id="oWD-HH-ogK">
+                                <rect key="frame" x="20" y="150" width="181" height="615"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -285,7 +290,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JRd-uo-6da" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="240" y="294"/>
+            <point key="canvasLocation" x="239" y="294"/>
         </scene>
         <!--Victory View Controller-->
         <scene sceneID="HVk-Fv-3aK">
@@ -295,24 +300,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="victory_horz.jpg" id="JLM-Ro-eOU" userLabel="victoryH">
-                                <rect key="frame" x="-3" y="2" width="1024" height="768"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bkg_1024.png" id="JLM-Ro-eOU" userLabel="victoryH">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Victory Text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" minimumFontSize="36" id="AEI-1G-Q6g" userLabel="txVictory">
-                                <rect key="frame" x="25" y="400" width="318" height="319"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" id="vHF-q8-sSy" customClass="AnswerView">
-                                <rect key="frame" x="66" y="181" width="700" height="170"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rCa-hJ-V9o">
-                                <rect key="frame" x="453" y="359" width="200" height="36"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" id="FsE-hn-4yX">
+                                <rect key="frame" x="0.0" y="142" width="509" height="614"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="titleVictory.png" id="k3W-nA-S1j">
+                                <rect key="frame" x="342" y="28" width="672" height="112"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rCa-hJ-V9o">
+                                <rect key="frame" x="823" y="621" width="150" height="37"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="NEXT ROUND">
+                                <state key="normal" backgroundImage="btNextRound.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -320,10 +323,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fX1-BT-1GA">
-                                <rect key="frame" x="143" y="359" width="200" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fX1-BT-1GA">
+                                <rect key="frame" x="604" y="622" width="150" height="36"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="GAME MENU">
+                                <state key="normal" backgroundImage="btGameMenu.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -331,6 +334,21 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" id="JU1-FF-unw">
+                                <rect key="frame" x="541" y="209" width="451" height="298"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure </string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textView>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="- quote source" textAlignment="right" id="ktJ-LI-IK4">
+                                <rect key="frame" x="541" y="515" width="437" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -341,10 +359,11 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="answerView" destination="vHF-q8-sSy" id="yBz-2n-xEA"/>
                         <outlet property="btNextRound" destination="rCa-hJ-V9o" id="4UY-WP-V2s"/>
                         <outlet property="btSelectGame" destination="fX1-BT-1GA" id="AbS-3e-BaW"/>
-                        <outlet property="txQuoteSource" destination="AEI-1G-Q6g" id="TFa-Wm-6sm"/>
+                        <outlet property="charImage" destination="FsE-hn-4yX" id="nDG-oW-Vzt"/>
+                        <outlet property="txQuoteBody" destination="JU1-FF-unw" id="BSp-v3-M4R"/>
+                        <outlet property="txQuoteSource" destination="ktJ-LI-IK4" id="OLe-iQ-k93"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQ8-Yf-gom" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -403,20 +422,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="main_horz.jpg" id="Z2E-hi-HbC" userLabel="bkgH">
-                                <rect key="frame" x="-1" y="1" width="1024" height="768"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bkg_1024.png" id="Z2E-hi-HbC" userLabel="bkgH">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Choose a Round" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" minimumFontSize="24" id="GVQ-ou-A6D" userLabel="txVictory">
-                                <rect key="frame" x="329" y="57" width="600" height="47"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="lIN-iA-s1o" customClass="GridView">
-                                <rect key="frame" x="281" y="117" width="674" height="590"/>
+                                <rect key="frame" x="280" y="173" width="674" height="590"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="side_ready.png" id="uHy-ZV-4Hp">
+                                <rect key="frame" x="37" y="231" width="211" height="524"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="titleChooseAGame.png" id="5s3-Pn-wPR">
+                                <rect key="frame" x="172" y="34" width="787" height="86"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -428,13 +449,12 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="gridView" destination="lIN-iA-s1o" id="lZw-AT-hdl"/>
-                        <outlet property="txTitle" destination="GVQ-ou-A6D" id="CVA-5a-8dX"/>
                         <segue destination="tOf-gt-KqZ" kind="push" identifier="toPlayScreen" id="gsm-eI-RJx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lSh-34-kpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-860" y="302"/>
+            <point key="canvasLocation" x="-870" y="294"/>
         </scene>
         <!--Lobby View Controller-->
         <scene sceneID="GuM-TT-sfQ">
@@ -444,12 +464,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="main_horz.jpg" id="TlH-k2-7kD" userLabel="bkgH">
-                                <rect key="frame" x="-1" y="1" width="1024" height="768"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bkg_1024.png" id="TlH-k2-7kD" userLabel="bkgH">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wFH-Ja-sO5">
-                                <rect key="frame" x="412" y="505" width="200" height="34"/>
+                                <rect key="frame" x="795" y="664" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="CREATE">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -462,13 +482,14 @@
                                     <segue destination="GAR-OT-HYK" kind="push" id="L96-hB-dSl"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5sU-uK-shU">
-                                <rect key="frame" x="411" y="281" width="200" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5sU-uK-shU">
+                                <rect key="frame" x="462" y="293" width="257" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="INSTRUCTIONS">
+                                <state key="normal" backgroundImage="btTutorial.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -476,10 +497,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gUa-Ii-vXF">
-                                <rect key="frame" x="411" y="413" width="200" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gUa-Ii-vXF">
+                                <rect key="frame" x="462" y="405" width="257" height="55"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="PLAY">
+                                <state key="normal" backgroundImage="btPlay.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -490,6 +511,14 @@
                                     <segue destination="7zB-F7-9ft" kind="push" id="MOh-6K-kKe"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="sideChar3.png" id="Y1l-uV-wzm">
+                                <rect key="frame" x="37" y="169" width="228" height="584"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="title.png" id="ffz-dd-bZq">
+                                <rect key="frame" x="27" y="31" width="613" height="89"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -502,7 +531,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJ8-lW-Kwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1956" y="302"/>
+            <point key="canvasLocation" x="-2122" y="286"/>
         </scene>
         <!--Design View Controller-->
         <scene sceneID="R9b-ml-Q7y">
@@ -544,11 +573,74 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bkg_1024.png" width="1024" height="768"/>
+        <image name="bkg_1024Game.png" width="1024" height="768"/>
+        <image name="btGameMenu.png" width="150" height="36"/>
+        <image name="btMenu.png" width="114" height="36"/>
+        <image name="btNextRound.png" width="150" height="37"/>
+        <image name="btPlay.png" width="241" height="51"/>
+        <image name="btReset.png" width="114" height="36"/>
+        <image name="btTutorial.png" width="241" height="51"/>
         <image name="main_horz.jpg" width="640" height="480"/>
         <image name="main_vert.jpg" width="480" height="640"/>
-        <image name="victory_horz.jpg" width="640" height="480"/>
+        <image name="sideChar3.png" width="215" height="549"/>
+        <image name="side_ready.png" width="211" height="524"/>
+        <image name="side_think.png" width="181" height="615"/>
+        <image name="title.png" width="613" height="89"/>
+        <image name="titleChooseAGame.png" width="787" height="86"/>
+        <image name="titleVictory.png" width="672" height="112"/>
         <image name="victory_vert.jpg" width="480" height="640"/>
     </resources>
+    <classes>
+        <class className="AnswerView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AnswerView.h"/>
+        </class>
+        <class className="DDWNavController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DDWNavController.h"/>
+        </class>
+        <class className="DesignViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DesignViewController.h"/>
+        </class>
+        <class className="GameViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="onGotoSelectionMenu:"/>
+                <relationship kind="action" name="onReset:"/>
+                <relationship kind="outlet" name="answerView" candidateClass="AnswerView"/>
+                <relationship kind="outlet" name="btMenu" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="btReset" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="gridView" candidateClass="GridView"/>
+            </relationships>
+        </class>
+        <class className="GridView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GridView.h"/>
+        </class>
+        <class className="LobbyViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LobbyViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="btCreate" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="btInstructions" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="btPlay" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="SelectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SelectionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="gridView" candidateClass="GridView"/>
+                <relationship kind="outlet" name="txTitle" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="VictoryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VictoryViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="btNextRound" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="btSelectGame" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="charImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="txQuoteBody" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="txQuoteSource" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

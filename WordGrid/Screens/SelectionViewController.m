@@ -114,6 +114,16 @@ NSMutableArray *tiles;
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    BOOL result = NO;
+	if (toInterfaceOrientation & UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight )
+    {
+        result = YES;
+    }
+	return result;
+}
+
 - (void)viewDidUnload
 {
     [self setTxTitle:nil];

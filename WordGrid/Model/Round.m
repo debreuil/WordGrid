@@ -10,6 +10,13 @@
 #import "Grid.h"
 #import "TileWord.h"
 #import "Tile.h"
+#import <AudioToolbox/AudioToolbox.h>
+
+extern SystemSoundID correctWordSoundID;
+extern SystemSoundID errorSoundID;
+extern SystemSoundID returnWordsSoundID;
+extern SystemSoundID winSoundID;
+extern SystemSoundID tickSoundID;
 
 @interface Round()
 {
@@ -170,6 +177,7 @@
 }
 - (void) undoLastWord
 {
+    AudioServicesPlaySystemSound(returnWordsSoundID);
     int guessedLetterCount = 0;
     if(_currentWord.guessedLetterCount == 0)
     {
@@ -259,14 +267,17 @@
 
 -(void) onWordCorrect
 {
+    AudioServicesPlaySystemSound(correctWordSoundID);
     [isCorrectGuessedWords addObject:[NSNumber numberWithBool:YES]];
 }
 -(void) onWordIncorrect
 {
+    AudioServicesPlaySystemSound(errorSoundID);
     [isCorrectGuessedWords addObject:[NSNumber numberWithBool:NO]];    
 }
 -(void) onRoundComplete
 {
+    AudioServicesPlaySystemSound(winSoundID);
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onRoundComplete"
      object:self];    

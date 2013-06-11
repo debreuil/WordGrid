@@ -16,6 +16,12 @@
 #import "Answer.h"
 #import "Grid.h"
 
+extern SystemSoundID correctWordSoundID;
+extern SystemSoundID errorSoundID;
+extern SystemSoundID returnWordsSoundID;
+extern SystemSoundID winSoundID;
+extern SystemSoundID tickSoundID;
+
 @interface GameViewController ()
 {
     Game *game;
@@ -36,10 +42,6 @@ float letterMoveDelay;
 int lastSelectedTileIndex;
 bool roundComplete;
 
-SystemSoundID correctWordSoundID;
-SystemSoundID errorSoundID;
-SystemSoundID returnWordsSoundID;
-SystemSoundID winSoundID;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -69,14 +71,17 @@ SystemSoundID winSoundID;
     AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &returnWordsSoundID);
     
     tickURLRef = [[NSBundle mainBundle] URLForResource:@"win" withExtension:@"caf"];
-    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &winSoundID);    
+    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &winSoundID);
+    
+    tickURLRef = [[NSBundle mainBundle] URLForResource:@"smallTick" withExtension:@"caf"];
+    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &tickSoundID);
 
     _answerView.showErrors = YES;
 }
 
--(void) viewDidAppear:(BOOL)animated
+-(void) viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     
 	[[NSNotificationCenter defaultCenter]
      addObserver:self
@@ -100,7 +105,7 @@ SystemSoundID winSoundID;
     [_btMenu addTarget:self action:@selector(onGotoSelectionMenu:) forControlEvents:UIControlEventTouchUpInside];
     
     roundComplete = NO;        
-    [self newRound];
+    [self setupRound];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
@@ -113,7 +118,7 @@ SystemSoundID winSoundID;
     [[Game instance] saveRound];
 }
 
-- (void) newRound
+- (void) setupRound
 {
     [self.gridView setHidden:NO];
     
@@ -121,6 +126,13 @@ SystemSoundID winSoundID;
     self.answerView.round = game.currentRound;              
         
     [self.gridView layoutGrid:YES];
+    
+    if([game.currentRound isFullyGuessed])
+    {
+        [game.currentRound undoLastWord];
+        [game.currentRound setSelectableByLetter];
+        [self.gridView layoutGrid:YES];
+    }
 }
 
 - (void) tileSelected:(NSNotification *)notification
@@ -132,7 +144,7 @@ SystemSoundID winSoundID;
 - (IBAction) onReset:(id) sender
 {
     [game.currentRound resetRound];
-    [self newRound];
+    [self setupRound];
 }
 - (IBAction) onGotoSelectionMenu:(id) sender
 {
@@ -175,6 +187,17 @@ SystemSoundID winSoundID;
 }
 - (void) autoSelectFirstLetter
 {
+}
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    BOOL result = NO;
+	if (toInterfaceOrientation & UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight )
+    {
+        result = YES;
+    }
+	return result;
 }
 
 - (void)viewDidUnload

@@ -11,6 +11,8 @@
 #import "TileView.h"
 #import "Tile.h"
 
+extern SystemSoundID tickSoundID;
+
 @interface GridView()
 {
     UIView *blankView;
@@ -236,7 +238,7 @@ UIInterfaceOrientation io;
 
     if(tile != (id)[NSNull null] && tile.isSelectable)
     {
-        //AudioServicesPlaySystemSound(tickSoundID);
+        AudioServicesPlaySystemSound(tickSoundID);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
     }
     [self clearAllHovers];      

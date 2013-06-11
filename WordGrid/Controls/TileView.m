@@ -36,7 +36,7 @@ static NSArray *imageStates;
 static UIImage *errorImage;
 static UIImage *checkImage;
 static float hoverScale = 1.5;
-static SystemSoundID tickSoundID;
+//static SystemSoundID tickSoundID;
 
 - (id) initWithFrame:(CGRect)frame andTile:(Tile *) t
 {
@@ -120,9 +120,6 @@ static SystemSoundID tickSoundID;
                    [UIImage imageNamed:@"let_sel0.png"],
                    [UIImage imageNamed:@"let_sel1.png"],
                    [UIImage imageNamed:@"let_sel2.png"], nil];
-    
-    NSURL *tickURLRef = [[NSBundle mainBundle] URLForResource:@"smallTick" withExtension:@"caf"];
-    AudioServicesCreateSystemSoundID ( (__bridge CFURLRef) tickURLRef, &tickSoundID);
 }
 
 - (void)drawRect:(CGRect)rect
