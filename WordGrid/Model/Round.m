@@ -134,7 +134,6 @@ extern SystemSoundID tickSoundID;
 - (BOOL) guessTile:(Tile *)guessedTile
 {
     guessedTile.isSelected = YES;
-    
     [_currentWord addTile:guessedTile];
     [guessedKeys addObject:[NSNumber numberWithInt:[self.grid getIndexFromTile:guessedTile]]];
     _currentFullGuess = [_currentFullGuess stringByAppendingString:guessedTile.letter];
@@ -252,6 +251,8 @@ extern SystemSoundID tickSoundID;
     [self resetRound];
     
     //NSLog(@"%@", [self trace]);
+    NSLog(@"%@", [_grid trace]);
+    
     if(value.length > 0)
     {
         NSArray *ar = [value componentsSeparatedByString:@","];

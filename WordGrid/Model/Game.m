@@ -38,16 +38,16 @@
             NSArray *data = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name ofType:@"plist"]];
             inst.quotePack = [[QuotePack alloc] initWithData:data];
             inst.quotePack.quotePackName = name;
+            inst.loadAndSave = YES;
             
-            //[inst tempResetSaves];
+            [inst tempResetSaves];
         }
         return inst;
     }
 }
 
 - (void) tempResetSaves
-{
-    
+{    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *roundRatingsName = [_quotePack.quotePackName stringByAppendingString:@"_ratings"];
     [defaults setObject:nil forKey:roundRatingsName];    
@@ -63,7 +63,7 @@
     _currentIndex = answerIndex;
     [_quotePack setAnswerIndex:_currentIndex];
     _currentRound = [[Round alloc] initWithAnswer:_quotePack.currentAnswer];
-    [self loadRound];
+    [self loadRound];    
 }
 
 -(Answer *) currentAnswer
@@ -89,7 +89,7 @@
 
 - (void) saveRound
 {
-    if(_currentRound != nil)
+    if(_loadAndSave && _currentRound != nil)
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *guessedKeys = [_currentRound getGuessedKeysAsString];
@@ -127,10 +127,13 @@
 }
 -(void) loadRound
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *loadName = [_quotePack.quotePackName stringByAppendingString:[NSString stringWithFormat:@"%d",_currentIndex]];
-    NSString *guessedKeys = [defaults objectForKey:loadName];
-    [_currentRound guessKeysFromString:guessedKeys];
+    if(_loadAndSave)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *loadName = [_quotePack.quotePackName stringByAppendingString:[NSString stringWithFormat:@"%d",_currentIndex]];
+        NSString *guessedKeys = [defaults objectForKey:loadName];
+        [_currentRound guessKeysFromString:guessedKeys];
+    }
 }
 
 -(void) resetRound

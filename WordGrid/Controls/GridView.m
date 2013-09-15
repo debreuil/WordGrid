@@ -16,22 +16,12 @@ extern SystemSoundID tickSoundID;
 @interface GridView()
 {
     UIView *blankView;
+    int yOffset;
 }
 - (void)    createGrid;
 @end
 
 @implementation GridView
-
-@synthesize grid = _grid;
-@synthesize tileViews;
-
-@synthesize margin;
-@synthesize lastHoverTileIndex;
-@synthesize tileWidth;
-@synthesize tileHeight;
-@synthesize slotWidth;
-@synthesize slotHeight;
-@synthesize animationDelay;
 
 UIInterfaceOrientation io;
 
@@ -45,6 +35,8 @@ UIInterfaceOrientation io;
         blankView = [[UIView alloc] init];
         blankView.hidden = YES;
         [self addSubview:blankView];
+        
+        self.clipsToBounds = YES;
     }
     return self;
 }
@@ -52,7 +44,7 @@ UIInterfaceOrientation io;
 {
     [self clearGrid];
     _grid = g;
-    [self createGrid];
+    [self createGrid];    
 }
 
 - (void) clearGrid
@@ -66,14 +58,16 @@ UIInterfaceOrientation io;
 }
 
 - (void) createGrid
-{           
+{    
     self.lastHoverTileIndex = -1;
     
     int gw = self.grid.gridSize.width;
     int gh = self.grid.gridSize.height;
+    int maxH = (_maxRows == 0) ? self.grid.gridSize.height : _maxRows;
+    yOffset = (_maxRows == 0) ? 0 : _maxRows - gh;
     
-    self.tileWidth = (self.bounds.size.width - self.margin * (gw - 2)) / gw;
-    self.tileHeight = (self.bounds.size.height - self.margin * (gh - 2)) / gh;
+    self.tileWidth = (self.bounds.size.width - self.margin * (gw - 1)) / gw;
+    self.tileHeight = (self.bounds.size.height - self.margin * (maxH - 1)) / maxH;
     self.slotWidth = self.tileWidth + self.margin;
     self.slotHeight = self.tileHeight + self.margin;
     
@@ -93,6 +87,9 @@ UIInterfaceOrientation io;
     }
     
     [self layoutGrid:NO];
+    
+    r = self.frame;
+    //self.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, r.size.height - tileHeight);
 }
 
 - (void) resetAnimationDelay:(int) delay
@@ -103,8 +100,6 @@ UIInterfaceOrientation io;
 - (void) layoutGrid:(Boolean) useAnimation
 {
     [self resetAnimationDelay:0];
-    //int gw = self.grid.gridSize.width;
-    //int gh = self.grid.gridSize.height;
     
     [self bringSubviewToFront:blankView];
     UIView *topView = blankView;
@@ -133,12 +128,12 @@ UIInterfaceOrientation io;
             [self insertSubview:tv belowSubview:topView];
             topView = tv;
             CGRect fr = CGRectMake(
-                    self.margin / 2.0 + self.slotWidth * tv.tile.currentIndex.x,
-                    self.margin / 2.0 + self.slotHeight * tv.tile.currentIndex.y,
+                    self.slotWidth * tv.tile.currentIndex.x,
+                    self.slotHeight * (tv.tile.currentIndex.y + yOffset),
                     self.tileWidth, self.tileHeight);            
             
             [UIView
-             animateWithDuration:0.3 delay:self.animationDelay options: UIViewAnimationCurveEaseOut
+             animateWithDuration:0.3 delay:self.animationDelay options: UIViewAnimationOptionCurveEaseOut
              animations:^{ tv.frame = fr; }
              completion:^(BOOL finished){}
              ];
@@ -156,7 +151,7 @@ UIInterfaceOrientation io;
     if(CGRectContainsPoint(self.bounds, point))
     {
         int tx = (int)(point.x / self.slotWidth);
-        int ty = (int)(point.y / self.slotHeight);
+        int ty = (int)(point.y / self.slotHeight) - yOffset;
         int tileIndex = ty * self.grid.gridSize.width + tx;
         result = [self.grid getTileFromIndex:tileIndex];
     }
@@ -169,7 +164,7 @@ UIInterfaceOrientation io;
     if(CGRectContainsPoint(self.bounds, point))
     {
         int tx = (int)(point.x / self.slotWidth);
-        int ty = (int)(point.y / self.slotHeight);
+        int ty = (int)(point.y / self.slotHeight) - yOffset;
         tileIndex = ty * self.grid.gridSize.width + tx;
         //Tile *t = [self.grid getTileFromIndex:tileIndex];
         if(tileIndex >= [self.tileViews count])

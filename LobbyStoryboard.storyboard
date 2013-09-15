@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="JEi-2v-Bmo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="JEi-2v-Bmo">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -238,7 +238,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Goo-4n-c4Q" customClass="GridView">
-                                <rect key="frame" x="278" y="14" width="674" height="525"/>
+                                <rect key="frame" x="278" y="100" width="674" height="430"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="MJ3-2v-HI0" customClass="AnswerView">
@@ -591,56 +591,6 @@
         <image name="titleVictory.png" width="672" height="112"/>
         <image name="victory_vert.jpg" width="480" height="640"/>
     </resources>
-    <classes>
-        <class className="AnswerView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AnswerView.h"/>
-        </class>
-        <class className="DDWNavController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DDWNavController.h"/>
-        </class>
-        <class className="DesignViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DesignViewController.h"/>
-        </class>
-        <class className="GameViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="onGotoSelectionMenu:"/>
-                <relationship kind="action" name="onReset:"/>
-                <relationship kind="outlet" name="answerView" candidateClass="AnswerView"/>
-                <relationship kind="outlet" name="btMenu" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btReset" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="gridView" candidateClass="GridView"/>
-            </relationships>
-        </class>
-        <class className="GridView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GridView.h"/>
-        </class>
-        <class className="LobbyViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LobbyViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="btCreate" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btInstructions" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btPlay" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="SelectionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SelectionViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="gridView" candidateClass="GridView"/>
-                <relationship kind="outlet" name="txTitle" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="VictoryViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VictoryViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="btNextRound" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btSelectGame" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="charImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="txQuoteBody" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="txQuoteSource" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

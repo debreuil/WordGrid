@@ -18,6 +18,7 @@
 @property (nonatomic) QuotePack *quotePack;
 @property (nonatomic, readonly) int quoteCount;
 
+@property (nonatomic) BOOL loadAndSave;
 @property (nonatomic) int currentIndex;
 @property (nonatomic, readonly) Round *currentRound;
 @property (nonatomic, readonly) Answer *currentAnswer;

@@ -21,6 +21,7 @@ Round *testRound;
 {
     [super setUp];
     testGame = [Game instance];
+    testGame.loadAndSave = NO;
 }
 
 - (void)tearDown
@@ -35,6 +36,20 @@ Round *testRound;
         [self roundTestOfIndex:i];
     }
 }
+
+//- (void)invertGrid
+//{
+//    NSString *name = @"QuotePackMain";
+//    NSArray *quoteData = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name ofType:@"plist"]];
+//    
+//    for (NSArray *ar in quoteData)
+//    {
+//        Answer *ans = [[Answer alloc] initWithData:ar];
+//        NSArray *keys = ans.keys;
+//        NSString *lets = ans.gridLetters;
+//    }
+//    
+//}
 
 - (void)roundTestOfIndex:(int)index
 {

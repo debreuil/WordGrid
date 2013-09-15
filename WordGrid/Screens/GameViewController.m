@@ -121,6 +121,7 @@ bool roundComplete;
 - (void) setupRound
 {
     [self.gridView setHidden:NO];
+    self.gridView.maxRows = 5;
     
     self.gridView.grid = game.currentRound.grid;
     self.answerView.round = game.currentRound;              
