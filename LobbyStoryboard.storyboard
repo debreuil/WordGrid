@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="JEi-2v-Bmo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="JEi-2v-Bmo">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--Lobby View Controller-->
@@ -23,22 +24,14 @@
                                 </accessibility>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="INSTRUCTIONS">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4xF-ZD-3v7">
                                 <rect key="frame" x="284" y="597" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="PLAY">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="wO3-Is-1mh" kind="push" id="GBf-rI-Oz3"/>
@@ -48,11 +41,7 @@
                                 <rect key="frame" x="284" y="682" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="CREATE">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="cfg-IB-nHg" kind="push" id="bsy-sL-Vhg"/>
@@ -66,7 +55,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="btCreate" destination="Vqd-JE-qXF" id="zGS-7t-8md"/>
                         <outlet property="btInstructions" destination="LY1-QI-HH3" id="9Y4-dp-AnP"/>
@@ -192,22 +180,14 @@
                                 <rect key="frame" x="84" y="493" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="NEXT ROUND">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="V15-BJ-s6t">
                                 <rect key="frame" x="84" y="573" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="GAME MENU">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                         </subviews>
@@ -382,7 +362,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ig9-8H-68l" customClass="LevelEditorGrid">
+                            <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ig9-8H-68l" customClass="GridView">
                                 <rect key="frame" x="47" y="416" width="675" height="525"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                             </view>
@@ -393,8 +373,8 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" id="SAb-i5-Foc" customClass="AnswerGrid">
-                                <rect key="frame" x="69" y="219" width="630" height="168"/>
+                            <view contentMode="scaleToFill" id="SAb-i5-Foc" customClass="AnswerView">
+                                <rect key="frame" x="47" y="219" width="675" height="168"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
@@ -406,8 +386,8 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
-                        <outlet property="answerGrid" destination="SAb-i5-Foc" id="51T-qA-hfE"/>
-                        <outlet property="editGrid" destination="ig9-8H-68l" id="HPv-Yd-pTD"/>
+                        <outlet property="answerView" destination="SAb-i5-Foc" id="8ZG-Be-d52"/>
+                        <outlet property="gridView" destination="ig9-8H-68l" id="Xga-i4-gRT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VRj-lC-QbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -472,11 +452,7 @@
                                 <rect key="frame" x="795" y="664" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="CREATE">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="GAR-OT-HYK" kind="push" id="L96-hB-dSl"/>
@@ -542,15 +518,15 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="main_horz.jpg" id="aVP-bz-BNd" userLabel="bkgH">
-                                <rect key="frame" x="-1" y="1" width="1024" height="768"/>
+                                <rect key="frame" x="-1" y="0.0" width="1024" height="768"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="afi-aH-Hds" customClass="LevelEditorGrid">
-                                <rect key="frame" x="296" y="208" width="675" height="525"/>
+                            <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="afi-aH-Hds" customClass="DesignGridView">
+                                <rect key="frame" x="280" y="256" width="675" height="430"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" id="ShW-Xr-4dZ" customClass="AnswerGrid">
-                                <rect key="frame" x="311" y="32" width="630" height="168"/>
+                            <view contentMode="scaleToFill" id="ShW-Xr-4dZ" customClass="AnswerView">
+                                <rect key="frame" x="280" y="55" width="630" height="168"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
@@ -563,8 +539,8 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="answerGrid" destination="ShW-Xr-4dZ" id="soU-3F-G7U"/>
-                        <outlet property="editGrid" destination="afi-aH-Hds" id="V3p-uG-Ntg"/>
+                        <outlet property="answerView" destination="ShW-Xr-4dZ" id="UUe-7L-5EK"/>
+                        <outlet property="gridView" destination="afi-aH-Hds" id="lol-z0-isT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qUM-yE-vmf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -592,7 +568,7 @@
         <image name="victory_vert.jpg" width="480" height="640"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
+        <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>

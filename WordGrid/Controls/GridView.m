@@ -10,15 +10,20 @@
 #import "GridView.h"
 #import "TileView.h"
 #import "Tile.h"
+#import "Round.h"
+#import "GridOverlay.h"
 
 extern SystemSoundID tickSoundID;
 
 @interface GridView()
 {
-    UIView *blankView;
+    GridOverlay *blankView;
     int yOffset;
+    BOOL ignoreDrag;
 }
-- (void)    createGrid;
+
+- (void) createGrid;
+
 @end
 
 @implementation GridView
@@ -32,19 +37,34 @@ UIInterfaceOrientation io;
     {
         self.margin = 4;
         self.tileViews = [NSMutableArray arrayWithCapacity:200];
-        blankView = [[UIView alloc] init];
-        blankView.hidden = YES;
+        blankView = [[GridOverlay alloc] init];
+        blankView.opaque = NO;
+        blankView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
         [self addSubview:blankView];
         
-        self.clipsToBounds = YES;
+        //self.clipsToBounds = YES;
+        ignoreDrag = NO;        
+        
+        //self.backgroundColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:0.5];
+        //blankView.backgroundColor = [UIColor colorWithRed:0.0 green:0.9 blue:0 alpha:0.5];
     }
     return self;
 }
-- (void) setGrid:(Grid *)g
+
+- (void) setRound:(Round *)rnd
 {
     [self clearGrid];
-    _grid = g;
-    [self createGrid];    
+    _round = rnd;
+    _grid = _round.grid;
+    blankView.gridView = self;
+    [self createGrid];
+}
+
+- (void) setGrid:(Grid *)grd
+{
+    [self clearGrid];
+    _grid = grd;
+    [self createGrid];
 }
 
 - (void) clearGrid
@@ -74,13 +94,15 @@ UIInterfaceOrientation io;
     Tile *tile;
     TileView *tileView;
     
-    CGRect r = CGRectMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0, self.tileWidth, self.tileHeight);
+    CGRect r = CGRectMake(0, 0, self.tileWidth, self.tileHeight);
     for (int i = 0; i < gh; i++)
     {
         for (int j = 0; j < gw; j++)
         {
             tile = [self.grid getTileFromIndex:i * gw + j];            
             tileView = [[TileView alloc] initWithFrame:r andTile:tile];
+            //tileView.isOffScreen = [self isOffScreen:tileView.tile];
+
             [self.tileViews addObject:tileView];
             [self addSubview:tileView];
         }
@@ -88,7 +110,7 @@ UIInterfaceOrientation io;
     
     [self layoutGrid:NO];
     
-    r = self.frame;
+    //r = self.frame;
     //self.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, r.size.height - tileHeight);
 }
 
@@ -96,17 +118,27 @@ UIInterfaceOrientation io;
 {
     self.animationDelay = delay;
 }
-
+- (void)bringSubviewToFront:(UIView *)view
+{
+    [super bringSubviewToFront:view];
+    [super bringSubviewToFront:blankView];
+}
+- (BOOL) isOffScreen:(Tile*)tile
+{
+    return tile.currentIndex.y >= 0 &&
+            tile.currentIndex.y + yOffset < 0;
+}
 - (void) layoutGrid:(Boolean) useAnimation
 {
     [self resetAnimationDelay:0];
     
     [self bringSubviewToFront:blankView];
     UIView *topView = blankView;
-            
+        
     for(TileView * tv in self.tileViews)
     {    
         //NSLog(@"%@   %@", NSStringFromCGPoint(tv.tile.currentIndex), NSStringFromCGRect(tv.frame));
+        
         if(tv.tile == (id)[NSNull null]) continue;
         
         if(tv.isSelected != tv.tile.isSelected ||
@@ -117,6 +149,12 @@ UIInterfaceOrientation io;
             tv.isSelectable = tv.tile.isSelectable;
             tv.isHidden = tv.tile.isHidden;
             [tv setNeedsDisplay];
+        }
+        
+        if(tv.isOffScreen != [self isOffScreen:tv.tile])
+        {
+           tv.isOffScreen = [self isOffScreen:tv.tile];
+           [tv setNeedsDisplay];
         }
         
         if(tv.currentIndex.x != tv.tile.currentIndex.x || tv.currentIndex.y != tv.tile.currentIndex.y)
@@ -142,42 +180,66 @@ UIInterfaceOrientation io;
             [tv setNeedsDisplay];
         }
     }
+    
     [self setNeedsDisplay];
+    [blankView setNeedsDisplay];
 }
 
-- (Tile *) getTileFromMousePoint:(CGPoint) point
+- (CGPoint)  getCenterFromTile:(Tile *) tile
+{
+    int tileIndex = tile.currentIndex.x + tile.currentIndex.y * _grid.gridSize.width;
+    TileView *tv = (TileView *)[self.tileViews objectAtIndex:tileIndex];
+    return tv.center;
+}
+
+- (Tile *) getTileFromMousePoint:(CGPoint) point centerOnly:(BOOL) centerOnly
 {
     Tile *result = nil;
     if(CGRectContainsPoint(self.bounds, point))
     {
-        int tx = (int)(point.x / self.slotWidth);
-        int ty = (int)(point.y / self.slotHeight) - yOffset;
-        int tileIndex = ty * self.grid.gridSize.width + tx;
+        int tileIndex = [self getTileIndexFromMousePoint:point centerOnly:NO];
         result = [self.grid getTileFromIndex:tileIndex];
     }
     return result;
 }
 
-- (int) getTileIndexFromMousePoint:(CGPoint) point
+- (int) getTileIndexFromMousePoint:(CGPoint) point centerOnly:(BOOL) centerOnly
 {
     int tileIndex = -1;
     if(CGRectContainsPoint(self.bounds, point))
     {
         int tx = (int)(point.x / self.slotWidth);
-        int ty = (int)(point.y / self.slotHeight) - yOffset;
-        tileIndex = ty * self.grid.gridSize.width + tx;
-        //Tile *t = [self.grid getTileFromIndex:tileIndex];
+        int ty = (int)(point.y / self.slotHeight);
+        tileIndex = tx + (ty - yOffset) * self.grid.gridSize.width;
+
         if(tileIndex >= [self.tileViews count])
         {
             tileIndex = -1;
+        }
+        else if(centerOnly)
+        {
+            CGPoint tCent = CGPointMake(tx * self.slotWidth + self.slotWidth / 2.0 - self.margin,
+                                        ty * self.slotHeight + self.slotHeight / 2.0 - self.margin);
+            float difX = tCent.x - point.x;
+            float difY = tCent.y - point.y;
+            float dist = difX * difX + difY * difY;
+            
+            if(dist > (self.slotWidth / 2.7) * (self.slotWidth / 2.7))
+            {
+                tileIndex = -1;
+            }
+            else
+            {
+                //NSLog(@"x: %d y:%d index:%d", tx, ty, tileIndex);
+            }
         }
     }
     return tileIndex;
 }
 
--(void) hoverTileAtPoint:(CGPoint) p
+-(int) hoverTileAtPoint:(CGPoint) p centerOnly:(BOOL) centerOnly
 {
-    int tileIndex = [self getTileIndexFromMousePoint:p];
+    int tileIndex = [self getTileIndexFromMousePoint:p centerOnly:centerOnly];
     if(tileIndex > -1)
     {
         if(tileIndex != self.lastHoverTileIndex && self.lastHoverTileIndex != -1)
@@ -195,6 +257,7 @@ UIInterfaceOrientation io;
     {
         [self clearAllHovers];
     }
+    return tileIndex;
 }
 
 -(void) clearAllHovers
@@ -208,36 +271,53 @@ UIInterfaceOrientation io;
     self.lastHoverTileIndex = -1;
 }
 
+- (void) finishMultiTileDrag
+{
+    ignoreDrag = YES;
+}
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
+    ignoreDrag = NO;
     
     UITouch *t = [touches anyObject];
-    [self hoverTileAtPoint:[t locationInView:self]];
+    [self hoverTileAtPoint:[t locationInView:self] centerOnly:NO];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [super touchesMoved:touches withEvent:event];
-    
-    UITouch *t = [touches anyObject];
-    [self hoverTileAtPoint:[t locationInView:self]];
+    if(!ignoreDrag)
+    {
+        [super touchesMoved:touches withEvent:event];
+        
+        [self selectTileFromTouch:touches centerOnly:YES];
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
     
-    UITouch *t = [touches anyObject];
-    Tile *tile = [self getTileFromMousePoint:[t locationInView:self]];
+    [self selectTileFromTouch:touches centerOnly:NO];
+    ignoreDrag = NO;
+}
 
-    if(tile != (id)[NSNull null] && tile.isSelectable)
+- (void) selectTileFromTouch:(NSSet *)touches centerOnly:(BOOL)centerOnly
+{    
+    UITouch *t = [touches anyObject];
+    int tileIndex = [self hoverTileAtPoint:[t locationInView:self] centerOnly:centerOnly];
+    Tile *tile = [self.grid getTileFromIndex:tileIndex];
+    
+    if(tile && tile != (id)[NSNull null] && tile.isSelectable)
     {
         AudioServicesPlaySystemSound(tickSoundID);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:tile];
     }
-    [self clearAllHovers];      
+    [self clearAllHovers];
+    
 }
+
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesCancelled:touches withEvent:event];

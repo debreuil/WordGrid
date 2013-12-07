@@ -8,51 +8,76 @@
 //
 
 #import "DesignViewController.h"
+#import "Game.h"
+#import "Round.h"
+#import "DesignGrid.h"
 
 @interface DesignViewController ()
+{
+    Game *game;
+}
+
+@property (nonatomic, readonly)DesignGrid *designGrid;
 
 @end
 
 @implementation DesignViewController
-/*
-@synthesize editGrid = _editGrid;
-@synthesize answerGrid = _answerGrid;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
     }
-    return self;
+    return self;    
 }
--(void) viewDidAppear:(BOOL)animated
+
+- (DesignGrid *) ensureDesignGrid
 {
-    [super viewDidAppear:animated];
-    
-    [self.editGrid didAppear];
-    [self.answerGrid didAppear];
-    
-}
--(void) viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self.editGrid didDisappear];
-    [self.answerGrid didDisappear];
+    DesignGrid *result = (DesignGrid *)_gridView.grid;
+    if(result == nil)
+    {
+        result = [[DesignGrid alloc] init];
+        [result createEmptyGrid];
+        [_gridView setGrid:result];
+    }
+    return result;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	
-    self.editGrid.answerGrid = _answerGrid;
+    [super viewDidLoad];    
+    game = [Game instance];  
+}
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+	[self setupRound];
     
-    [self.answerGrid setup]; // answer grid needs to be setup first
-    [self.editGrid setup];
+}
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+
+- (void) setupRound
+{
+    //[self.answerGrid setDirection:-1];
     
-    [self.answerGrid setDirection:-1];
+    [self ensureDesignGrid];
     
-    //self.answerRefs = [[NSMutableArray alloc] initWithCapacity:20];
+//    game.currentIndex = 2;
+//    [game.currentRound exposeAllLetters];
+//    
+//    self.gridView.hidden = NO;
+//    self.gridView.maxRows = MAX_ROWS;
+//    
+//    self.gridView.grid = game.currentRound.grid;
+//    self.answerView.round = game.currentRound;
+
+    
+    [self.gridView layoutGrid:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +90,7 @@
 {
     [super viewDidUnload];
 }
- */
+
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation

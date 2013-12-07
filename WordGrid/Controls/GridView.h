@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class Round;
 @class Grid;
 @class Tile;
 
+#define MAX_ROWS 5
+
 @interface GridView : UIView
 
+@property (nonatomic, weak) Round *round;
 @property (nonatomic, weak) Grid *grid;
 @property (nonatomic, strong) NSMutableArray *tileViews;
 
@@ -25,13 +29,16 @@
 @property (nonatomic) float animationDelay;
 @property (nonatomic) float maxRows;
 
-- (void)    hoverTileAtPoint:(CGPoint) point;
 - (void)    clearAllHovers;
-- (Tile *)  getTileFromMousePoint:(CGPoint) point;
-- (int)     getTileIndexFromMousePoint:(CGPoint) point;
+
+- (Tile *)  getTileFromMousePoint:(CGPoint) point centerOnly:(BOOL) centerOnly;
+- (int)     getTileIndexFromMousePoint:(CGPoint) point centerOnly:(BOOL) centerOnly;
+- (int)     hoverTileAtPoint:(CGPoint) p centerOnly:(BOOL) centerOnly;
+- (CGPoint)  getCenterFromTile:(Tile *) tile;
+
 - (void)    resetAnimationDelay:(int) delay;
 - (void)    layoutGrid:(Boolean) useAnimation;
-
+- (void)    finishMultiTileDrag;
 
 
 @end

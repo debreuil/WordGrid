@@ -44,6 +44,11 @@
 }
 
 
+-(NSArray *) getGuessedTiles
+{
+    return [_tiles copy];
+}
+
 -(void) addTile:(Tile *) tile
 {
     [self.tiles addObject:tile];

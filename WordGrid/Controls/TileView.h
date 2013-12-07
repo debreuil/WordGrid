@@ -16,6 +16,7 @@
 @property (nonatomic) BOOL isSelectable;
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic) BOOL isHidden;
+@property (nonatomic) BOOL isOffScreen;
 
 
 -(id) initWithFrame:(CGRect)frame andTile:(Tile *) tile;

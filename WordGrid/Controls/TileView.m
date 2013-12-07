@@ -24,13 +24,8 @@
 @implementation TileView
 
 @synthesize tile = _tile;
-@synthesize animatingFrom = _animatingFrom;
 @synthesize isHovering = _isHovering;
-
-@synthesize currentIndex = _currentIndex;
-@synthesize isSelectable = _isSelectable;
-@synthesize isSelected = _isSelected;
-@synthesize isHidden = _isHidden;
+@synthesize isSelectable  = _isSelectable;
 
 static NSArray *imageStates;
 static UIImage *errorImage;
@@ -74,7 +69,7 @@ static float hoverScale = 1.5;
         if(_isHovering)
         {        
             [self.superview bringSubviewToFront:self];
-            if(self.tile.isSelectable)
+            if(_tile.isSelectable)
             {
                 self.bounds = scaleUpRect;
             }
@@ -101,6 +96,7 @@ static float hoverScale = 1.5;
     _isSelected = NO;
     _isSelectable = NO;
     _isHidden = YES;
+    _isOffScreen = NO;
     
     CGRect f = [self frame];
     float xBorder = ((f.size.width * hoverScale) - f.size.width) / 2.0;
@@ -112,19 +108,26 @@ static float hoverScale = 1.5;
 
 + (void) load
 {
-    errorImage = [UIImage imageNamed:@"errorTile.png"];
-    checkImage = [UIImage imageNamed:@"checkTile.png"];
-    
-    imageStates = [[NSArray alloc] initWithObjects:
-                   [UIImage imageNamed:@"let_norm.png"],
-                   [UIImage imageNamed:@"let_sel0.png"],
-                   [UIImage imageNamed:@"let_sel1.png"],
-                   [UIImage imageNamed:@"let_sel2.png"], nil];
+    @autoreleasepool
+    {
+        errorImage = [UIImage imageNamed:@"errorTile.png"];
+        checkImage = [UIImage imageNamed:@"checkTile.png"];
+        
+        imageStates = [[NSArray alloc] initWithObjects:
+                       [UIImage imageNamed:@"let_norm.png"],
+                       [UIImage imageNamed:@"let_sel0.png"],
+                       [UIImage imageNamed:@"let_sel1.png"],
+                       [UIImage imageNamed:@"let_sel2.png"], nil];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
 {
     if(_tile == (id)[NSNull null] || _tile.isHidden)
+    {
+        self.hidden = YES;
+    }
+    else if(_isOffScreen)
     {
         self.hidden = YES;
     }
@@ -156,7 +159,7 @@ static float hoverScale = 1.5;
             [[UIColor whiteColor] set];
         }
         
-        [_tile.letter drawInRect:letR withFont:f lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        [_tile.letter drawInRect:letR withFont:f lineBreakMode:NSLineBreakByClipping alignment:NSTextAlignmentCenter];
         
         CGContextRef context;
         if(_tile.isSelectable && (_tile.rating == nil || _tile.rating.roundRating < inProgress))
@@ -199,19 +202,22 @@ static float hoverScale = 1.5;
     }
 }
 
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"canSel:%@t%@ sel:%@t%@, let:%@, pt:%d,%d ptt:%d,%d",
-            self.isSelectable ? @"Y" : @"N",            
-            self.tile.isSelectable ? @"Y" : @"N",
-            self.isSelected ? @"Y" : @"N",
-            self.tile.isSelected ? @"Y" : @"N",
-            self.tile.letter,
-            (int)self.currentIndex.x,
-            (int)self.currentIndex.y,
-            (int)self.tile.currentIndex.x,
-            (int)self.tile.currentIndex.y];
-}
+//- (NSString *)description
+//{
+//    return [NSString stringWithFormat:@"canSel:%@t%@ sel:%@t%@, let:%@, pt:%d,%d ptt:%d,%d fr:%d,%d,%d,%d",
+//            _isSelectable ? @"Y" : @"N",
+//            _tile.isSelectable ? @"Y" : @"N",
+//            _isSelected ? @"Y" : @"N",
+//            _tile.isSelected ? @"Y" : @"N",
+//            _tile.letter,
+//            (int)_currentIndex.x,
+//            (int)_currentIndex.y,
+//            (int)_tile.currentIndex.x,
+//            (int)_tile.currentIndex.y,
+//    
+//            (int)self.frame.origin.x, (int)self.frame.origin.y,
+//            (int)self.frame.size.width, (int)self.frame.size.height];
+//}
 
 
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -229,7 +235,7 @@ static float hoverScale = 1.5;
 //    [super touchesEnded:touches withEvent:event];
 //    self.isHovering = NO;
 //    //NSLog(@"%i", gridIndex);
-//    if(self.tile.isSelectable)
+//    if(_tile.isSelectable)
 //    {
 //        AudioServicesPlaySystemSound(tickSoundID);
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"onTileSelected" object:self];

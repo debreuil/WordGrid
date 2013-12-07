@@ -12,6 +12,7 @@
 -(id) initWithAnswer:(NSString *) answer;
 //-(id) initWithTiles:(NSArray *) tiles;
 
+-(NSArray *) getGuessedTiles;
 -(void) addTile:(Tile *) tile;
 -(void) addTiles:(NSArray *) tiles;
 -(void) removeLastTile;

@@ -12,6 +12,7 @@
 #import "TileWord.h"
 #import "Tile.h"
 #import "Game.h"
+#import "GridView.h"
 
 @interface GridManipulationTests()
 - (void)roundRemoveAddAll:(int) puzzleIndex;
@@ -32,6 +33,30 @@ Grid *grid;
 - (void)tearDown
 {
     [super tearDown];
+}
+
+- (void)testTileIndexVisible
+{
+    for(int i = 0; i < testGame.quoteCount; i++)
+    {
+        testGame.currentIndex = i;
+        Answer *ans = testGame.currentAnswer;
+        int w = ans.gridSize.width;
+        int h = ans.gridSize.height;
+        int yOffset = MAX_ROWS - h;
+        NSArray *keys = ans.keys;
+        for(int key = 0; key < keys.count; key++)
+        {
+            int val = [keys[key] integerValue];
+            int row = floor(val / w + yOffset);
+            STAssertTrue(row >= 0 && row < MAX_ROWS, @"Correct tile is off screen");
+            if(row < 0 || row >= MAX_ROWS)
+            {
+                NSLog(@"fail game: %d index: %d quote: %@", i, val, ans.quote);
+                break;
+            }
+        }
+    }
 }
 
 - (void)testTileWordSorting

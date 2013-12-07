@@ -27,6 +27,7 @@
 - (id)initWithAnswer:(Answer *)answer;
 
 - (void) resetRound;
+- (NSArray *) getGuessedTiles;
 - (BOOL) guessTileByIndex:(int)index;
 - (BOOL) guessTile:(Tile *)guessedTile;
 - (void) undoLastWord;
@@ -44,6 +45,8 @@
 -(NSString *) getGuessedKeysAsString;
 -(void) guessKeysFromString:(NSString *) value;
 -(RoundRating) roundRating;
+
+- (void) exposeAllLetters;
 
 - (NSString *) trace;
 

@@ -70,7 +70,7 @@
         int index = [lps[i] intValue] + wordLen;
         NSRange range = NSMakeRange(startSlot, index - startSlot);
         NSString *s = [_round.answer.quote substringWithRange:range];
-        CGSize sz = [s sizeWithFont:font constrainedToSize:textArea.size lineBreakMode:UILineBreakModeWordWrap];
+        CGSize sz = [s sizeWithFont:font constrainedToSize:textArea.size lineBreakMode:NSLineBreakByWordWrapping];
         h = (h == 0) ? sz.height : h;
         
         if(sz.height > h) // new line
@@ -80,12 +80,12 @@
             index = startSlot + wordLen;
             range = NSMakeRange(startSlot, index - startSlot);
             s = [_round.answer.quote substringWithRange:range];
-            sz = [s sizeWithFont:font constrainedToSize:textArea.size lineBreakMode:UILineBreakModeWordWrap];
+            sz = [s sizeWithFont:font constrainedToSize:textArea.size lineBreakMode:NSLineBreakByWordWrapping];
         }
         // left location
         range = NSMakeRange(startSlot, index - startSlot - wordLen);
         NSString *ls = [_round.answer.quote substringWithRange:range];
-        CGSize leftSize = [ls sizeWithFont:font constrainedToSize:textArea.size lineBreakMode:UILineBreakModeWordWrap];
+        CGSize leftSize = [ls sizeWithFont:font constrainedToSize:textArea.size lineBreakMode:NSLineBreakByWordWrapping];
         int w = (sz.width - leftSize.width) / wordLen;
         i += wordLen;
         wordIndex++;
@@ -113,7 +113,7 @@
                              withString:[ga substringWithRange:NSMakeRange(i, 1)]];
         }
         
-        [s drawInRect:textArea withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
+        [s drawInRect:textArea withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentLeft];
         
         if(_showErrors)
         {

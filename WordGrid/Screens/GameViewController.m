@@ -32,22 +32,15 @@ extern SystemSoundID tickSoundID;
 
 @implementation GameViewController
 
-
-@synthesize gridView = _gridView;
-@synthesize answerView = _answerView;
-@synthesize btMenu = _btMenu;
-@synthesize btReset = _btReset;
-
 float letterMoveDelay;
 int lastSelectedTileIndex;
 bool roundComplete;
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Custom initialization
     }
     return self;
 }
@@ -89,6 +82,12 @@ bool roundComplete;
      name:@"onTileSelected"
      object:nil];
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(onWordGuessed:)
+     name:@"onWordGuessed"
+     object:nil];
+    
 	[[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(answerSelected:)
@@ -113,6 +112,8 @@ bool roundComplete;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onAnswerWordSelected" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onRoundComplete" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onWordGuessed" object:nil];
+
     [_btReset removeTarget:self action:@selector(onReset:) forControlEvents:UIControlEventTouchUpInside];
     [_btMenu removeTarget:self action:@selector(onGotoSelectionMenu:) forControlEvents:UIControlEventTouchUpInside];
     [[Game instance] saveRound];
@@ -121,9 +122,9 @@ bool roundComplete;
 - (void) setupRound
 {
     [self.gridView setHidden:NO];
-    self.gridView.maxRows = 5;
+    self.gridView.maxRows = MAX_ROWS;
     
-    self.gridView.grid = game.currentRound.grid;
+    self.gridView.round = game.currentRound;
     self.answerView.round = game.currentRound;              
         
     [self.gridView layoutGrid:YES];
@@ -181,6 +182,11 @@ bool roundComplete;
 - (void) onRoundComplete:(NSNotification *)notification
 {       
     [self performSegueWithIdentifier:@"toVictoryScreen" sender:self];
+}
+
+- (void) onWordGuessed:(NSNotification *)notification
+{
+    [_gridView finishMultiTileDrag];
 }
 
 - (void) testWordComplete

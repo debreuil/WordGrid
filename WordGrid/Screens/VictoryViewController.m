@@ -23,28 +23,29 @@
 
 @implementation VictoryViewController
 
-@synthesize txQuoteBody = _txQuoteBody;
-@synthesize txQuoteSource = _txQuoteSource;
-@synthesize btNextRound = _btNextRound;
-@synthesize btSelectGame = _btSelectGame;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        charImages = [[NSArray alloc] initWithObjects:
-                      @"char_ee.png",
-                      @"char_go.png",
-                      @"char_hc.png",
-                      @"char_margt.png",
-                      @"char_mt.png",
-                      @"char_mw.png",
-                      @"char_ow.png",
-                      @"char_suntzu.png",
-                      @"char_yb.png", nil];
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Custom initialization
     }
     return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    charImages = [[NSArray alloc] initWithObjects:
+                  @"char_ee.png",
+                  @"char_go.png",
+                  @"char_hc.png",
+                  @"char_margt.png",
+                  @"char_mt.png",
+                  @"char_mw.png",
+                  @"char_ow.png",
+                  @"char_suntzu.png",
+                  @"char_yb.png", nil];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -142,16 +143,6 @@
 -(void) onSelectGame:(id)sender
 {
    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-//    NSString *s = @"";
-//    s = [s stringByAppendingString:[AnswerData getCurrentSource]];
-//    self.txQuoteSource.text = s;
-//	
-//    [self.answerView setup];
 }
 
 - (void)didReceiveMemoryWarning

@@ -12,8 +12,16 @@
 @class Answer;
 
 @interface Grid : NSObject
+{
+    @private    
+    NSMutableArray *selectedLetters;
+    
+    @protected
+    NSMutableArray *grid;
+    int elementCount;
+}
 
-@property (nonatomic, readonly) CGSize gridSize;
+@property (nonatomic) CGSize gridSize;
 
 -(Tile *) getTileFromIndex:(int)index;
 -(Tile *) getTileFromBoxedIndex:(NSNumber *)index;

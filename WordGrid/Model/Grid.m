@@ -12,11 +12,7 @@
 #import "Answer.h"
 
 @interface Grid()
-{
-    NSMutableArray *grid;
-    NSMutableArray *selectedLetters;
-    int elementCount;
-}
+
 
 - (CGPoint) getPointFromIndex:(int)index;
 - (void) removeTile:(Tile *) t;
@@ -429,8 +425,8 @@
     for (int i = 0; i < elementCount; i++)
     {
         NSString *s = [testString substringWithRange:NSMakeRange(index++, 1)];
-        
-        if(![s isEqualToString:@" "])
+         
+        if(![s isEqualToString:@" "]) //YES)
         {
             Tile *t = [[Tile alloc] initWithLetter:s];
             t.currentIndex = [self getPointFromIndex:i];

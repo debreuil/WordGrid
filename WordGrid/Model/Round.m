@@ -30,14 +30,6 @@ extern SystemSoundID tickSoundID;
 
 @implementation Round
 
-@synthesize grid = _grid;
-@synthesize answer = _answer;
-@synthesize letterIndex = _letterIndex;
-@synthesize wordIndex = _wordIndex;
-@synthesize currentFullGuess = _currentFullGuess;
-@synthesize currentWord = _currentWord;
-@synthesize currentCorrectLetter = _currentCorrectLetter;
-
 - (id)initWithAnswer:(Answer *)ans
 {
     self = [super init];
@@ -80,6 +72,11 @@ extern SystemSoundID tickSoundID;
     isCorrectGuessedWords = [[NSMutableArray alloc] initWithCapacity:_answer.quoteWords.count];
     
     [self setSelectableByLetter];
+}
+
+-(NSArray *) getGuessedTiles
+{
+    return [_currentWord getGuessedTiles];
 }
 
 - (NSString *) currentCorrectLetter
@@ -142,7 +139,9 @@ extern SystemSoundID tickSoundID;
     BOOL result = [correctLetter isEqualToString:guessedTile.letter];
     _letterIndex++;
     if([_currentWord isFullyGuessed])
-    {
+    {        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"onWordGuessed" object:_currentWord];
+                
         if([_currentWord isCorrectlyGuessed])
         {
             // make sure the correct letters are from the correct spots
@@ -251,7 +250,7 @@ extern SystemSoundID tickSoundID;
     [self resetRound];
     
     //NSLog(@"%@", [self trace]);
-    NSLog(@"%@", [_grid trace]);
+    //NSLog(@"%@", [_grid trace]);
     
     if(value.length > 0)
     {
@@ -282,6 +281,19 @@ extern SystemSoundID tickSoundID;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onRoundComplete"
      object:self];    
+}
+
+- (void) exposeAllLetters
+{
+    _letterIndex = 0;
+    _wordIndex = 0;
+    _currentFullGuess = @"";
+    
+    NSArray *keys = _answer.keys;
+    for (int i = 0; i < keys.count; i++)
+    {
+        [self guessTileByIndex:[[keys objectAtIndex:i] intValue]];
+    }
 }
 
 - (NSString *) trace
