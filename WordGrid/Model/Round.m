@@ -138,14 +138,64 @@ extern SystemSoundID tickSoundID;
     NSString *correctLetter = [[_answer quoteLettersOnly] substringWithRange:NSMakeRange(_letterIndex, 1)];
     BOOL result = [correctLetter isEqualToString:guessedTile.letter];
     _letterIndex++;
+    
     if([_currentWord isFullyGuessed])
-    {        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"onWordGuessed" object:_currentWord];
-                
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"onWordLetterLimit" object:_currentWord];
+    }
+    else
+    {
+        [self.grid setSelectableAroundPoint:guessedTile.currentIndex];
+    }
+    
+//    if([_currentWord isFullyGuessed])
+//    {        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"onWordLetterLimit" object:_currentWord];
+//                
+//        if([_currentWord isCorrectlyGuessed])
+//        {
+//            // make sure the correct letters are from the correct spots
+//            [self replaceCurrentWordWithCorrectTiles];            
+//            [self onWordCorrect];
+//        }
+//        else
+//        {
+//            [self onWordIncorrect];
+//        }
+//        
+//        if(_wordIndex < _answer.quoteWords.count - 1)
+//        {
+//            [tileWords addObject:_currentWord];
+//            [_grid removeWord:_currentWord];
+//            _wordIndex++;
+//            _currentWord = [[TileWord alloc] initWithAnswer:[_answer.quoteWords objectAtIndex:_wordIndex]];
+//
+//            [self setSelectableByLetter];
+//        }
+//        else if([self isCorrectlyGuessed])
+//        {
+//            [self onRoundComplete];
+//        }
+//    }
+//    else
+//    {
+//        [self.grid setSelectableAroundPoint:guessedTile.currentIndex];
+//    }
+    
+    
+    return result;
+}
+
+- (void) checkWord
+{
+    if([_currentWord isFullyGuessed])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"onWordLetterLimit" object:_currentWord];
+        
         if([_currentWord isCorrectlyGuessed])
         {
             // make sure the correct letters are from the correct spots
-            [self replaceCurrentWordWithCorrectTiles];            
+            [self replaceCurrentWordWithCorrectTiles];
             [self onWordCorrect];
         }
         else
@@ -159,7 +209,7 @@ extern SystemSoundID tickSoundID;
             [_grid removeWord:_currentWord];
             _wordIndex++;
             _currentWord = [[TileWord alloc] initWithAnswer:[_answer.quoteWords objectAtIndex:_wordIndex]];
-
+            
             [self setSelectableByLetter];
         }
         else if([self isCorrectlyGuessed])
@@ -167,12 +217,8 @@ extern SystemSoundID tickSoundID;
             [self onRoundComplete];
         }
     }
-    else
-    {
-        [self.grid setSelectableAroundPoint:guessedTile.currentIndex];
-    }
-    return result;
 }
+
 - (void) undoLastWord
 {
     AudioServicesPlaySystemSound(returnWordsSoundID);

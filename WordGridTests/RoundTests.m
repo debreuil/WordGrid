@@ -63,6 +63,7 @@ Round *testRound;
     for (int i = 0; i < keys.count; i++)
     {
         [testRound guessTileByIndex:[[keys objectAtIndex:i] intValue]];
+        [testRound checkWord];
     }
     
     STAssertEquals((NSUInteger)testRound.letterIndex, keys.count, @"at last letter");
@@ -101,6 +102,7 @@ Round *testRound;
     for (int i = 0; i < keys.count; i++)
     {
         [testRound guessTileByIndex:[[keys objectAtIndex:i] intValue]];
+        [testRound checkWord];
     }
     NSString *guessedKeys = [testRound getGuessedKeysAsString];
     STAssertTrue([guessedKeys isEqualToString:@"61,53,43,51,52"], @"guessed Keys");
@@ -121,6 +123,7 @@ Round *testRound;
     for (int i = 0; i < 5; i++)
     {
         [testRound guessTileByIndex:[[answer.keys objectAtIndex:i] intValue]];
+        [testRound checkWord];
     }
     
     STAssertEquals(testRound.letterIndex, 5, @"at letter");

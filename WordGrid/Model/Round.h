@@ -30,6 +30,7 @@
 - (NSArray *) getGuessedTiles;
 - (BOOL) guessTileByIndex:(int)index;
 - (BOOL) guessTile:(Tile *)guessedTile;
+- (void) checkWord;
 - (void) undoLastWord;
 
 -(BOOL) isFullyGuessed;

@@ -84,8 +84,14 @@ bool roundComplete;
     
     [[NSNotificationCenter defaultCenter]
      addObserver:self
-     selector:@selector(onWordGuessed:)
-     name:@"onWordGuessed"
+     selector:@selector(onCheckWord:)
+     name:@"onCheckWord"
+     object:nil];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(onWordLetterLimit:)
+     name:@"onWordLetterLimit"
      object:nil];
     
 	[[NSNotificationCenter defaultCenter]
@@ -100,6 +106,7 @@ bool roundComplete;
      name:@"onRoundComplete"
      object:nil];
     
+    
     [_btReset addTarget:self action:@selector(onReset:) forControlEvents:UIControlEventTouchUpInside];
     [_btMenu addTarget:self action:@selector(onGotoSelectionMenu:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -110,9 +117,10 @@ bool roundComplete;
 -(void) viewDidDisappear:(BOOL)animated
 {    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onTileSelected" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onCheckWord" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onWordLetterLimit" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onAnswerWordSelected" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onRoundComplete" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"onWordGuessed" object:nil];
 
     [_btReset removeTarget:self action:@selector(onReset:) forControlEvents:UIControlEventTouchUpInside];
     [_btMenu removeTarget:self action:@selector(onGotoSelectionMenu:) forControlEvents:UIControlEventTouchUpInside];
@@ -184,7 +192,14 @@ bool roundComplete;
     [self performSegueWithIdentifier:@"toVictoryScreen" sender:self];
 }
 
-- (void) onWordGuessed:(NSNotification *)notification
+- (void) onCheckWord:(NSNotification *)notification
+{
+    [game.currentRound checkWord];
+    [self.gridView layoutGrid:YES];
+    [self.answerView setNeedsDisplay];
+}
+
+- (void) onWordLetterLimit:(NSNotification *)notification
 {
     [_gridView finishMultiTileDrag];
 }

@@ -107,6 +107,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7AACFF291853B7920095D659 /* IntGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntGeometry.h; path = Model/IntGeometry.h; sourceTree = "<group>"; };
 		8422DEC116C8BC7700BA0CAD /* bkg_1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bkg_1024.png; path = Images/updated/bkg_1024.png; sourceTree = "<group>"; };
 		8422DEC216C8BC7700BA0CAD /* btAudio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btAudio.png; path = Images/updated/btAudio.png; sourceTree = "<group>"; };
 		8422DEC316C8BC7700BA0CAD /* btGameMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btGameMenu.png; path = Images/updated/btGameMenu.png; sourceTree = "<group>"; };
@@ -436,24 +437,25 @@
 		849E29F016754BE900AA2DCF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				849E29E116754BC300AA2DCF /* QuotePack.h */,
-				849E29E216754BC300AA2DCF /* QuotePack.m */,
-				849E29DD16754BC300AA2DCF /* Game.h */,
-				849E29DE16754BC300AA2DCF /* Game.m */,
-				849E29E316754BC300AA2DCF /* Round.h */,
-				849E29E416754BC300AA2DCF /* Round.m */,
-				849E29DF16754BC300AA2DCF /* Grid.h */,
-				849E29E016754BC300AA2DCF /* Grid.m */,
 				849E29DB16754BC300AA2DCF /* Answer.h */,
 				849E29DC16754BC300AA2DCF /* Answer.m */,
-				849E29E716754BC300AA2DCF /* TileWord.h */,
-				849E29E816754BC300AA2DCF /* TileWord.m */,
-				849E29E516754BC300AA2DCF /* Tile.h */,
-				849E29E616754BC300AA2DCF /* Tile.m */,
-				8455D8C4168BC101005A6E41 /* GameRating.h */,
-				8455D8C5168BC101005A6E41 /* GameRating.m */,
 				84D7592017E79EB8009B2E84 /* DesignGrid.h */,
 				84D7592117E79EB9009B2E84 /* DesignGrid.m */,
+				849E29DD16754BC300AA2DCF /* Game.h */,
+				849E29DE16754BC300AA2DCF /* Game.m */,
+				8455D8C4168BC101005A6E41 /* GameRating.h */,
+				8455D8C5168BC101005A6E41 /* GameRating.m */,
+				849E29DF16754BC300AA2DCF /* Grid.h */,
+				849E29E016754BC300AA2DCF /* Grid.m */,
+				849E29E116754BC300AA2DCF /* QuotePack.h */,
+				849E29E216754BC300AA2DCF /* QuotePack.m */,
+				849E29E316754BC300AA2DCF /* Round.h */,
+				849E29E416754BC300AA2DCF /* Round.m */,
+				849E29E516754BC300AA2DCF /* Tile.h */,
+				849E29E616754BC300AA2DCF /* Tile.m */,
+				849E29E716754BC300AA2DCF /* TileWord.h */,
+				849E29E816754BC300AA2DCF /* TileWord.m */,
+				7AACFF291853B7920095D659 /* IntGeometry.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";

@@ -12,7 +12,7 @@
 @class Grid;
 @class Tile;
 
-#define MAX_ROWS 5
+#define MAX_ROWS 7
 
 @interface GridView : UIView
 

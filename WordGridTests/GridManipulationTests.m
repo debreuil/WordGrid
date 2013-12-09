@@ -52,7 +52,7 @@ Grid *grid;
             STAssertTrue(row >= 0 && row < MAX_ROWS, @"Correct tile is off screen");
             if(row < 0 || row >= MAX_ROWS)
             {
-                NSLog(@"fail game: %d index: %d quote: %@", i, val, ans.quote);
+                NSLog(@"fail game:%d index:%d quote:%@", i, val, ans.quote);
                 break;
             }
         }

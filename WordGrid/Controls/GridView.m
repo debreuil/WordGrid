@@ -299,7 +299,12 @@ UIInterfaceOrientation io;
 {
     [super touchesEnded:touches withEvent:event];
     
-    [self selectTileFromTouch:touches centerOnly:NO];
+    if(!ignoreDrag)
+    {
+        [self selectTileFromTouch:touches centerOnly:NO];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"onCheckWord" object:nil];
     ignoreDrag = NO;
 }
 

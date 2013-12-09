@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Debreuil Digital Works. All rights reserved.
 //
 
+#import "IntGeometry.h"
 #import <Foundation/Foundation.h>
 @class Tile;
 @class TileWord;
@@ -25,17 +26,17 @@
 
 -(Tile *) getTileFromIndex:(int)index;
 -(Tile *) getTileFromBoxedIndex:(NSNumber *)index;
--(Tile *) getTileFromPoint:(CGPoint)pt;
+-(Tile *) getTileFromPoint:(IntPoint)pt;
 -(int)    getIndexFromTile:(Tile *)tile;
 
--(int) getIndexFromPoint:(CGPoint)pt;
--(CGPoint) getPointFromIndex:(int)index;
+-(int) getIndexFromPoint:(IntPoint)pt;
+-(IntPoint) getPointFromIndex:(int)index;
 -(NSString *) getLetterFromIndex:(int)index;
 -(TileWord *) getTileWordFromIndexes:(NSArray *)indexes;
 
 - (void)    setAllIsSelectable:(Boolean) isSelectable;
 
-- (void)    setSelectableAroundPoint:(CGPoint) point;
+- (void)    setSelectableAroundPoint:(IntPoint) point;
 - (void)    setSelectableByLetter:(NSString *)let;
 
 -(void) insertWord:(TileWord *) indexesToRemove;

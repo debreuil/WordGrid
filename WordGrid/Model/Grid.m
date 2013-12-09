@@ -13,15 +13,6 @@
 
 @interface Grid()
 
-
-- (CGPoint) getPointFromIndex:(int)index;
-- (void) removeTile:(Tile *) t;
-- (void) removeVerticalGaps:(TileWord *) word;
-- (void) insertVerticalGaps:(TileWord *) word;
-- (void) swapColumns:(int)src toColumn:(int)dest;
-- (void) setTile:(id) t atPoint:(CGPoint)pt;
-- (void) clearAllSelections;
-
 @end
 
 
@@ -42,7 +33,7 @@
     return self;
 }
 
--(int) getIndexFromPoint:(CGPoint)pt
+-(int) getIndexFromPoint:(IntPoint)pt
 {
     int result = -1;    
     if(pt.x >= 0 && pt.x < _gridSize.width && pt.y >= 0 && pt.y < _gridSize.height)
@@ -52,7 +43,7 @@
     return result;
 }
 
--(Tile *) getTileFromPoint:(CGPoint)pt
+-(Tile *) getTileFromPoint:(IntPoint)pt
 {
     Tile *t = nil;
     if(pt.x >= 0 && pt.x < _gridSize.width && pt.y >= 0 && pt.y < _gridSize.height)
@@ -62,7 +53,7 @@
     }
     return t;
 }
--(void) setTile:(id) t atPoint:(CGPoint)pt
+-(void) setTile:(id) t atPoint:(IntPoint)pt
 {
     if(pt.x >= 0 && pt.x < _gridSize.width && pt.y >= 0 && pt.y < _gridSize.height)
     {
@@ -95,9 +86,9 @@
     }
     return t;
 }
--(CGPoint) getPointFromIndex:(int)index
+-(IntPoint) getPointFromIndex:(int)index
 {
-    return CGPointMake(floor(index % (int)self.gridSize.width), floor(index / (int)self.gridSize.width));
+    return IntPointMake(index % (int)self.gridSize.width, floorf(index / self.gridSize.width));
 }
 
 -(NSString *) getLetterFromIndex:(int)index
@@ -134,13 +125,13 @@
     
     for (int i = t.currentIndex.y - 1; i >= 0; i--)
     {
-        int newIndex = [self getIndexFromPoint:CGPointMake(t.currentIndex.x, i)];
+        int newIndex = [self getIndexFromPoint:IntPointMake(t.currentIndex.x, i)];
         Tile *stackedTile = [grid objectAtIndex:newIndex];
         if(stackedTile != (id)[NSNull null])
         {
             [grid replaceObjectAtIndex:newIndex withObject:[NSNull null]];
             [grid setObject:stackedTile atIndexedSubscript:index];
-            stackedTile.currentIndex = CGPointMake(stackedTile.currentIndex.x, i + 1);
+            stackedTile.currentIndex = IntPointMake(stackedTile.currentIndex.x, i + 1);
             index = newIndex;
         }
         else
@@ -165,7 +156,7 @@
     {
         if(oldTile != (id)[NSNull null] && !oldTile.isHidden)//todo:check
         {
-            CGPoint p = CGPointMake(t.currentIndex.x, i);
+            IntPoint p = IntPointMake(t.currentIndex.x, i);
             int newIndex = [self getIndexFromPoint:p];
             temp = [grid objectAtIndex:newIndex];
             [grid replaceObjectAtIndex:newIndex withObject:oldTile];
@@ -239,7 +230,7 @@
     }
 }
 
--(void) setSelectableAroundPoint:(CGPoint) point
+-(void) setSelectableAroundPoint:(IntPoint) point
 {
     [self setAllIsSelectable:NO];
     
@@ -247,7 +238,7 @@
     {
         for (int j = point.y - 1; j <= point.y + 1; j++)
         {
-            Tile *t = [self getTileFromPoint:CGPointMake(i, j)];
+            Tile *t = [self getTileFromPoint:IntPointMake(i, j)];
             if(t != (id)[NSNull null] && !t.isSelected)
             {
                 t.isSelectable = YES;
@@ -262,7 +253,7 @@
     int firstFilled;
     for(firstFilled = 0; firstFilled < self.gridSize.width; firstFilled++)
     {
-        CGPoint p = CGPointMake(firstFilled, self.gridSize.height - 1);
+        IntPoint p = IntPointMake(firstFilled, self.gridSize.height - 1);
         Tile *t = [self getTileFromPoint:p];
         if(t != (id)[NSNull null] && !t.isHidden) // todo:check
         {
@@ -281,7 +272,7 @@
     
     for(int i = self.gridSize.width - 1; i >= 0; i--)
     {        
-        CGPoint p = CGPointMake(i, self.gridSize.height - 1);
+        IntPoint p = IntPointMake(i, self.gridSize.height - 1);
         Tile *t = [self getTileFromPoint:p];
         if(t == (id)[NSNull null])
         {
@@ -349,8 +340,8 @@
 {
     for (int j = 0; j < self.gridSize.height; j++)
     {
-        CGPoint srcPt = CGPointMake(src, j);
-        CGPoint destPt = CGPointMake(dest, j);
+        IntPoint srcPt = IntPointMake(src, j);
+        IntPoint destPt = IntPointMake(dest, j);
         id srcTile = [self getTileFromPoint:srcPt];
         id destTile = [self getTileFromPoint:destPt];
         [self setTile:srcTile atPoint:destPt];        
