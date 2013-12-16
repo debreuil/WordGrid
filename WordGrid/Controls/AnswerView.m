@@ -101,10 +101,16 @@
     if(_round != nil)
     {        
         // draw letters
-        [[UIColor whiteColor] set];
         
+        BOOL isTraining = _round.answer.isTrainingRound;
         NSString *ga = _round.currentFullGuess;
         NSMutableString *s = [_round.answer.quoteUnderscores mutableCopy];
+        
+        if(isTraining)
+        {
+            [[UIColor colorWithRed:1 green:1 blue:1 alpha:0.5] set];
+            [_round.answer.quote drawInRect:textArea withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentLeft];
+        }
         
         for(int i = 0; i < ga.length; i++)
         {
@@ -112,6 +118,8 @@
             [s replaceCharactersInRange:NSMakeRange(index, 1)
                              withString:[ga substringWithRange:NSMakeRange(i, 1)]];
         }
+        
+        [[UIColor whiteColor] set];
         
         [s drawInRect:textArea withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentLeft];
         

@@ -8,6 +8,7 @@
 		<string>GOOD JOB!</string>
 		<string>59,60,61,62,66,67,68,67,68,69,67,68,69,70,71</string>
 		<string>{9,8}</string>
+		<string>trainingRound</string>
 	</array>
 	<array>
 		<string>PRESS ON THE LOWER PANEL TO REVERT TILES.</string>
@@ -15,6 +16,7 @@
 		<string>GOOD JOB!</string>
 		<string>18,27,36,45,54,42,43,38,39,40,19,28,37,46,55,55,56,57,58,59,44,53,56,57,58,59,60,61,58,59,60,61,62</string>
 		<string>{9,7}</string>
+		<string>trainingRound</string>
 	</array>
 	<array>
 		<string>LETTERS CAN JOIN DIAGONALLY TOO.</string>
@@ -22,6 +24,7 @@
 		<string>GOOD JOB!</string>
 		<string>12,22,32,42,52,62,53,31,40,49,23,32,41,50,21,30,39,48,57,58,59,60,61,62,60,61,62</string>
 		<string>{9,7}</string>
+		<string>trainingRound</string>
 	</array>
 	<array>
 		<string>WORK IS THE CURSE OF THE DRINKING CLASSES.</string>

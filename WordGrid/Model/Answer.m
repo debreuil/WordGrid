@@ -51,12 +51,15 @@ static NSCharacterSet *nonLetterSpaceSet;
     _gridLetters = [quoteData objectAtIndex:1];
     _victoryBlurb = [quoteData objectAtIndex:2];
     _gridSize = CGSizeFromString([quoteData objectAtIndex:4]);
+    _category = quoteData.count > 5 ? [quoteData objectAtIndex:5] : @"";
+    
+    _isTrainingRound = [_category isEqualToString:@"trainingRound"];
     
     NSString *quoteUpper = [_quote uppercaseString];
-        
-    _quoteUnderscores = [letRegex stringByReplacingMatchesInString:_quote
-                              options:0 range:NSMakeRange(0, _quote.length) withTemplate:@"□"];
     
+    _quoteUnderscores = _isTrainingRound ?
+        [spaces substringToIndex:_quote.length] :
+        [letRegex stringByReplacingMatchesInString:_quote options:0 range:NSMakeRange(0, _quote.length) withTemplate:@"□"];
     
     _quoteLettersOnly = [[quoteUpper componentsSeparatedByCharactersInSet:nonLetterSet]componentsJoinedByString:@""];
     NSString *wordsWithSpaces = [[quoteUpper componentsSeparatedByCharactersInSet:nonLetterSpaceSet]componentsJoinedByString:@""];
@@ -102,6 +105,6 @@ static NSCharacterSet *nonLetterSpaceSet;
     //NSLog(@"_answerKeyWords: %@", _keyWordArrays);
 }
 
-
+static NSString *spaces = @"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ";
 
 @end

@@ -146,9 +146,10 @@ static float hoverScale = 1.5;
             [errorImage drawInRect:r];
         }
         
-        float sc = r.size.width / 48.0;
-        UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:(48.0 * sc)];        
-        CGRect letR = CGRectOffset(r, 0.0, 2.0);
+        float fontSize = r.size.width * 0.8;
+        UIFont *f = [UIFont fontWithName:@"VTC Letterer Pro" size:fontSize];
+        CGSize stringSize = [_tile.letter sizeWithAttributes:@{NSFontAttributeName:f}];
+        CGRect letR = CGRectOffset(r, 0.0, ((r.size.height - stringSize.height) / 2.0));
 
         if(_tile.isSelected)
         {

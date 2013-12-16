@@ -187,9 +187,9 @@ UIInterfaceOrientation io;
 
 - (CGPoint)  getCenterFromTile:(Tile *) tile
 {
-    int tileIndex = tile.currentIndex.x + tile.currentIndex.y * _grid.gridSize.width;
-    TileView *tv = (TileView *)[self.tileViews objectAtIndex:tileIndex];
-    return tv.center;
+    IntPoint pt = tile.currentIndex;
+    return CGPointMake(self.slotWidth * pt.x + self.tileWidth / 2.0,
+                       self.slotHeight * (pt.y + yOffset) + self.tileHeight / 2.0);
 }
 
 - (Tile *) getTileFromMousePoint:(CGPoint) point centerOnly:(BOOL) centerOnly

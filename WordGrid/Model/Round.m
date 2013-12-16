@@ -295,20 +295,21 @@ extern SystemSoundID tickSoundID;
 {
     [self resetRound];
     
-    //NSLog(@"%@", [self trace]);
-    //NSLog(@"%@", [_grid trace]);
-    
     if(value.length > 0)
     {
         NSArray *ar = [value componentsSeparatedByString:@","];
-        for(int i = 0; i < ar.count; i++)
+        BOOL roundComplete = ar.count == _answer.quoteLettersOnly.length;
+        if(!roundComplete)
         {
-            NSString *val = (NSString *)ar[i];
-            int index = [val intValue];
-            [self guessTileByIndex:index];
+            for(int i = 0; i < ar.count; i++)
+            {
+                NSString *val = (NSString *)ar[i];
+                int index = [val intValue];
+                [self guessTileByIndex:index];
+                [self checkWord];
+            }
         }
     }
-    //NSLog(@"%@", [self trace]);
 }
 
 -(void) onWordCorrect
